@@ -1,0 +1,8 @@
+[{
+      "relation": ["delegate_permission/common.handle_all_urls"],
+      "target": {
+        "namespace": "android_app",
+        "package_name": "io.github.altair0622.tonemirror",
+        "sha256_cert_fingerprints": ["52:01:C2:0D:BC:4A:65:E3:02:22:8C:D6:5E:03:B1:19:53:B0:2B:76:14:47:E6:A0:07:7C:90:44:F1:C0:85:D6"]
+      }
+    }]
