@@ -5,6 +5,18 @@
 배포 URL: https://altair0622.github.io/drape/
 개인정보처리방침: https://altair0622.github.io/drape/privacy.html
 
+## 진행 상황 (2026-09-15)
+
+- [x] §2 패키징 — PWABuilder API로 생성. 결과물은 `Dropbox\99 drape\keys\` (톤미러.aab, 톤미러.apk, signing.keystore, 비밀번호 txt)
+- [x] §3 서명 키 보관 — 위 Dropbox 폴더. git에는 없음
+- [x] §4 assetlinks.json — 업로드 키 지문 1개로 배포됨. **Play Console 등록 후 앱 서명 키 지문을 두 번째로 추가해야 함**
+- [x] 그래픽 이미지 — `store/feature-graphic.png`
+- [ ] §1 개발자 계정 — 사용자
+- [ ] 폰 스크린샷 2장 이상 — 사용자 (세로, 카메라 켜진 화면·색 비교 화면)
+- [ ] §6 Play Console 입력 → §7 내부 테스트 업로드
+
+**지금 폰에서 해볼 것:** Dropbox 앱에서 `톤미러.apk`를 열어 설치(출처 불명 앱 허용 필요) → 실행했을 때 **주소창 없이** 열리면 assetlinks가 제대로 된 것.
+
 ## 0. 원리 한 줄
 
 PWABuilder는 우리 사이트를 여는 얇은 안드로이드 앱(TWA, Trusted Web Activity)을 만든다.
