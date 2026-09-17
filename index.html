@@ -13,10 +13,9 @@
 <meta name="apple-mobile-web-app-title" content="톤미러">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+KR:wght@300;400;500;600&display=swap" media="print" onload="this.media='all'">
-<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+KR:wght@300;400;500;600&display=swap"></noscript>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css"></noscript>
 <style>
   :root{
     --ink:#0D0D0F;
@@ -25,9 +24,9 @@
     --fg-dim:#9B99A2;
     --line:rgba(255,255,255,.14);
     --line-strong:rgba(255,255,255,.32);
-    --sans:"IBM Plex Sans KR","Apple SD Gothic Neo","Malgun Gothic",system-ui,sans-serif;
-    --serif:"Gowun Batang","Nanum Myeongjo",Georgia,serif;
-    --mono:"IBM Plex Mono",ui-monospace,"SFMono-Regular",monospace;
+    --sans:"Pretendard Variable",Pretendard,-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Segoe UI","Malgun Gothic",system-ui,sans-serif;
+    --serif:var(--sans);
+    --mono:var(--sans);
     --drape:#FF7F6E;
     --drape-top:52%;
     color-scheme:dark;
@@ -58,6 +57,7 @@
     margin:max(8px,env(safe-area-inset-top)) 8px 0;border-radius:24px;isolation:isolate}
   #cam,#shot{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
   #cam{transform:scaleX(-1)}
+  #cam.rear{transform:none}
   #shot{display:none}
   .stage.photo #cam{display:none}
   .stage.photo #shot{display:block}
@@ -106,15 +106,16 @@
     background:linear-gradient(to bottom,rgba(0,0,0,.62),rgba(0,0,0,0));
     pointer-events:none;
   }
-  .readout .name{font-family:var(--serif);font-size:26px;line-height:1.15;letter-spacing:-.01em}
+  .readout .name{font-family:var(--sans);font-weight:600;font-size:26px;line-height:1.15;letter-spacing:-.03em}
   .readout .season{
     margin-top:5px;font-size:11.5px;letter-spacing:.02em;
     color:var(--fg-dim);
   }
-  .readout .meta{text-align:right;font-family:var(--mono);font-size:12px;letter-spacing:.02em}
+  .readout .meta{text-align:right;font-family:var(--sans);font-size:12px;letter-spacing:.02em;font-variant-numeric:tabular-nums}
   .readout .match{margin-top:8px;font-family:var(--mono);font-size:12px;color:var(--fg-dim);display:flex;align-items:baseline;justify-content:flex-end;gap:6px}
   .readout .match b{font-weight:500;font-size:22px;color:var(--fg);letter-spacing:-.02em;min-width:2.4em;text-align:right}
   .readout .match.na b{color:var(--fg-dim)}
+  .readout .match[hidden]{display:none}
   .readout .ctl{display:flex;gap:6px;justify-content:flex-end;flex-wrap:wrap}
   .readout .lang[aria-pressed="true"]{border-color:var(--fg)}
   .readout .lang{
@@ -293,7 +294,7 @@
         <div id="cHex">#FF7F6E</div>
         <div class="match na" id="cMatchWrap" hidden title="같은 조명에서 다른 색과 견준 상대값입니다"><b id="cMatch">—</b><span>어울림</span></div>
         <div class="ver" id="ver"></div>
-        <div class="ctl"><button class="lang" id="lockBtn" type="button" hidden aria-pressed="false">빛 자동</button><button class="lang" id="langBtn" type="button">EN</button></div>
+        <div class="ctl"><button class="lang" id="flipBtn" type="button" hidden>셀프</button><button class="lang" id="lockBtn" type="button" hidden aria-pressed="false">빛 자동</button><button class="lang" id="langBtn" type="button">EN</button></div>
       </div>
     </div>
 
@@ -344,7 +345,7 @@
 <script>
 (function(){
   "use strict";
-  var APP_VERSION = "11";
+  var APP_VERSION = "12";
 
   /* ---- 언어 ---- 기기 언어가 한국어면 ko, 아니면 en. 화면의 EN/한국어 버튼으로 바꾸면 기억한다. */
   var T = {
@@ -361,6 +362,7 @@
          notFound:"카메라를 찾지 못했어요. 사진 한 장으로 대신 진행할 수 있어요.",
          handle:"드레이프 높이 조절", shot:"업로드한 사진", langBtn:"EN",
          soft:"흐리게", base:"기본", vivid:"선명하게",
+         camFront:"셀프", camRear:"상대방", camHint:"전면/후면 카메라 전환. 후면으로 하면 다른 사람이 폰을 들고 대볼 수 있어요",
          lockOff:"빛 자동", lockOn:"빛 고정됨", lockHint:"카메라가 색을 계속 다시 맞추지 않도록 화이트밸런스·노출을 지금 값에 고정합니다" },
     en:{ title:"Tone Mirror", compare:"Previous", guide:"Guide", keep:"Keep this color", unkeep:"Unkeep", kept:"Kept",
          hint:"Swipe to change color · drag the handle to move the drape",
@@ -375,6 +377,7 @@
          notFound:"No camera found. You can continue with a photo instead.",
          handle:"Adjust drape height", shot:"Uploaded photo", langBtn:"한국어",
          soft:"Muted", base:"Base", vivid:"Vivid",
+         camFront:"Selfie", camRear:"Someone else", camHint:"Switch front/rear camera. Rear lets another person hold the phone and drape you",
          lockOff:"Auto light", lockOn:"Light locked", lockHint:"Locks white balance and exposure at their current values so the camera stops re-adjusting colors" }
   };
   var LANG = "ko";
@@ -755,13 +758,34 @@
 
   /* ---- camera ---- */
   var video=$("cam");
+  /* ---- 전면/후면 ---- 후면 카메라로 바꾸면 다른 사람이 폰을 들고 상대에게 대볼 수 있다. 후면은 거울 반전을 하지 않는다. */
+  var facing = "user", curStream = null;
+  function stopCam(){
+    if(curStream){ curStream.getTracks().forEach(function(tr){ try{ tr.stop(); }catch(e){} }); curStream=null; }
+  }
+  $("flipBtn").addEventListener("click", function(){
+    facing = facing==="user" ? "environment" : "user";
+    $("flipBtn").textContent = facing==="user" ? t("camFront") : t("camRear");
+    startCam();
+  });
   function startCam(){
     stage.classList.remove("blocked");
+    stopCam();
     if(!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia){
       lastFail="noCam"; return fail(t("noCam"));
     }
-    navigator.mediaDevices.getUserMedia({ video:{ facingMode:"user", width:{ideal:1280}, height:{ideal:960} }, audio:false })
-      .then(function(s){ stage.classList.remove("photo"); video.srcObject=s; setupLightLock(s); })
+    navigator.mediaDevices.getUserMedia({ video:{ facingMode:facing, width:{ideal:1280}, height:{ideal:960} }, audio:false })
+      .then(function(s){
+        curStream=s; stage.classList.remove("photo"); video.srcObject=s; setupLightLock(s);
+        var st={}; try{ st=s.getVideoTracks()[0].getSettings(); }catch(e){}
+        video.classList.toggle("rear", (st.facingMode||facing)==="environment");
+        // 카메라가 둘 이상일 때만 전환 버튼을 보인다
+        if(navigator.mediaDevices.enumerateDevices){
+          navigator.mediaDevices.enumerateDevices().then(function(ds){
+            $("flipBtn").hidden = ds.filter(function(d){ return d.kind==="videoinput"; }).length < 2;
+          }).catch(function(){});
+        }
+      })
       .catch(function(err){
         var framed = false;
         try{ framed = window.top !== window.self; }catch(e){ framed = true; }
@@ -851,6 +875,8 @@
     $("shot").alt = t("shot");
     $("langBtn").textContent = t("langBtn");
     $("lockBtn").textContent = lightLocked ? t("lockOn") : t("lockOff");
+    $("flipBtn").textContent = facing==="user" ? t("camFront") : t("camRear");
+    $("flipBtn").title = t("camHint");
     $("lockBtn").title = t("lockHint");
     render();
     if(!$("sheet").hidden) renderSheet();
