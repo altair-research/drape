@@ -389,12 +389,12 @@
 <script>
 (function(){
   "use strict";
-  var APP_VERSION = "14";
+  var APP_VERSION = "15";
 
   /* ---- 언어 ---- 기기 언어가 한국어면 ko, 아니면 en. 화면의 EN/한국어 버튼으로 바꾸면 기억한다. */
   var T = {
     ko:{ title:"Personal Color Mirror", compare:"직전 색 비교", guide:"가이드", keep:"이 색 담기", unkeep:"담기 취소", kept:"담은 색",
-         hint:"좌우로 밀어 색을 넘기세요 · 손잡이를 끌면 드레이프 높이",
+         hint:"얼굴이 맑아 보이는 색을 골라 담으세요 · 좌우로 밀면 색이 바뀌어요",
          sheetTitle:"담은 색", lede:"얼굴빛이 맑아 보였던 색만 담으세요. 한 계절에 몰린다면 그쪽이 유력합니다. 다만 조명이 바뀌면 결과도 바뀌니, 다른 날 자연광에서 한 번 더 해보고 겹치는지 확인하세요.",
          bySeason:"계절 분포", nColors:function(n){ return n+"색"; }, list:"목록", back:"돌아가기", clear:"전체 지우기",
          empty:"아직 담은 색이 없어요. 색을 넘기다가 얼굴이 화사해 보이는 색에서 ‘이 색 담기’를 누르세요.",
@@ -408,13 +408,13 @@
          soft:"흐리게", base:"기본", vivid:"선명하게",
          introTitle:"3가지만 알면 돼요",
          i1t:"창가 자연광에서", i1p:"형광등이나 노란 조명은 색을 왜곡해요. 낮에 창가가 가장 정확해요.",
-         i2t:"색을 넘기며 얼굴만 보세요", i2p:"얼굴이 밝고 잡티가 옅어 보이면 어울리는 색. 칙칙하고 그늘이 진해지면 아닌 색.",
+         i2t:"얼굴이 맑아 보이는 색을 고르세요", i2p:"색을 넘기며 얼굴만 보세요. 밝고 잡티가 옅어 보이면 어울리는 색, 칙칙하고 그늘이 진해지면 아닌 색.",
          i3t:"어울리는 색만 담으세요", i3p:"5~6개 담으면 계절이 보여요. 다른 날 한 번 더 해보면 확실해져요.",
          introGo:"시작하기", help:"사용법",
          camFront:"셀프", camRear:"상대방", camHint:"전면/후면 카메라 전환. 후면으로 하면 다른 사람이 폰을 들고 대볼 수 있어요",
          lockOff:"빛 자동", lockOn:"빛 고정됨", lockHint:"카메라가 색을 계속 다시 맞추지 않도록 화이트밸런스·노출을 지금 값에 고정합니다" },
     en:{ title:"Personal Color Mirror", compare:"Previous", guide:"Guide", keep:"Keep this color", unkeep:"Unkeep", kept:"Kept",
-         hint:"Swipe to change color · drag the handle to move the drape",
+         hint:"Keep the colors that make your face look clearer · swipe to change",
          sheetTitle:"Kept colors", lede:"Keep only the colors that made your face look clearer. If they cluster in one season, that season is likely yours. Lighting changes the result, so try again another day in daylight and see what overlaps.",
          bySeason:"By season", nColors:function(n){ return n+(n===1?" color":" colors"); }, list:"List", back:"Back", clear:"Clear all",
          empty:"Nothing kept yet. Swipe through the colors and tap ‘Keep this color’ when your face looks brighter.",
@@ -428,7 +428,7 @@
          soft:"Muted", base:"Base", vivid:"Vivid",
          introTitle:"Just three things",
          i1t:"Sit by a window in daylight", i1p:"Fluorescent and warm bulbs distort colors. Daylight near a window is most accurate.",
-         i2t:"Swipe colors, watch only your face", i2p:"Brighter skin and softer blemishes mean a good color. Dull skin and darker shadows mean it isn’t yours.",
+         i2t:"Pick the colors that make your face look clearer", i2p:"Swipe colors and watch only your face. Brighter skin and softer blemishes mean a good color; dull skin and darker shadows mean it isn’t yours.",
          i3t:"Keep only the good ones", i3p:"After 5–6, a season shows up. Try again another day to be sure.",
          introGo:"Start", help:"How to use",
          camFront:"Selfie", camRear:"Someone else", camHint:"Switch front/rear camera. Rear lets another person hold the phone and drape you",
@@ -655,13 +655,17 @@
     $("guide").classList.toggle("off", !guideOn);
     this.setAttribute("aria-pressed", guideOn ? "true" : "false");
   });
-  var hintTimer = setTimeout(hideHint, 7000);
-  function hideHint(){ clearTimeout(hintTimer); $("hint").classList.add("off"); }
+  // 지시문이라서 시간이 지나도 안 없어진다. 처음으로 색을 담으면 사라진다 (그때부터는 아는 사람).
+  var hintDone = false;
+  try{ hintDone = !!(saved && saved.length); }catch(e){}
+  if(hintDone) $("hint").classList.add("off");
+  function hideHint(){ /* 조작 중에는 유지 */ }
+  function hintOff(){ hintDone = true; $("hint").classList.add("off"); }
 
   /* ---- save ---- */
   $("save").addEventListener("click", function(){
     var k = keyOf(idx, lv), at = saved.indexOf(k);
-    if(at > -1) saved.splice(at,1); else saved.push(k);
+    if(at > -1) saved.splice(at,1); else { saved.push(k); hintOff(); }
     persist(); render();
   });
 
