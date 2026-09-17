@@ -54,7 +54,8 @@
   }
 
   /* ---------- stage: camera + drape ---------- */
-  .stage{position:relative;flex:1;min-height:0;overflow:hidden;background:var(--ink-2);touch-action:pan-y}
+  .stage{position:relative;flex:1;min-height:0;overflow:hidden;background:var(--ink-2);touch-action:pan-y;
+    margin:max(8px,env(safe-area-inset-top)) 8px 0;border-radius:24px;isolation:isolate}
   #cam,#shot{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
   #cam{transform:scaleX(-1)}
   #shot{display:none}
@@ -139,8 +140,7 @@
   .console{
     flex:none;z-index:6;
     background:var(--ink);
-    border-top:1px solid var(--line);
-    padding:12px 0 max(12px,env(safe-area-inset-bottom));
+    padding:14px 0 max(12px,env(safe-area-inset-bottom));
     display:flex;flex-direction:column;gap:11px;
   }
   .tabs{display:flex;gap:6px;padding:0 14px}
@@ -328,7 +328,7 @@
 <script>
 (function(){
   "use strict";
-  var APP_VERSION = "9";
+  var APP_VERSION = "10";
 
   /* ---- 언어 ---- 기기 언어가 한국어면 ko, 아니면 en. 화면의 EN/한국어 버튼으로 바꾸면 기억한다. */
   var T = {
@@ -758,7 +758,7 @@
   function applyLang(){
     document.documentElement.lang = LANG;
     document.title = t("title");
-    for(var i=0;i<tabEls.length;i++) tabEls[i].textContent = sName(SEASONS[i]);
+    for(var i=0;i<tabEls.length;i++) tabEls[i].textContent = LANG==="ko" ? SEASONS[i].ko : SEASONS[i].en.split(" ")[0]; // 영어 탭은 한 단어(좁은 폰에서 줄바꿈 방지)
     for(var j=0;j<chips.length;j++){ chips[j].title = sName(FLAT[j].s)+" · "+cName(FLAT[j]); chips[j].setAttribute("aria-label", chips[j].title); }
     $("compare").firstChild.textContent = t("compare");
     $("guideBtn").textContent = t("guide");
