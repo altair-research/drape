@@ -144,7 +144,8 @@
     background:rgba(0,0,0,.4);
     padding:6px 12px;border-radius:999px;
     backdrop-filter:blur(6px);
-    white-space:nowrap;
+    white-space:normal;text-align:center;line-height:1.4;
+    width:max-content;max-width:calc(100% - 28px);
     transition:opacity .4s ease;
   }
   .hint.off{opacity:0}
@@ -389,7 +390,7 @@
 <script>
 (function(){
   "use strict";
-  var APP_VERSION = "15";
+  var APP_VERSION = "16";
 
   /* ---- 언어 ---- 기기 언어가 한국어면 ko, 아니면 en. 화면의 EN/한국어 버튼으로 바꾸면 기억한다. */
   var T = {
