@@ -209,7 +209,7 @@
 
   .strip{
     display:flex;gap:9px;
-    padding:2px 14px 4px;
+    padding:7px 14px 9px;
     overflow-x:auto;
     scrollbar-width:none;
     scroll-snap-type:x proximity;
@@ -461,7 +461,7 @@
 <script>
 (function(){
   "use strict";
-  var APP_VERSION = "26";
+  var APP_VERSION = "27";
 
   /* ---- 언어 ---- 기기 언어가 한국어면 ko, 아니면 en. 화면의 EN/한국어 버튼으로 바꾸면 기억한다. */
   var T = {
@@ -684,14 +684,14 @@
   }
   var lvBtns = $("levels").querySelectorAll("button");
   for(var lb=0; lb<lvBtns.length; lb++){
-    lvBtns[lb].addEventListener("click", function(){ setLevel(+this.getAttribute("data-lv")); showLevels(1500); });
+    lvBtns[lb].addEventListener("click", function(){ setLevel(+this.getAttribute("data-lv")); showLevels(5000); });
   }
   /* 채도 단계는 평소엔 숨기고, 색(칩이나 화면)을 꾹 누르면 잠깐 나타난다 */
   var levelsTimer = null;
   function showLevels(ms){
     $("levels").classList.add("show");
     clearTimeout(levelsTimer);
-    levelsTimer = setTimeout(function(){ $("levels").classList.remove("show"); }, ms || 4000);
+    levelsTimer = setTimeout(function(){ $("levels").classList.remove("show"); }, ms || 10000);
   }
   function longPress(el, onFire, onTapIndex){
     var timer=null, moved=false, sx=0, sy=0;
