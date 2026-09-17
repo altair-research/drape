@@ -116,6 +116,7 @@
   .readout .match b{font-weight:500;font-size:22px;color:var(--fg);letter-spacing:-.02em;min-width:2.4em;text-align:right}
   .readout .match.na b{color:var(--fg-dim)}
   .readout .match[hidden]{display:none}
+  #cHex,#compare .num{display:none}
   /* ---------- 더보기 메뉴 ---------- */
   .menu .rows{display:flex;flex-direction:column;gap:8px;margin-bottom:16px}
   .mrow{
@@ -214,7 +215,6 @@
     touch-action:manipulation;
     white-space:nowrap;
   }
-  @media (max-width:420px){ #compare .num{display:none} }
   .btn:hover{border-color:var(--line-strong)}
   .btn:focus-visible{outline:2px solid var(--fg);outline-offset:2px}
   .btn[aria-pressed="true"]{border-color:var(--fg)}
@@ -412,7 +412,7 @@
 <script>
 (function(){
   "use strict";
-  var APP_VERSION = "17";
+  var APP_VERSION = "18";
 
   /* ---- 언어 ---- 기기 언어가 한국어면 ko, 아니면 en. 화면의 EN/한국어 버튼으로 바꾸면 기억한다. */
   var T = {
