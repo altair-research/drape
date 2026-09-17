@@ -1,7 +1,7 @@
 {
-  "name": "톤미러",
-  "short_name": "톤미러",
-  "description": "라이브 카메라로 4계절 드레이프 색을 얼굴에 대보는 퍼스널컬러 도구",
+  "name": "Personal Color Mirror",
+  "short_name": "Color Mirror",
+  "description": "Drape four-season colors over your face with the live camera. 라이브 카메라로 사계절 드레이프 색을 얼굴에 대보는 퍼스널컬러 거울",
   "id": "/drape/",
   "start_url": "./",
   "scope": "./",

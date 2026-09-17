@@ -1,6 +1,6 @@
 # 플레이 스토어 등록 절차 (PWABuilder → Google Play)
 
-톤미러를 Google Play에 올리는 순서. 하나 끝내면 체크하고 다음으로.
+Personal Color Mirror를 Google Play에 올리는 순서. 하나 끝내면 체크하고 다음으로.
 
 배포 URL: https://altair0622.github.io/drape/
 개인정보처리방침: https://altair0622.github.io/drape/privacy.html
@@ -42,8 +42,8 @@ PWABuilder는 우리 사이트를 여는 얇은 안드로이드 앱(TWA, Trusted
    | 항목 | 값 | 이유 |
    |---|---|---|
    | Package ID | `io.github.altair0622.tonemirror` | 소유한 도메인을 뒤집어 쓰는 관례. `com.example.*`은 Play가 거부. **한번 올리면 못 바꾼다.** |
-   | App name | 톤미러 | 스토어 표시명 |
-   | Launcher name | 톤미러 | 홈 화면 아이콘 밑 글자, 12자 이내 |
+   | App name | Personal Color Mirror | 스토어 표시명 |
+   | Launcher name | Color Mirror | 홈 화면 아이콘 밑 글자, 12자 이내 |
    | App version / code | 1.0.0 / 1 | 올릴 때마다 version code를 1씩 올린다 |
    | Display mode | Standalone | 매니페스트와 동일 |
    | Signing key | **Create new** | 처음이니 새로 만든다. 아래 3번 참고 |
@@ -102,7 +102,7 @@ PWABuilder가 노란 경고를 내는 항목. 없어도 패키징되지만 스�
 
 | 항목 | 입력값 / 판단 |
 |---|---|
-| 앱 이름 | 톤미러 |
+| 앱 이름 | Personal Color Mirror |
 | 기본 언어 | 한국어 |
 | 앱/게임 | 앱 |
 | 무료/유료 | 무료 (유료→무료는 되지만 반대는 안 된다) |
@@ -128,7 +128,7 @@ PWABuilder가 노란 경고를 내는 항목. 없어도 패키징되지만 스�
 > 카메라에 비친 얼굴에 사계절 드레이프 색을 대보는 퍼스널컬러 미러
 
 ### 자세한 설명 초안
-> 톤미러는 퍼스널컬러 진단에서 쓰는 '드레이핑'을 폰 카메라로 해 보는 도구입니다.
+> Personal Color Mirror는 퍼스널컬러 진단에서 쓰는 '드레이핑'을 폰 카메라로 해 보는 도구입니다.
 > 봄·여름·가을·겨울 네 계절의 대표색을 얼굴 아래에 천처럼 대보고, 어울리는 색을 저장해 비교할 수 있습니다.
 > 카메라 영상과 사진은 기기 안에서만 처리되며 어디에도 전송되지 않습니다.
 
