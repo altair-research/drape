@@ -320,26 +320,27 @@
 <script>
 (function(){
   "use strict";
-  var APP_VERSION = "7";
+  var APP_VERSION = "8";
   var MATCH_ENABLED = false; // 어울림 % — 2026-09-17 실기기 테스트에서 근거가 약해 화면에서 뺌. 코드는 남김 // 화면에 표시. sw.js의 VERSION 숫자와 함께 올린다
 
   var SEASONS = [
     { key:"spring", ko:"봄 웜", en:"Spring Warm", attr:"밝고 맑은 · 노란기", colors:[
       {n:"코랄",h:"#FF7F6E"},{n:"피치",h:"#FFB088"},{n:"골든 옐로",h:"#FFD23D"},{n:"애플 그린",h:"#8CC63F"},
-      {n:"아쿠아",h:"#3FC1C9"},{n:"살몬 핑크",h:"#FF8FA3"},{n:"카멜",h:"#D99A5B"},{n:"아이보리",h:"#FFF3D6"}]},
+      {n:"아쿠아",h:"#3FC1C9"},{n:"아이보리",h:"#FFF3D6"}]},
     { key:"summer", ko:"여름 쿨", en:"Summer Cool", attr:"부드럽고 흐린 · 푸른기", colors:[
       {n:"라벤더",h:"#B39DDB"},{n:"파우더 블루",h:"#A8C8E8"},{n:"로즈 핑크",h:"#E7A0B8"},{n:"소프트 민트",h:"#9FD8C8"},
-      {n:"그레이시 블루",h:"#7E9AB8"},{n:"모브",h:"#A98BA5"},{n:"소프트 네이비",h:"#4A5D7E"},{n:"라이트 그레이",h:"#D6D3DC"}]},
+      {n:"소프트 네이비",h:"#4A5D7E"},{n:"라이트 그레이",h:"#D6D3DC"}]},
     { key:"autumn", ko:"가을 웜", en:"Autumn Warm", attr:"깊고 흐린 · 노란기", colors:[
-      {n:"머스터드",h:"#D4A017"},{n:"테라코타",h:"#C05F3C"},{n:"올리브",h:"#7A8450"},{n:"카키 브라운",h:"#8B6F47"},
-      {n:"펌킨",h:"#C25E27"},{n:"포레스트",h:"#3E5C4B"},{n:"브릭 와인",h:"#8E3B37"},{n:"크림 베이지",h:"#E8D5B0"}]},
+      {n:"머스터드",h:"#D4A017"},{n:"테라코타",h:"#C05F3C"},{n:"올리브",h:"#7A8450"},
+      {n:"포레스트",h:"#3E5C4B"},{n:"브릭 와인",h:"#8E3B37"},{n:"크림 베이지",h:"#E8D5B0"}]},
     { key:"winter", ko:"겨울 쿨", en:"Winter Cool", attr:"선명하고 진한 · 푸른기", colors:[
       {n:"퓨어 화이트",h:"#FFFFFF"},{n:"트루 블랙",h:"#1A1A1A"},{n:"로열 블루",h:"#1E50A2"},{n:"마젠타",h:"#C71585"},
-      {n:"에메랄드",h:"#00876C"},{n:"아이시 핑크",h:"#F2C6D9"},{n:"버건디",h:"#7B1E3A"},{n:"코발트",h:"#2B3A8F"}]}
+      {n:"에메랄드",h:"#00876C"},{n:"아이시 핑크",h:"#F2C6D9"}]}
   ];
 
   // flat index across all seasons
   var FLAT = [];
+  function seasonStart(si){ var n=SEASONS.length; si=((si%n)+n)%n; for(var i=0;i<FLAT.length;i++){ if(FLAT[i].si===si) return i; } return 0; }
   SEASONS.forEach(function(s,si){
     s.colors.forEach(function(c,ci){ FLAT.push({si:si,ci:ci,n:c.n,h:c.h,s:s}); });
   });
@@ -362,7 +363,7 @@
   SEASONS.forEach(function(s,si){
     var b=document.createElement("button");
     b.className="tab"; b.type="button"; b.role="tab"; b.textContent=s.ko;
-    b.addEventListener("click", function(){ setIdx(si*8); });
+    b.addEventListener("click", function(){ setIdx(seasonStart(si)); });
     tabs.appendChild(b);
   });
 
@@ -448,8 +449,8 @@
     if(e.target.tagName==="INPUT") return;
     if(e.key==="ArrowRight"){ setIdx(idx+1); e.preventDefault(); }
     else if(e.key==="ArrowLeft"){ setIdx(idx-1); e.preventDefault(); }
-    else if(e.key==="ArrowDown"){ setIdx((FLAT[idx].si+1)*8); e.preventDefault(); }
-    else if(e.key==="ArrowUp"){ setIdx((FLAT[idx].si+3)*8); e.preventDefault(); }
+    else if(e.key==="ArrowDown"){ setIdx(seasonStart(FLAT[idx].si+1)); e.preventDefault(); }
+    else if(e.key==="ArrowUp"){ setIdx(seasonStart(FLAT[idx].si-1)); e.preventDefault(); }
     else if(e.key===" " && prevIdx!==null && !e.repeat){ flash(true); e.preventDefault(); }
   });
   document.addEventListener("keyup", function(e){
