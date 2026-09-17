@@ -124,8 +124,20 @@
   }
   .readout .ver{margin-top:6px;font-family:var(--mono);font-size:10.5px;color:rgba(255,255,255,.38);letter-spacing:.06em}
 
+  .levels{
+    position:absolute;left:14px;bottom:14px;z-index:5;
+    display:flex;gap:8px;padding:6px;border-radius:999px;
+    background:rgba(0,0,0,.38);backdrop-filter:blur(6px);
+  }
+  .levels button{
+    width:26px;height:26px;border-radius:50%;padding:0;cursor:pointer;
+    border:2px solid transparent;box-shadow:0 0 0 1px rgba(0,0,0,.35);
+    touch-action:manipulation;
+  }
+  .levels button[aria-pressed="true"]{border-color:#fff}
+  .levels.na{opacity:.35;pointer-events:none}
   .hint{
-    position:absolute;left:50%;bottom:14px;transform:translateX(-50%);
+    position:absolute;left:50%;bottom:58px;transform:translateX(-50%);
     z-index:5;pointer-events:none;
     font-size:11.5px;color:rgba(255,255,255,.72);
     background:rgba(0,0,0,.4);
@@ -285,6 +297,10 @@
       </div>
     </div>
 
+    <div class="levels" id="levels" role="group">
+      <button type="button" data-lv="0"></button><button type="button" data-lv="1"></button><button type="button" data-lv="2"></button>
+    </div>
+
     <div class="hint" id="hint">좌우로 밀어 색을 넘기세요 · 손잡이를 끌면 드레이프 높이</div>
 
     <div class="fallback">
@@ -328,7 +344,7 @@
 <script>
 (function(){
   "use strict";
-  var APP_VERSION = "10";
+  var APP_VERSION = "11";
 
   /* ---- 언어 ---- 기기 언어가 한국어면 ko, 아니면 en. 화면의 EN/한국어 버튼으로 바꾸면 기억한다. */
   var T = {
@@ -344,6 +360,7 @@
          denied:"카메라 권한이 거부됐어요. 주소창 왼쪽 자물쇠 → 권한 → 카메라를 허용하고 ‘다시 시도’를 누르세요.",
          notFound:"카메라를 찾지 못했어요. 사진 한 장으로 대신 진행할 수 있어요.",
          handle:"드레이프 높이 조절", shot:"업로드한 사진", langBtn:"EN",
+         soft:"흐리게", base:"기본", vivid:"선명하게",
          lockOff:"빛 자동", lockOn:"빛 고정됨", lockHint:"카메라가 색을 계속 다시 맞추지 않도록 화이트밸런스·노출을 지금 값에 고정합니다" },
     en:{ title:"Tone Mirror", compare:"Previous", guide:"Guide", keep:"Keep this color", unkeep:"Unkeep", kept:"Kept",
          hint:"Swipe to change color · drag the handle to move the drape",
@@ -357,6 +374,7 @@
          denied:"Camera access was denied. Tap the lock icon in the address bar → Permissions → Camera, then ‘Try again’.",
          notFound:"No camera found. You can continue with a photo instead.",
          handle:"Adjust drape height", shot:"Uploaded photo", langBtn:"한국어",
+         soft:"Muted", base:"Base", vivid:"Vivid",
          lockOff:"Auto light", lockOn:"Light locked", lockHint:"Locks white balance and exposure at their current values so the camera stops re-adjusting colors" }
   };
   var LANG = "ko";
@@ -401,7 +419,38 @@
   var root = document.documentElement;
   var $ = function(id){ return document.getElementById(id); };
   var stage=$("stage"), strip=$("strip"), tabs=$("tabs");
-  var idx = 0, prevIdx = null, saved = [], drapeTop = 52;
+  var idx = 0, lv = 1, prev = null, saved = [], drapeTop = 52;
+
+  /* ---- 채도 단계 ----
+     같은 빨강도 흐린 빨강과 쨍한 빨강은 다르게 어울린다. 색마다 3단계를 둔다.
+     HSL에서 채도를 0.55배 / 1배 / 1.45배 하고, 흐린 쪽은 조금 밝게, 선명한 쪽은 밝기를 중간(0.5)으로 15% 당긴다.
+     배율은 화면에서 차이가 보이되 다른 색으로 바뀌지는 않는 범위에서 눈으로 정한 값. 무채색(채도 8% 미만)은 단계를 두지 않는다. */
+  var LEVELS = [{k:"soft", s:0.55, l:0.06}, {k:"base", s:1, l:0}, {k:"vivid", s:1.45, l:0}];
+  function hexToHsl(hex){
+    var n=parseInt(hex.slice(1),16), r=((n>>16)&255)/255, g=((n>>8)&255)/255, b=(n&255)/255;
+    var mx=Math.max(r,g,b), mn=Math.min(r,g,b), l=(mx+mn)/2, h=0, sa=0, d=mx-mn;
+    if(d){ sa = l>0.5 ? d/(2-mx-mn) : d/(mx+mn);
+      if(mx===r) h=((g-b)/d + (g<b?6:0)); else if(mx===g) h=(b-r)/d+2; else h=(r-g)/d+4; h/=6; }
+    return {h:h,s:sa,l:l};
+  }
+  function hslToHex(c){
+    function f(n){ var k=(n+c.h*12)%12, a=c.s*Math.min(c.l,1-c.l); return c.l - a*Math.max(-1, Math.min(k-3, 9-k, 1)); }
+    function hx(v){ v=Math.round(Math.max(0,Math.min(1,v))*255); return (v<16?"0":"")+v.toString(16); }
+    return ("#"+hx(f(0))+hx(f(8))+hx(f(4))).toUpperCase();
+  }
+  function isNeutral(hex){ return hexToHsl(hex).s < 0.08; }
+  function variantHex(hex, level){
+    if(level===1 || isNeutral(hex)) return hex;
+    var c=hexToHsl(hex), L=LEVELS[level];
+    c.s=Math.min(1, c.s*L.s);
+    if(level===0) c.l=Math.min(1, c.l+L.l);
+    else c.l=c.l+(0.5-c.l)*0.15;   // 이미 채도가 꽉 찬 색(코랄 등)은 채도 대신 깊이로 '선명함'을 낸다
+    return hslToHex(c);
+  }
+  function keyOf(i, level){ if(isNeutral(FLAT[i].h)) level=1; return FLAT[i].h + (level===1 ? "" : "@"+level); }
+  function parseKey(k){ var p=k.split("@"); return {h:p[0], lv:p.length>1 ? +p[1] : 1}; }
+  function findFlat(h){ for(var i=0;i<FLAT.length;i++){ if(FLAT[i].h===h) return i; } return -1; }
+  function labelOf(c, level){ if(isNeutral(c.h)) level=1; return cName(c) + (level===1 ? "" : " · " + t(LEVELS[level].k)); }
 
   try{
     var raw = localStorage.getItem("drape.saved");
@@ -435,29 +484,49 @@
     var n = FLAT.length;
     i = ((i % n) + n) % n;
     if(i === idx) return;
-    if(!keepPrev) prevIdx = idx;
+    if(!keepPrev) prev = {i:idx, lv:lv};
     idx = i;
     render();
     chips[idx].scrollIntoView({block:"nearest", inline:"center", behavior:"smooth"});
     hideHint();
   }
 
+  function setLevel(l){
+    if(l===lv) return;
+    prev = {i:idx, lv:lv};
+    lv = l;
+    render();
+    hideHint();
+  }
+  var lvBtns = $("levels").querySelectorAll("button");
+  for(var lb=0; lb<lvBtns.length; lb++){
+    lvBtns[lb].addEventListener("click", function(){ setLevel(+this.getAttribute("data-lv")); });
+  }
+
   function render(){
-    var c = FLAT[idx];
-    root.style.setProperty("--drape", c.h);
-    $("cName").textContent = cName(c);
+    var c = FLAT[idx], h = variantHex(c.h, lv);
+    root.style.setProperty("--drape", h);
+    $("cName").textContent = labelOf(c, lv);
     $("cSeason").textContent = sName(c.s) + " · " + sAttr(c.s);
-    $("cHex").textContent = c.h;
+    $("cHex").textContent = h;
     showMatch();
-    $("prevHex").textContent = prevIdx===null ? "—" : FLAT[prevIdx].h;
+    $("prevHex").textContent = prev===null ? "—" : variantHex(FLAT[prev.i].h, prev.lv);
+    var savedBase = {};
+    saved.forEach(function(k){ savedBase[parseKey(k).h] = true; });
     for(var i=0;i<chips.length;i++){
       chips[i].setAttribute("aria-pressed", i===idx ? "true" : "false");
-      chips[i].classList.toggle("saved", saved.indexOf(FLAT[i].h) > -1);
+      chips[i].classList.toggle("saved", !!savedBase[FLAT[i].h]);
+    }
+    $("levels").classList.toggle("na", isNeutral(c.h));
+    for(var q=0;q<lvBtns.length;q++){
+      lvBtns[q].style.background = variantHex(c.h, q);
+      lvBtns[q].setAttribute("aria-pressed", q===lv ? "true" : "false");
+      lvBtns[q].title = t(LEVELS[q].k); lvBtns[q].setAttribute("aria-label", t(LEVELS[q].k));
     }
     for(var k=0;k<tabEls.length;k++){
       tabEls[k].setAttribute("aria-selected", k===c.si ? "true" : "false");
     }
-    $("save").textContent = saved.indexOf(c.h) > -1 ? t("unkeep") : t("keep");
+    $("save").textContent = saved.indexOf(keyOf(idx, lv)) > -1 ? t("unkeep") : t("keep");
     $("savedCount").textContent = String(saved.length);
   }
 
@@ -503,7 +572,9 @@
     else if(e.key==="ArrowLeft"){ setIdx(idx-1); e.preventDefault(); }
     else if(e.key==="ArrowDown"){ setIdx(seasonStart(FLAT[idx].si+1)); e.preventDefault(); }
     else if(e.key==="ArrowUp"){ setIdx(seasonStart(FLAT[idx].si-1)); e.preventDefault(); }
-    else if(e.key===" " && prevIdx!==null && !e.repeat){ flash(true); e.preventDefault(); }
+    else if(e.key==="[" ){ setLevel(Math.max(0, lv-1)); e.preventDefault(); }
+    else if(e.key==="]" ){ setLevel(Math.min(2, lv+1)); e.preventDefault(); }
+    else if(e.key===" " && prev!==null && !e.repeat){ flash(true); e.preventDefault(); }
   });
   document.addEventListener("keyup", function(e){
     if(e.key===" ") flash(false);
@@ -512,8 +583,8 @@
   /* ---- hold to compare ---- */
   var flashing=false;
   function flash(on){
-    if(prevIdx===null) return;
-    if(on && !flashing){ flashing=true; root.style.setProperty("--drape", FLAT[prevIdx].h); $("cName").textContent = cName(FLAT[prevIdx]); $("cHex").textContent = FLAT[prevIdx].h; showMatch(prevIdx); }
+    if(prev===null) return;
+    if(on && !flashing){ flashing=true; var ph=variantHex(FLAT[prev.i].h, prev.lv); root.style.setProperty("--drape", ph); $("cName").textContent = labelOf(FLAT[prev.i], prev.lv); $("cHex").textContent = ph; showMatch(prev.i); }
     else if(!on && flashing){ flashing=false; render(); }
   }
   var cmp=$("compare");
@@ -532,8 +603,8 @@
 
   /* ---- save ---- */
   $("save").addEventListener("click", function(){
-    var h = FLAT[idx].h, at = saved.indexOf(h);
-    if(at > -1) saved.splice(at,1); else saved.push(h);
+    var k = keyOf(idx, lv), at = saved.indexOf(k);
+    if(at > -1) saved.splice(at,1); else saved.push(k);
     persist(); render();
   });
 
@@ -551,9 +622,9 @@
       return;
     }
     var counts = SEASONS.map(function(){ return 0; });
-    saved.forEach(function(h){
-      var f = FLAT.filter(function(c){ return c.h===h; })[0];
-      if(f) counts[f.si]++;
+    saved.forEach(function(k){
+      var fi = findFlat(parseKey(k).h);
+      if(fi > -1) counts[FLAT[fi].si]++;
     });
     var g=document.createElement("div");
     g.className="group";
@@ -582,14 +653,16 @@
     g.appendChild(legend);
     tally.appendChild(g);
 
-    saved.forEach(function(h){
-      var f = FLAT.filter(function(c){ return c.h===h; })[0];
-      if(!f) return;
+    saved.forEach(function(k){
+      var pk = parseKey(k), fi = findFlat(pk.h);
+      if(fi < 0) return;
+      var f = FLAT[fi];
       var b=document.createElement("button");
       b.type="button";
-      b.innerHTML='<i style="background:'+h+'"></i>'+cName(f);
+      b.innerHTML='<i style="background:'+variantHex(f.h, pk.lv)+'"></i>'+labelOf(f, pk.lv);
       b.addEventListener("click", function(){
-        setIdx(FLAT.indexOf(f));
+        if(fi===idx){ if(pk.lv!==lv){ prev={i:idx,lv:lv}; lv=pk.lv; render(); } }
+        else { lv = pk.lv; setIdx(fi); }
         $("sheet").hidden=true;
       });
       list.appendChild(b);
