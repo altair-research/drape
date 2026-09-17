@@ -114,6 +114,13 @@
   .readout .match{margin-top:8px;font-family:var(--mono);font-size:12px;color:var(--fg-dim);display:flex;align-items:baseline;justify-content:flex-end;gap:6px}
   .readout .match b{font-weight:500;font-size:22px;color:var(--fg);letter-spacing:-.02em;min-width:2.4em;text-align:right}
   .readout .match.na b{color:var(--fg-dim)}
+  .readout .ctl{display:flex;gap:6px;justify-content:flex-end;flex-wrap:wrap}
+  .readout .lang[aria-pressed="true"]{border-color:var(--fg)}
+  .readout .lang{
+    pointer-events:auto;margin-top:8px;appearance:none;cursor:pointer;
+    background:rgba(0,0,0,.35);color:var(--fg);border:1px solid var(--line);border-radius:999px;
+    font-family:var(--sans);font-size:11px;padding:4px 10px;letter-spacing:.04em;
+  }
   .readout .ver{margin-top:6px;font-family:var(--mono);font-size:10.5px;color:rgba(255,255,255,.38);letter-spacing:.06em}
 
   .hint{
@@ -274,13 +281,14 @@
         <div id="cHex">#FF7F6E</div>
         <div class="match na" id="cMatchWrap" hidden title="같은 조명에서 다른 색과 견준 상대값입니다"><b id="cMatch">—</b><span>어울림</span></div>
         <div class="ver" id="ver"></div>
+        <div class="ctl"><button class="lang" id="lockBtn" type="button" hidden aria-pressed="false">빛 자동</button><button class="lang" id="langBtn" type="button">EN</button></div>
       </div>
     </div>
 
     <div class="hint" id="hint">좌우로 밀어 색을 넘기세요 · 손잡이를 끌면 드레이프 높이</div>
 
     <div class="fallback">
-      <div class="t">카메라를 열 수 없어요</div>
+      <div class="t" id="fbTitle">카메라를 열 수 없어요</div>
       <p id="fbMsg">브라우저에서 카메라 권한을 허용하거나, 사진 한 장으로 대신 진행할 수 있어요.</p>
       <div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:center">
         <a class="btn" id="openExt" href="#" target="_blank" rel="noopener">브라우저에서 열기</a>
@@ -303,11 +311,11 @@
   </div>
 
   <div class="sheet" id="sheet" hidden>
-    <h2>담은 색</h2>
-    <p class="lede">얼굴빛이 맑아 보였던 색만 담으세요. 한 계절에 몰린다면 그쪽이 유력합니다. 다만 조명이 바뀌면 결과도 바뀌니, 다른 날 자연광에서 한 번 더 해보고 겹치는지 확인하세요.</p>
+    <h2 id="sheetTitle">담은 색</h2>
+    <p class="lede" id="lede">얼굴빛이 맑아 보였던 색만 담으세요. 한 계절에 몰린다면 그쪽이 유력합니다. 다만 조명이 바뀌면 결과도 바뀌니, 다른 날 자연광에서 한 번 더 해보고 겹치는지 확인하세요.</p>
     <div id="tally"></div>
     <div class="group">
-      <h3>목록</h3>
+      <h3 id="listTitle">목록</h3>
       <div class="savedlist" id="savedList"></div>
     </div>
     <div class="actions" style="padding:0">
@@ -320,29 +328,74 @@
 <script>
 (function(){
   "use strict";
-  var APP_VERSION = "8";
+  var APP_VERSION = "9";
+
+  /* ---- 언어 ---- 기기 언어가 한국어면 ko, 아니면 en. 화면의 EN/한국어 버튼으로 바꾸면 기억한다. */
+  var T = {
+    ko:{ title:"톤미러", compare:"직전 색 비교", guide:"가이드", keep:"이 색 담기", unkeep:"담기 취소", kept:"담은 색",
+         hint:"좌우로 밀어 색을 넘기세요 · 손잡이를 끌면 드레이프 높이",
+         sheetTitle:"담은 색", lede:"얼굴빛이 맑아 보였던 색만 담으세요. 한 계절에 몰린다면 그쪽이 유력합니다. 다만 조명이 바뀌면 결과도 바뀌니, 다른 날 자연광에서 한 번 더 해보고 겹치는지 확인하세요.",
+         bySeason:"계절 분포", nColors:function(n){ return n+"색"; }, list:"목록", back:"돌아가기", clear:"전체 지우기",
+         empty:"아직 담은 색이 없어요. 색을 넘기다가 얼굴이 화사해 보이는 색에서 ‘이 색 담기’를 누르세요.",
+         camTitle:"카메라를 열 수 없어요", camDefault:"브라우저에서 카메라 권한을 허용하거나, 사진 한 장으로 대신 진행할 수 있어요.",
+         openExt:"브라우저에서 열기", retry:"다시 시도", pick:"사진 올리기",
+         noCam:"이 브라우저에서는 카메라를 쓸 수 없어요. 사진 한 장으로 대신 진행할 수 있어요.",
+         framed:"앱 안의 미리보기에서는 카메라가 막혀 있어요. ‘브라우저에서 열기’로 Chrome이나 삼성 인터넷에서 열면 권한을 물어봅니다.",
+         denied:"카메라 권한이 거부됐어요. 주소창 왼쪽 자물쇠 → 권한 → 카메라를 허용하고 ‘다시 시도’를 누르세요.",
+         notFound:"카메라를 찾지 못했어요. 사진 한 장으로 대신 진행할 수 있어요.",
+         handle:"드레이프 높이 조절", shot:"업로드한 사진", langBtn:"EN",
+         lockOff:"빛 자동", lockOn:"빛 고정됨", lockHint:"카메라가 색을 계속 다시 맞추지 않도록 화이트밸런스·노출을 지금 값에 고정합니다" },
+    en:{ title:"Tone Mirror", compare:"Previous", guide:"Guide", keep:"Keep this color", unkeep:"Unkeep", kept:"Kept",
+         hint:"Swipe to change color · drag the handle to move the drape",
+         sheetTitle:"Kept colors", lede:"Keep only the colors that made your face look clearer. If they cluster in one season, that season is likely yours. Lighting changes the result, so try again another day in daylight and see what overlaps.",
+         bySeason:"By season", nColors:function(n){ return n+(n===1?" color":" colors"); }, list:"List", back:"Back", clear:"Clear all",
+         empty:"Nothing kept yet. Swipe through the colors and tap ‘Keep this color’ when your face looks brighter.",
+         camTitle:"Can’t open the camera", camDefault:"Allow camera access in your browser, or continue with a photo instead.",
+         openExt:"Open in browser", retry:"Try again", pick:"Use a photo",
+         noCam:"This browser can’t use the camera. You can continue with a photo instead.",
+         framed:"The camera is blocked inside this preview. Use ‘Open in browser’ to open it in Chrome or Samsung Internet.",
+         denied:"Camera access was denied. Tap the lock icon in the address bar → Permissions → Camera, then ‘Try again’.",
+         notFound:"No camera found. You can continue with a photo instead.",
+         handle:"Adjust drape height", shot:"Uploaded photo", langBtn:"한국어",
+         lockOff:"Auto light", lockOn:"Light locked", lockHint:"Locks white balance and exposure at their current values so the camera stops re-adjusting colors" }
+  };
+  var LANG = "ko";
+  try{ LANG = localStorage.getItem("drape.lang") || ((navigator.language||"").slice(0,2)==="ko" ? "ko" : "en"); }catch(e){}
+  if(!T[LANG]) LANG="ko";
+  function t(k){ return T[LANG][k]; }
+  function cName(c){ return LANG==="ko" ? c.n : c.e; }
+  function sName(sn){ return LANG==="ko" ? sn.ko : sn.en; }
+  function sAttr(sn){ return LANG==="ko" ? sn.attr : sn.attrEn; }
   var MATCH_ENABLED = false; // 어울림 % — 2026-09-17 실기기 테스트에서 근거가 약해 화면에서 뺌. 코드는 남김 // 화면에 표시. sw.js의 VERSION 숫자와 함께 올린다
 
   var SEASONS = [
-    { key:"spring", ko:"봄 웜", en:"Spring Warm", attr:"밝고 맑은 · 노란기", colors:[
-      {n:"코랄",h:"#FF7F6E"},{n:"피치",h:"#FFB088"},{n:"골든 옐로",h:"#FFD23D"},{n:"애플 그린",h:"#8CC63F"},
-      {n:"아쿠아",h:"#3FC1C9"},{n:"아이보리",h:"#FFF3D6"}]},
-    { key:"summer", ko:"여름 쿨", en:"Summer Cool", attr:"부드럽고 흐린 · 푸른기", colors:[
-      {n:"라벤더",h:"#B39DDB"},{n:"파우더 블루",h:"#A8C8E8"},{n:"로즈 핑크",h:"#E7A0B8"},{n:"소프트 민트",h:"#9FD8C8"},
-      {n:"소프트 네이비",h:"#4A5D7E"},{n:"라이트 그레이",h:"#D6D3DC"}]},
-    { key:"autumn", ko:"가을 웜", en:"Autumn Warm", attr:"깊고 흐린 · 노란기", colors:[
-      {n:"머스터드",h:"#D4A017"},{n:"테라코타",h:"#C05F3C"},{n:"올리브",h:"#7A8450"},
-      {n:"포레스트",h:"#3E5C4B"},{n:"브릭 와인",h:"#8E3B37"},{n:"크림 베이지",h:"#E8D5B0"}]},
-    { key:"winter", ko:"겨울 쿨", en:"Winter Cool", attr:"선명하고 진한 · 푸른기", colors:[
-      {n:"퓨어 화이트",h:"#FFFFFF"},{n:"트루 블랙",h:"#1A1A1A"},{n:"로열 블루",h:"#1E50A2"},{n:"마젠타",h:"#C71585"},
-      {n:"에메랄드",h:"#00876C"},{n:"아이시 핑크",h:"#F2C6D9"}]}
+    { key:"spring", ko:"봄 웜", en:"Spring Warm", attr:"밝고 맑은 · 노란기", attrEn:"bright & clear · yellow undertone", colors:[
+      {n:"아이보리",e:"Ivory",h:"#FFF3D6"},{n:"웜 베이지",e:"Warm Beige",h:"#E8CBA8"},{n:"카멜",e:"Camel",h:"#D99A5B"},
+      {n:"피치",e:"Peach",h:"#FFB088"},{n:"코랄",e:"Coral",h:"#FF7F6E"},{n:"살몬 핑크",e:"Salmon Pink",h:"#FF8FA3"},
+      {n:"토마토 레드",e:"Tomato Red",h:"#E8412C"},{n:"골든 옐로",e:"Golden Yellow",h:"#FFD23D"},{n:"애플 그린",e:"Apple Green",h:"#8CC63F"},
+      {n:"아쿠아",e:"Aqua",h:"#3FC1C9"},{n:"브라이트 네이비",e:"Bright Navy",h:"#2E4A9E"},{n:"라이트 카키",e:"Light Khaki",h:"#C8C2A0"}]},
+    { key:"summer", ko:"여름 쿨", en:"Summer Cool", attr:"부드럽고 흐린 · 푸른기", attrEn:"soft & muted · blue undertone", colors:[
+      {n:"오프 화이트",e:"Off White",h:"#F4F2F5"},{n:"라이트 그레이",e:"Light Gray",h:"#D6D3DC"},{n:"미디엄 그레이",e:"Medium Gray",h:"#9A9AA6"},
+      {n:"파우더 블루",e:"Powder Blue",h:"#A8C8E8"},{n:"그레이시 블루",e:"Grayish Blue",h:"#7E9AB8"},{n:"소프트 네이비",e:"Soft Navy",h:"#4A5D7E"},
+      {n:"라벤더",e:"Lavender",h:"#B39DDB"},{n:"로즈 핑크",e:"Rose Pink",h:"#E7A0B8"},{n:"더스티 로즈",e:"Dusty Rose",h:"#C98A94"},
+      {n:"라즈베리",e:"Raspberry",h:"#B04A6E"},{n:"소프트 민트",e:"Soft Mint",h:"#9FD8C8"},{n:"로즈 브라운",e:"Rose Brown",h:"#8C6E73"}]},
+    { key:"autumn", ko:"가을 웜", en:"Autumn Warm", attr:"깊고 흐린 · 노란기", attrEn:"deep & muted · yellow undertone", colors:[
+      {n:"크림 베이지",e:"Cream Beige",h:"#E8D5B0"},{n:"샌드 베이지",e:"Sand Beige",h:"#C9B48A"},{n:"캐러멜",e:"Caramel",h:"#B5763B"},
+      {n:"카키 브라운",e:"Khaki Brown",h:"#8B6F47"},{n:"다크 브라운",e:"Dark Brown",h:"#5C3D2E"},{n:"올리브",e:"Olive",h:"#7A8450"},
+      {n:"카키 그린",e:"Khaki Green",h:"#5E6B3C"},{n:"포레스트",e:"Forest",h:"#3E5C4B"},{n:"머스터드",e:"Mustard",h:"#D4A017"},
+      {n:"펌킨",e:"Pumpkin",h:"#C25E27"},{n:"테라코타",e:"Terracotta",h:"#C05F3C"},{n:"브릭 와인",e:"Brick Wine",h:"#8E3B37"}]},
+    { key:"winter", ko:"겨울 쿨", en:"Winter Cool", attr:"선명하고 진한 · 푸른기", attrEn:"vivid & deep · blue undertone", colors:[
+      {n:"퓨어 화이트",e:"Pure White",h:"#FFFFFF"},{n:"아이시 블루",e:"Icy Blue",h:"#D6E6F5"},{n:"아이시 핑크",e:"Icy Pink",h:"#F2C6D9"},
+      {n:"트루 블랙",e:"True Black",h:"#1A1A1A"},{n:"차콜",e:"Charcoal",h:"#3A3A40"},{n:"딥 네이비",e:"Deep Navy",h:"#1B2A4A"},
+      {n:"로열 블루",e:"Royal Blue",h:"#1E50A2"},{n:"퍼플",e:"Purple",h:"#5B2C8A"},{n:"에메랄드",e:"Emerald",h:"#00876C"},
+      {n:"트루 레드",e:"True Red",h:"#D0021B"},{n:"버건디",e:"Burgundy",h:"#7B1E3A"},{n:"마젠타",e:"Magenta",h:"#C71585"}]}
   ];
 
   // flat index across all seasons
   var FLAT = [];
   function seasonStart(si){ var n=SEASONS.length; si=((si%n)+n)%n; for(var i=0;i<FLAT.length;i++){ if(FLAT[i].si===si) return i; } return 0; }
   SEASONS.forEach(function(s,si){
-    s.colors.forEach(function(c,ci){ FLAT.push({si:si,ci:ci,n:c.n,h:c.h,s:s}); });
+    s.colors.forEach(function(c,ci){ FLAT.push({si:si,ci:ci,n:c.n,e:c.e,h:c.h,s:s}); });
   });
 
   var root = document.documentElement;
@@ -362,7 +415,7 @@
   /* ---- build controls ---- */
   SEASONS.forEach(function(s,si){
     var b=document.createElement("button");
-    b.className="tab"; b.type="button"; b.role="tab"; b.textContent=s.ko;
+    b.className="tab"; b.type="button"; b.role="tab";
     b.addEventListener("click", function(){ setIdx(seasonStart(si)); });
     tabs.appendChild(b);
   });
@@ -372,7 +425,6 @@
     b.className="chip"; b.type="button";
     b.style.background=c.h;
     b.title=c.s.ko+" · "+c.n;
-    b.setAttribute("aria-label", c.s.ko+" "+c.n);
     b.addEventListener("click", function(){ setIdx(i); });
     strip.appendChild(b);
   });
@@ -393,8 +445,8 @@
   function render(){
     var c = FLAT[idx];
     root.style.setProperty("--drape", c.h);
-    $("cName").textContent = c.n;
-    $("cSeason").textContent = c.s.ko + " · " + c.s.attr;
+    $("cName").textContent = cName(c);
+    $("cSeason").textContent = sName(c.s) + " · " + sAttr(c.s);
     $("cHex").textContent = c.h;
     showMatch();
     $("prevHex").textContent = prevIdx===null ? "—" : FLAT[prevIdx].h;
@@ -402,10 +454,10 @@
       chips[i].setAttribute("aria-pressed", i===idx ? "true" : "false");
       chips[i].classList.toggle("saved", saved.indexOf(FLAT[i].h) > -1);
     }
-    for(var t=0;t<tabEls.length;t++){
-      tabEls[t].setAttribute("aria-selected", t===c.si ? "true" : "false");
+    for(var k=0;k<tabEls.length;k++){
+      tabEls[k].setAttribute("aria-selected", k===c.si ? "true" : "false");
     }
-    $("save").textContent = saved.indexOf(c.h) > -1 ? "담기 취소" : "이 색 담기";
+    $("save").textContent = saved.indexOf(c.h) > -1 ? t("unkeep") : t("keep");
     $("savedCount").textContent = String(saved.length);
   }
 
@@ -461,7 +513,7 @@
   var flashing=false;
   function flash(on){
     if(prevIdx===null) return;
-    if(on && !flashing){ flashing=true; root.style.setProperty("--drape", FLAT[prevIdx].h); $("cName").textContent = FLAT[prevIdx].n; $("cHex").textContent = FLAT[prevIdx].h; showMatch(prevIdx); }
+    if(on && !flashing){ flashing=true; root.style.setProperty("--drape", FLAT[prevIdx].h); $("cName").textContent = cName(FLAT[prevIdx]); $("cHex").textContent = FLAT[prevIdx].h; showMatch(prevIdx); }
     else if(!on && flashing){ flashing=false; render(); }
   }
   var cmp=$("compare");
@@ -494,7 +546,7 @@
     tally.innerHTML=""; list.innerHTML="";
     if(!saved.length){
       var p=document.createElement("div");
-      p.className="empty"; p.textContent="아직 담은 색이 없어요. 색을 넘기다가 얼굴이 화사해 보이는 색에서 ‘이 색 담기’를 누르세요.";
+      p.className="empty"; p.textContent=t("empty");
       list.appendChild(p);
       return;
     }
@@ -506,7 +558,7 @@
     var g=document.createElement("div");
     g.className="group";
     var h3=document.createElement("h3");
-    h3.innerHTML='<span>계절 분포</span><b>'+saved.length+'색</b>';
+    h3.innerHTML='<span>'+t("bySeason")+'</span><b>'+t("nColors")(saved.length)+'</b>';
     g.appendChild(h3);
     var bar=document.createElement("div");
     bar.className="bar";
@@ -515,7 +567,7 @@
       var i=document.createElement("i");
       i.style.width=(counts[si]/saved.length*100)+"%";
       i.style.background=s.colors[0].h;
-      i.title=s.ko+" "+counts[si];
+      i.title=sName(s)+" "+counts[si];
       bar.appendChild(i);
     });
     g.appendChild(bar);
@@ -523,7 +575,7 @@
     legend.style.cssText="display:flex;flex-wrap:wrap;gap:12px;font-size:11.5px;color:var(--fg-dim)";
     SEASONS.forEach(function(s,si){
       var sp=document.createElement("span");
-      sp.textContent=s.ko+" "+counts[si];
+      sp.textContent=sName(s)+" "+counts[si];
       if(counts[si] && counts[si]===Math.max.apply(null,counts)) sp.style.color="var(--fg)";
       legend.appendChild(sp);
     });
@@ -535,7 +587,7 @@
       if(!f) return;
       var b=document.createElement("button");
       b.type="button";
-      b.innerHTML='<i style="background:'+h+'"></i>'+f.n;
+      b.innerHTML='<i style="background:'+h+'"></i>'+cName(f);
       b.addEventListener("click", function(){
         setIdx(FLAT.indexOf(f));
         $("sheet").hidden=true;
@@ -633,20 +685,62 @@
   function startCam(){
     stage.classList.remove("blocked");
     if(!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia){
-      return fail("이 브라우저에서는 카메라를 쓸 수 없어요. 사진 한 장으로 대신 진행할 수 있어요.");
+      lastFail="noCam"; return fail(t("noCam"));
     }
     navigator.mediaDevices.getUserMedia({ video:{ facingMode:"user", width:{ideal:1280}, height:{ideal:960} }, audio:false })
-      .then(function(s){ stage.classList.remove("photo"); video.srcObject=s; })
+      .then(function(s){ stage.classList.remove("photo"); video.srcObject=s; setupLightLock(s); })
       .catch(function(err){
         var framed = false;
         try{ framed = window.top !== window.self; }catch(e){ framed = true; }
-        fail(err && err.name==="NotAllowedError"
-          ? (framed
-              ? "앱 안의 미리보기에서는 카메라가 막혀 있어요. ‘브라우저에서 열기’로 Chrome이나 삼성 인터넷에서 열면 권한을 물어봅니다."
-              : "카메라 권한이 거부됐어요. 주소창 왼쪽 자물쇠 → 권한 → 카메라를 허용하고 ‘다시 시도’를 누르세요.")
-          : "카메라를 찾지 못했어요. 사진 한 장으로 대신 진행할 수 있어요.");
+        lastFail = err && err.name==="NotAllowedError" ? (framed ? "framed" : "denied") : "notFound";
+        fail(t(lastFail));
       });
   }
+  /* ---- 빛 고정 (화이트밸런스·노출 잠금) ----
+     폰 카메라는 장면에 맞춰 색온도와 밝기를 계속 다시 맞춘다. 드레이프 색이 바뀌거나 고개를 돌리면
+     얼굴색도 따라 흔들려 비교가 어렵다. 기기가 허용하면(안드로이드 Chrome 대부분) 현재 값에 고정한다.
+     iOS Safari는 이 API를 지원하지 않아 버튼이 숨겨진다. */
+  var lightLocked = false, camTrack = null;
+  function setupLightLock(stream){
+    camTrack = stream.getVideoTracks()[0];
+    lightLocked = false;
+    var caps = {};
+    try{ caps = camTrack.getCapabilities ? camTrack.getCapabilities() : {}; }catch(e){}
+    var canWB = caps.whiteBalanceMode && caps.whiteBalanceMode.indexOf("manual") > -1;
+    var canEx = caps.exposureMode && caps.exposureMode.indexOf("manual") > -1;
+    $("lockBtn").hidden = !(canWB || canEx);
+    $("lockBtn").setAttribute("aria-pressed","false");
+    $("lockBtn").textContent = t("lockOff");
+  }
+  function setLightLock(on){
+    if(!camTrack) return Promise.resolve();
+    var caps = {}, st = {};
+    try{ caps = camTrack.getCapabilities(); st = camTrack.getSettings(); }catch(e){}
+    var adv = {};
+    if(caps.whiteBalanceMode && caps.whiteBalanceMode.indexOf("manual") > -1){
+      adv.whiteBalanceMode = on ? "manual" : "continuous";
+      if(on && st.colorTemperature) adv.colorTemperature = st.colorTemperature;
+    }
+    if(caps.exposureMode && caps.exposureMode.indexOf("manual") > -1){
+      adv.exposureMode = on ? "manual" : "continuous";
+      if(on && st.exposureTime) adv.exposureTime = st.exposureTime;
+      if(on && st.iso) adv.iso = st.iso;
+    }
+    return camTrack.applyConstraints({ advanced:[adv] }).then(function(){
+      lightLocked = on;
+    }).catch(function(){
+      // 노출 고정이 거부되면 화이트밸런스만이라도
+      var wb = {};
+      if(adv.whiteBalanceMode){ wb.whiteBalanceMode = adv.whiteBalanceMode; if(adv.colorTemperature) wb.colorTemperature = adv.colorTemperature; }
+      return camTrack.applyConstraints({ advanced:[wb] }).then(function(){ lightLocked = on; }).catch(function(){});
+    }).then(function(){
+      $("lockBtn").setAttribute("aria-pressed", lightLocked ? "true" : "false");
+      $("lockBtn").textContent = lightLocked ? t("lockOn") : t("lockOff");
+    });
+  }
+  $("lockBtn").addEventListener("click", function(){ setLightLock(!lightLocked); });
+
+  var lastFail = null;
   function fail(msg){ $("fbMsg").textContent=msg; stage.classList.add("blocked"); }
 
   $("retry").addEventListener("click", startCam);
@@ -661,7 +755,40 @@
     stage.classList.remove("blocked");
   });
 
-  render();
+  function applyLang(){
+    document.documentElement.lang = LANG;
+    document.title = t("title");
+    for(var i=0;i<tabEls.length;i++) tabEls[i].textContent = sName(SEASONS[i]);
+    for(var j=0;j<chips.length;j++){ chips[j].title = sName(FLAT[j].s)+" · "+cName(FLAT[j]); chips[j].setAttribute("aria-label", chips[j].title); }
+    $("compare").firstChild.textContent = t("compare");
+    $("guideBtn").textContent = t("guide");
+    $("openSaved").firstChild.textContent = t("kept");
+    $("hint").textContent = t("hint");
+    $("sheetTitle").textContent = t("sheetTitle");
+    $("lede").textContent = t("lede");
+    $("listTitle").textContent = t("list");
+    $("closeSheet").textContent = t("back");
+    $("clearSaved").textContent = t("clear");
+    $("fbTitle").textContent = t("camTitle");
+    $("fbMsg").textContent = lastFail ? t(lastFail) : t("camDefault");
+    $("openExt").textContent = t("openExt");
+    $("retry").textContent = t("retry");
+    $("pick").textContent = t("pick");
+    handle.setAttribute("aria-label", t("handle"));
+    $("shot").alt = t("shot");
+    $("langBtn").textContent = t("langBtn");
+    $("lockBtn").textContent = lightLocked ? t("lockOn") : t("lockOff");
+    $("lockBtn").title = t("lockHint");
+    render();
+    if(!$("sheet").hidden) renderSheet();
+  }
+  $("langBtn").addEventListener("click", function(){
+    LANG = LANG==="ko" ? "en" : "ko";
+    try{ localStorage.setItem("drape.lang", LANG); }catch(e){}
+    applyLang();
+  });
+
+  applyLang();
   startCam();
   $("ver").textContent = "v" + APP_VERSION;
 
