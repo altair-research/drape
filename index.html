@@ -122,8 +122,8 @@
     pointer-events:auto;appearance:none;cursor:pointer;
     display:inline-flex;align-items:center;gap:6px;
     background:rgba(0,0,0,.42);color:var(--fg);border:1px solid var(--line);border-radius:999px;
-    font-family:var(--sans);font-size:12.5px;font-weight:500;padding:7px 12px;
-    backdrop-filter:blur(6px);
+    font-family:var(--sans);font-size:11px;font-weight:500;padding:4px 9px;gap:4px;
+    backdrop-filter:blur(6px);opacity:.85;
   }
   .readout .flip[hidden]{display:none}
   .readout .flip:active{transform:scale(.97)}
@@ -433,7 +433,7 @@
 <script>
 (function(){
   "use strict";
-  var APP_VERSION = "20";
+  var APP_VERSION = "21";
 
   /* ---- 언어 ---- 기기 언어가 한국어면 ko, 아니면 en. 화면의 EN/한국어 버튼으로 바꾸면 기억한다. */
   var T = {
