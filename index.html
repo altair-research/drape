@@ -112,6 +112,9 @@
   }
   .readout .meta{text-align:right;font-family:var(--mono);font-size:12px;letter-spacing:.02em}
   .readout .attr{margin-top:5px;font-family:var(--sans);font-size:11.5px;color:var(--fg-dim);letter-spacing:.01em}
+  .readout .match{margin-top:8px;font-family:var(--mono);font-size:12px;color:var(--fg-dim);display:flex;align-items:baseline;justify-content:flex-end;gap:6px}
+  .readout .match b{font-weight:500;font-size:22px;color:var(--fg);letter-spacing:-.02em;min-width:2.4em;text-align:right}
+  .readout .match.na b{color:var(--fg-dim)}
 
   .hint{
     position:absolute;left:50%;bottom:14px;transform:translateX(-50%);
@@ -268,6 +271,7 @@
       <div class="meta">
         <div id="cHex">#FF7F6E</div>
         <div class="attr" id="cAttr">밝고 맑은 · 노란기</div>
+        <div class="match na" id="cMatchWrap" title="같은 조명에서 다른 색과 견준 상대값입니다"><b id="cMatch">—</b><span>어울림</span></div>
       </div>
     </div>
 
@@ -388,6 +392,7 @@
     $("cSeason").textContent = c.s.en;
     $("cHex").textContent = c.h;
     $("cAttr").textContent = c.s.attr;
+    showMatch();
     $("prevHex").textContent = prevIdx===null ? "—" : FLAT[prevIdx].h;
     for(var i=0;i<chips.length;i++){
       chips[i].setAttribute("aria-pressed", i===idx ? "true" : "false");
@@ -452,7 +457,7 @@
   var flashing=false;
   function flash(on){
     if(prevIdx===null) return;
-    if(on && !flashing){ flashing=true; root.style.setProperty("--drape", FLAT[prevIdx].h); $("cName").textContent = FLAT[prevIdx].n; $("cHex").textContent = FLAT[prevIdx].h; }
+    if(on && !flashing){ flashing=true; root.style.setProperty("--drape", FLAT[prevIdx].h); $("cName").textContent = FLAT[prevIdx].n; $("cHex").textContent = FLAT[prevIdx].h; showMatch(prevIdx); }
     else if(!on && flashing){ flashing=false; render(); }
   }
   var cmp=$("compare");
@@ -534,6 +539,87 @@
       list.appendChild(b);
     });
   }
+
+  /* ---- 어울림 지수 ----
+     얼굴 가이드 안(볼·코 부근)의 피부색을 카메라에서 읽어 Lab 색공간으로 바꾸고,
+     32색 각각에 대해 (1) 피부 언더톤과 색의 온도 일치, (2) 피부의 맑기와 색의 채도 일치를 점수화한다.
+     절대값이 아니라 32색 안에서의 상대 순위를 10~100으로 펼친 값이다.
+     조명이 바뀌면 피부색 측정이 통째로 움직이므로, 같은 자리·같은 조명에서 색끼리 견주는 용도로만 쓴다. */
+  var skin = null;           // {L,a,b,C,h} 이동평균
+  var matchScores = null;    // FLAT 순서의 10~100 점수
+  function srgbToLab(r,g,b){
+    function lin(v){ v/=255; return v<=0.04045 ? v/12.92 : Math.pow((v+0.055)/1.055,2.4); }
+    var R=lin(r),G=lin(g),B=lin(b);
+    var X=(R*0.4124+G*0.3576+B*0.1805)/0.95047, Y=(R*0.2126+G*0.7152+B*0.0722), Z=(R*0.0193+G*0.1192+B*0.9505)/1.08883;
+    function f(t){ return t>0.008856 ? Math.cbrt(t) : 7.787*t+16/116; }
+    var fx=f(X),fy=f(Y),fz=f(Z);
+    return { L:116*fy-16, a:500*(fx-fy), b:200*(fy-fz) };
+  }
+  function polar(lab){
+    lab.C=Math.sqrt(lab.a*lab.a+lab.b*lab.b);
+    lab.h=(Math.atan2(lab.b,lab.a)*180/Math.PI+360)%360;
+    return lab;
+  }
+  var LABS = FLAT.map(function(c){
+    var n=parseInt(c.h.slice(1),16);
+    return polar(srgbToLab((n>>16)&255,(n>>8)&255,n&255));
+  });
+  var CMAX = Math.max.apply(null, LABS.map(function(l){ return l.C; }));
+  function colorWarmth(l){ // -1(쿨) ~ +1(웜). 무채색은 0
+    var w = Math.cos((l.h-60)*Math.PI/180);
+    return w * Math.min(1, l.C/30);
+  }
+  function computeScores(){
+    if(!skin) { matchScores=null; return; }
+    // 피부 언더톤: Lab 색상각이 클수록 노란기(웜). 52°를 중립으로, ±12°를 ±1로 본다 — 관행적 범위에서 정한 값.
+    var skinWarm = Math.max(-1, Math.min(1, (skin.h-52)/12));
+    // 피부 맑기: 채도 12~35를 0~1로
+    var skinClear = Math.max(0, Math.min(1, (skin.C-12)/23));
+    var raw = LABS.map(function(l){
+      var temp = 1 - Math.abs(skinWarm - colorWarmth(l))/2;        // 0~1
+      var clear = 1 - Math.abs(skinClear - l.C/CMAX);              // 0~1
+      return 0.6*temp + 0.4*clear;
+    });
+    var lo=Math.min.apply(null,raw), hi=Math.max.apply(null,raw);
+    matchScores = raw.map(function(v){ return hi>lo ? Math.round(10 + 90*(v-lo)/(hi-lo)) : 55; });
+  }
+  function showMatch(i){
+    if(i===undefined) i=idx;
+    var w=$("cMatchWrap"), b=$("cMatch");
+    if(!matchScores){ w.classList.add("na"); b.textContent="—"; return; }
+    w.classList.remove("na"); b.textContent=matchScores[i]+"%";
+  }
+  var sampCv=document.createElement("canvas"); sampCv.width=24; sampCv.height=24;
+  var sampCx=sampCv.getContext("2d",{willReadFrequently:true});
+  function sampleSkin(){
+    var src, sw, sh;
+    if(stage.classList.contains("photo")){ src=$("shot"); sw=src.naturalWidth; sh=src.naturalHeight; }
+    else { src=video; sw=video.videoWidth; sh=video.videoHeight; }
+    if(!sw || !sh || stage.classList.contains("blocked")) return false;
+    var r=stage.getBoundingClientRect(), W=r.width, H=r.height;
+    var gw=Math.min(0.56*W,240), gh=gw*4/3;               // .guide 크기와 동일
+    var cx=W/2, cy=0.2*H+gh/2+0.12*gh;                    // 가이드 중심보다 살짝 아래 = 볼·코
+    var bw=0.4*gw, bh=0.25*gh;
+    var scale=Math.max(W/sw, H/sh), ox=(W-sw*scale)/2, oy=(H-sh*scale)/2;   // object-fit:cover 역산
+    var x=(cx-bw/2-ox)/scale, y=(cy-bh/2-oy)/scale, w=bw/scale, h=bh/scale;
+    try{ sampCx.drawImage(src, x, y, w, h, 0, 0, 24, 24); }catch(e){ return false; }
+    var d=sampCx.getImageData(0,0,24,24).data, Ls=[],As=[],Bs=[];
+    for(var i=0;i<d.length;i+=4){
+      var lab=srgbToLab(d[i],d[i+1],d[i+2]);
+      if(lab.L<18 || lab.L>96) continue;                  // 눈썹·눈동자·반사광 제외
+      Ls.push(lab.L); As.push(lab.a); Bs.push(lab.b);
+    }
+    if(Ls.length<60) return false;
+    function med(a){ a.sort(function(p,q){return p-q;}); return a[a.length>>1]; }
+    var m={L:med(Ls),a:med(As),b:med(Bs)};
+    if(!skin) skin=m; else { skin.L+= .3*(m.L-skin.L); skin.a+= .3*(m.a-skin.a); skin.b+= .3*(m.b-skin.b); }
+    polar(skin);
+    return true;
+  }
+  setInterval(function(){
+    if(sampleSkin()) computeScores(); else { skin=null; matchScores=null; }
+    if(!flashing) showMatch();
+  }, 700);
 
   /* ---- camera ---- */
   var video=$("cam");
