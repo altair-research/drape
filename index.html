@@ -114,6 +114,7 @@
   .readout .match{margin-top:8px;font-family:var(--mono);font-size:12px;color:var(--fg-dim);display:flex;align-items:baseline;justify-content:flex-end;gap:6px}
   .readout .match b{font-weight:500;font-size:22px;color:var(--fg);letter-spacing:-.02em;min-width:2.4em;text-align:right}
   .readout .match.na b{color:var(--fg-dim)}
+  .readout .ver{margin-top:6px;font-family:var(--mono);font-size:10.5px;color:rgba(255,255,255,.38);letter-spacing:.06em}
 
   .hint{
     position:absolute;left:50%;bottom:14px;transform:translateX(-50%);
@@ -272,6 +273,7 @@
       <div class="meta">
         <div id="cHex">#FF7F6E</div>
         <div class="match na" id="cMatchWrap" title="같은 조명에서 다른 색과 견준 상대값입니다"><b id="cMatch">—</b><span>어울림</span></div>
+        <div class="ver" id="ver"></div>
       </div>
     </div>
 
@@ -318,6 +320,7 @@
 <script>
 (function(){
   "use strict";
+  var APP_VERSION = "6"; // 화면에 표시. sw.js의 VERSION 숫자와 함께 올린다
 
   var SEASONS = [
     { key:"spring", ko:"봄 웜", en:"Spring Warm", attr:"밝고 맑은 · 노란기", colors:[
@@ -655,11 +658,18 @@
 
   render();
   startCam();
+  $("ver").textContent = "v" + APP_VERSION;
 
   /* ---- PWA ---- */
   if("serviceWorker" in navigator){
     window.addEventListener("load", function(){
       navigator.serviceWorker.register("sw.js").catch(function(){});
+    });
+    // 새 서비스워커가 주도권을 잡으면 한 번만 새로고침 → 앱을 두 번 열지 않아도 새 버전이 보인다.
+    // 첫 설치(이전 controller 없음)에는 새로고침하지 않는다.
+    var hadController = !!navigator.serviceWorker.controller, reloaded = false;
+    navigator.serviceWorker.addEventListener("controllerchange", function(){
+      if(hadController && !reloaded){ reloaded = true; location.reload(); }
     });
   }
 })();

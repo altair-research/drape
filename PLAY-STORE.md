@@ -9,7 +9,7 @@
 
 - [x] §2 패키징 — PWABuilder API로 생성. 결과물은 `Dropbox\99 drape\keys\` (톤미러.aab, 톤미러.apk, signing.keystore, 비밀번호 txt)
 - [x] §3 서명 키 보관 — 위 Dropbox 폴더. git에는 없음
-- [x] §4 assetlinks.json — 업로드 키 지문 1개로 배포됨. **Play Console 등록 후 앱 서명 키 지문을 두 번째로 추가해야 함**
+- [x] §4 assetlinks.json — 도메인 루트(`altair0622.github.io` 저장소)에 업로드 키 지문 1개로 배포됨. **Play Console 등록 후 앱 서명 키 지문을 두 번째로 추가해야 함**
 - [x] 그래픽 이미지 — `store/feature-graphic.png`
 - [ ] §1 개발자 계정 — 사용자
 - [ ] 폰 스크린샷 2장 이상 — 사용자 (세로, 카메라 켜진 화면·색 비교 화면)
@@ -65,9 +65,10 @@ PWABuilder는 우리 사이트를 여는 얇은 안드로이드 앱(TWA, Trusted
 
 ## 4. assetlinks.json 올리기
 
-1. zip에서 `assetlinks.json`을 꺼내 저장소의 `.well-known/assetlinks.json`에 넣고 push.
-   (`.nojekyll` 파일이 있어서 GitHub Pages가 `.well-known` 폴더를 그대로 서빙한다.)
-2. 확인: https://altair0622.github.io/drape/.well-known/assetlinks.json 이 JSON으로 열려야 한다.
+1. **위치가 중요하다.** 안드로이드는 `https://altair0622.github.io/.well-known/assetlinks.json` — **도메인 루트**에서만 찾는다.
+   `/drape/.well-known/`은 무시된다 (2026-09-17 실제로 이 때문에 주소창이 떴다).
+   루트는 별도 저장소 `altair0622/altair0622.github.io`가 담당한다. 지문이 바뀌면 **그 저장소**의 파일을 고친다.
+2. 확인: https://altair0622.github.io/.well-known/assetlinks.json 이 JSON으로 열려야 한다.
 3. **함정**: Play Console에 aab를 올리면 Google이 **자기 키로 다시 서명**한다(Play App Signing).
    그러면 사용자 폰에 설치되는 앱의 지문은 PWABuilder 키가 아니라 **Google 키**다.
    Play Console → 앱 → **설정 → 앱 무결성 → 앱 서명 키 인증서**의 SHA-256을 복사해

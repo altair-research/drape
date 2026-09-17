@@ -1,11 +1,11 @@
 /* 톤미러 — service worker
    앱 껍데기(index, manifest, 아이콘)는 캐시에서 먼저 열고,
    새 버전이 올라오면 다음 실행 때 자동으로 바뀝니다. */
-var VERSION = "drape-v5";
+var VERSION = "drape-v6"; // index.html의 APP_VERSION과 숫자를 맞춘다
 var SHELL = ["./", "./index.html", "./manifest.json", "./icon-192.png", "./icon-512.png", "./icon-maskable-512.png"];
 
 self.addEventListener("install", function (e) {
-  e.waitUntil(caches.open(VERSION).then(function (c) { return c.addAll(SHELL); }).then(function () { return self.skipWaiting(); }));
+  e.waitUntil(caches.open(VERSION).then(function (c) { return c.addAll(SHELL.map(function (u) { return new Request(u, { cache: "reload" }); })); }).then(function () { return self.skipWaiting(); }));
 });
 
 self.addEventListener("activate", function (e) {
@@ -22,7 +22,7 @@ self.addEventListener("fetch", function (e) {
   if (isShell) {
     // 캐시 먼저, 그 사이 네트워크로 갱신
     e.respondWith(caches.match(req, { ignoreSearch: true }).then(function (hit) {
-      var refresh = fetch(req).then(function (res) {
+      var refresh = fetch(req, { cache: "no-cache" }).then(function (res) {
         if (res && res.ok) caches.open(VERSION).then(function (c) { c.put(req, res.clone()); });
         return res;
       }).catch(function () { return hit; });
