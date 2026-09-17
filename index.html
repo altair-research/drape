@@ -107,11 +107,10 @@
   }
   .readout .name{font-family:var(--serif);font-size:26px;line-height:1.15;letter-spacing:-.01em}
   .readout .season{
-    margin-top:5px;font-size:11px;letter-spacing:.16em;text-transform:uppercase;
+    margin-top:5px;font-size:11.5px;letter-spacing:.02em;
     color:var(--fg-dim);
   }
   .readout .meta{text-align:right;font-family:var(--mono);font-size:12px;letter-spacing:.02em}
-  .readout .attr{margin-top:5px;font-family:var(--sans);font-size:11.5px;color:var(--fg-dim);letter-spacing:.01em}
   .readout .match{margin-top:8px;font-family:var(--mono);font-size:12px;color:var(--fg-dim);display:flex;align-items:baseline;justify-content:flex-end;gap:6px}
   .readout .match b{font-weight:500;font-size:22px;color:var(--fg);letter-spacing:-.02em;min-width:2.4em;text-align:right}
   .readout .match.na b{color:var(--fg-dim)}
@@ -185,7 +184,9 @@
     display:inline-flex;align-items:center;gap:6px;
     transition:border-color .15s ease,color .15s ease;
     touch-action:manipulation;
+    white-space:nowrap;
   }
+  @media (max-width:420px){ #compare .num{display:none} }
   .btn:hover{border-color:var(--line-strong)}
   .btn:focus-visible{outline:2px solid var(--fg);outline-offset:2px}
   .btn[aria-pressed="true"]{border-color:var(--fg)}
@@ -266,11 +267,10 @@
     <div class="readout">
       <div>
         <div class="name" id="cName">코랄</div>
-        <div class="season" id="cSeason">Spring Warm</div>
+        <div class="season" id="cSeason">봄 웜 · 밝고 맑은 · 노란기</div>
       </div>
       <div class="meta">
         <div id="cHex">#FF7F6E</div>
-        <div class="attr" id="cAttr">밝고 맑은 · 노란기</div>
         <div class="match na" id="cMatchWrap" title="같은 조명에서 다른 색과 견준 상대값입니다"><b id="cMatch">—</b><span>어울림</span></div>
       </div>
     </div>
@@ -389,9 +389,8 @@
     var c = FLAT[idx];
     root.style.setProperty("--drape", c.h);
     $("cName").textContent = c.n;
-    $("cSeason").textContent = c.s.en;
+    $("cSeason").textContent = c.s.ko + " · " + c.s.attr;
     $("cHex").textContent = c.h;
-    $("cAttr").textContent = c.s.attr;
     showMatch();
     $("prevHex").textContent = prevIdx===null ? "—" : FLAT[prevIdx].h;
     for(var i=0;i<chips.length;i++){
