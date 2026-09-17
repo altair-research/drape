@@ -154,6 +154,10 @@
   }
   .levels button[aria-pressed="true"]{border-color:#fff}
   .levels.na{opacity:.35;pointer-events:none}
+  .levels{opacity:0;pointer-events:none;transform:translateY(6px);transition:opacity .18s ease,transform .18s ease}
+  .levels.show{opacity:1;pointer-events:auto;transform:none}
+  .levels.show.na{opacity:.35;pointer-events:none}
+  .chip,.stage{-webkit-touch-callout:none;-webkit-user-select:none;user-select:none}
   .hint{
     position:absolute;left:50%;bottom:58px;transform:translateX(-50%);
     z-index:5;pointer-events:none;
@@ -433,7 +437,7 @@
 <script>
 (function(){
   "use strict";
-  var APP_VERSION = "23";
+  var APP_VERSION = "24";
 
   /* ---- 언어 ---- 기기 언어가 한국어면 ko, 아니면 en. 화면의 EN/한국어 버튼으로 바꾸면 기억한다. */
   var T = {
@@ -452,7 +456,7 @@
          soft:"흐리게", base:"기본", vivid:"선명하게",
          introTitle:"반가워요 👋", introSub:"세 가지만 알면 바로 할 수 있어요",
          i1t:"창가 자연광에서", i1p:"형광등이나 노란 조명은 색을 왜곡해요. 낮에 창가가 가장 정확해요.",
-         i2t:"얼굴이 맑아 보이는 색을 고르세요", i2p:"색을 넘기며 얼굴만 보세요. 밝고 잡티가 옅어 보이면 어울리는 색, 칙칙하고 그늘이 진해지면 아닌 색.",
+         i2t:"얼굴이 맑아 보이는 색을 고르세요", i2p:"색을 넘기며 얼굴만 보세요. 밝고 잡티가 옅어 보이면 어울리는 색, 칙칙하고 그늘이 진해지면 아닌 색. 색을 꾹 누르면 흐린·선명한 판도 볼 수 있어요.",
          i3t:"어울리는 색만 담으세요", i3p:"5~6개 담으면 계절이 보여요. 다른 날 한 번 더 해보면 확실해져요.",
          introNote:"여기서 고른 색은 절대적인 답이 아니라 참고용 추천이에요. 조명과 화면에 따라 다르게 보일 수 있어요.",
          introGo:"시작하기", help:"사용법", more:"더보기", privacy:"개인정보처리방침",
@@ -474,7 +478,7 @@
          soft:"Muted", base:"Base", vivid:"Vivid",
          introTitle:"Hi there 👋", introSub:"Three things and you’re ready",
          i1t:"Sit by a window in daylight", i1p:"Fluorescent and warm bulbs distort colors. Daylight near a window is most accurate.",
-         i2t:"Pick the colors that make your face look clearer", i2p:"Swipe colors and watch only your face. Brighter skin and softer blemishes mean a good color; dull skin and darker shadows mean it isn’t yours.",
+         i2t:"Pick the colors that make your face look clearer", i2p:"Swipe colors and watch only your face. Brighter skin and softer blemishes mean a good color; dull skin and darker shadows mean it isn’t yours. Press and hold a color for muted and vivid versions.",
          i3t:"Keep only the good ones", i3p:"After 5–6, a season shows up. Try again another day to be sure.",
          introNote:"What you pick here is a suggestion, not a verdict. Lighting and screens change how colors look.",
          introGo:"Start", help:"How to use", more:"More", privacy:"Privacy policy",
@@ -605,8 +609,33 @@
   }
   var lvBtns = $("levels").querySelectorAll("button");
   for(var lb=0; lb<lvBtns.length; lb++){
-    lvBtns[lb].addEventListener("click", function(){ setLevel(+this.getAttribute("data-lv")); });
+    lvBtns[lb].addEventListener("click", function(){ setLevel(+this.getAttribute("data-lv")); showLevels(1500); });
   }
+  /* 채도 단계는 평소엔 숨기고, 색(칩이나 화면)을 꾹 누르면 잠깐 나타난다 */
+  var levelsTimer = null;
+  function showLevels(ms){
+    $("levels").classList.add("show");
+    clearTimeout(levelsTimer);
+    levelsTimer = setTimeout(function(){ $("levels").classList.remove("show"); }, ms || 4000);
+  }
+  function longPress(el, onFire, onTapIndex){
+    var timer=null, moved=false, sx=0, sy=0;
+    el.addEventListener("pointerdown", function(e){
+      if(e.target.closest("#handle") || e.target.closest(".fallback") || e.target.closest(".levels")) return;
+      moved=false; sx=e.clientX; sy=e.clientY;
+      clearTimeout(timer);
+      timer=setTimeout(function(){ if(!moved){ onFire(e); if(navigator.vibrate) navigator.vibrate(12); } }, 450);
+    });
+    el.addEventListener("pointermove", function(e){ if(Math.abs(e.clientX-sx)>8 || Math.abs(e.clientY-sy)>8){ moved=true; clearTimeout(timer); } });
+    ["pointerup","pointercancel","pointerleave"].forEach(function(ev){ el.addEventListener(ev, function(){ clearTimeout(timer); }); });
+    el.addEventListener("contextmenu", function(e){ e.preventDefault(); });
+  }
+  longPress(stage, function(){ showLevels(); });
+  longPress(strip, function(e){
+    var chip = e.target.closest(".chip");
+    if(chip){ var i = Array.prototype.indexOf.call(chips, chip); if(i>-1 && i!==idx) setIdx(i); }
+    showLevels();
+  });
 
   function render(){
     var c = FLAT[idx], h = variantHex(c.h, lv);
