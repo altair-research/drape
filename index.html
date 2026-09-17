@@ -117,6 +117,16 @@
   .readout .match.na b{color:var(--fg-dim)}
   .readout .match[hidden]{display:none}
   #cHex,#compare .num{display:none}
+  #flipBtn{display:none}
+  .readout .flip{
+    pointer-events:auto;appearance:none;cursor:pointer;
+    display:inline-flex;align-items:center;gap:6px;
+    background:rgba(0,0,0,.42);color:var(--fg);border:1px solid var(--line);border-radius:999px;
+    font-family:var(--sans);font-size:12.5px;font-weight:500;padding:7px 12px;
+    backdrop-filter:blur(6px);
+  }
+  .readout .flip[hidden]{display:none}
+  .readout .flip:active{transform:scale(.97)}
   /* ---------- 더보기 메뉴 ---------- */
   .menu .rows{display:flex;flex-direction:column;gap:8px;margin-bottom:16px}
   .mrow{
@@ -341,6 +351,7 @@
         <div class="season" id="cSeason">봄 웜 · 밝고 맑은 · 노란기</div>
       </div>
       <div class="meta">
+        <button class="flip" id="flipTop" type="button" hidden>🔄 <span id="flipTopText">상대방</span></button>
         <div id="cHex">#FF7F6E</div>
         <div class="match na" id="cMatchWrap" hidden title="같은 조명에서 다른 색과 견준 상대값입니다"><b id="cMatch">—</b><span>어울림</span></div>
       </div>
@@ -422,7 +433,7 @@
 <script>
 (function(){
   "use strict";
-  var APP_VERSION = "19";
+  var APP_VERSION = "20";
 
   /* ---- 언어 ---- 기기 언어가 한국어면 ko, 아니면 en. 화면의 EN/한국어 버튼으로 바꾸면 기억한다. */
   var T = {
@@ -859,9 +870,11 @@
   function stopCam(){
     if(curStream){ curStream.getTracks().forEach(function(tr){ try{ tr.stop(); }catch(e){} }); curStream=null; }
   }
+  $("flipTop").addEventListener("click", function(){ $("flipBtn").click(); });
   $("flipBtn").addEventListener("click", function(){
     facing = facing==="user" ? "environment" : "user";
     $("flipState").textContent = facing==="user" ? t("camFront") : t("camRear");
+    $("flipTopText").textContent = facing==="user" ? t("camRear") : t("camFront");
     startCam();
   });
   function startCam(){
@@ -878,7 +891,8 @@
         // 카메라가 둘 이상일 때만 전환 버튼을 보인다
         if(navigator.mediaDevices.enumerateDevices){
           navigator.mediaDevices.enumerateDevices().then(function(ds){
-            $("flipBtn").hidden = ds.filter(function(d){ return d.kind==="videoinput"; }).length < 2;
+            var two = ds.filter(function(d){ return d.kind==="videoinput"; }).length >= 2;
+            $("flipBtn").hidden = !two; $("flipTop").hidden = !two;
           }).catch(function(){});
         }
       })
@@ -982,6 +996,8 @@
     $("lockState").textContent = lightLocked ? t("on") : t("off");
     $("flipState").textContent = facing==="user" ? t("camFront") : t("camRear");
     $("flipBtn").title = t("camHint");
+    $("flipTopText").textContent = facing==="user" ? t("camRear") : t("camFront");
+    $("flipTop").title = t("camHint");
     $("introTitle").textContent = t("introTitle");
     $("introSub").textContent = t("introSub");
     ["i1t","i1p","i2t","i2p","i3t","i3p"].forEach(function(k){ $(k).textContent = t(k); });
