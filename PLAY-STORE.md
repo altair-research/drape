@@ -5,17 +5,26 @@ Personal Color Mirror를 Google Play에 올리는 순서. 하나 끝내면 체�
 배포 URL: https://altair0622.github.io/drape/
 개인정보처리방침: https://altair0622.github.io/drape/privacy.html
 
-## 진행 상황 (2026-09-15)
+## 진행 상황 (2026-09-17 갱신)
 
-- [x] §2 패키징 — PWABuilder API로 생성. 결과물은 `Dropbox\99 drape\keys\` (톤미러.aab, 톤미러.apk, signing.keystore, 비밀번호 txt)
-- [x] §3 서명 키 보관 — 위 Dropbox 폴더. git에는 없음
-- [x] §4 assetlinks.json — 도메인 루트(`altair0622.github.io` 저장소)에 업로드 키 지문 1개로 배포됨. **Play Console 등록 후 앱 서명 키 지문을 두 번째로 추가해야 함**
-- [x] 그래픽 이미지 — `store/feature-graphic.png`
-- [ ] §1 개발자 계정 — 사용자
-- [ ] 폰 스크린샷 2장 이상 — 사용자 (세로, 카메라 켜진 화면·색 비교 화면)
-- [ ] §6 Play Console 입력 → §7 내부 테스트 업로드
+**끝난 것 (Claude)**
+- [x] 앱 이름 Personal Color Mirror, 한/영 UI, 개인정보처리방침(한/영) — https://altair0622.github.io/drape/privacy.html
+- [x] §2 패키징 — `Dropbox (Personal)\99 drape\keys\` 에 `Personal Color Mirror.aab`(업로드용) / `.apk`(테스트용) / `signing.keystore` / `PASSWORDS-DO-NOT-SHARE.txt`
+      (`old-tonemirror-key-UNUSED/`는 예전 키. Play에 올린 적 없으니 지워도 됨)
+- [x] §3 서명 키 보관 — 위 폴더. git에는 없음
+- [x] §4 assetlinks.json — 도메인 루트(`altair0622.github.io` 저장소)에 새 키·옛 키 지문 2개. Google 검증 통과
+- [x] 그래픽 이미지 1024×500 — `store/feature-graphic.png`. 앱 아이콘 512 — `icon-512.png`
+- [x] 스토어 문안 초안 (아래 §6, 한/영)
 
-**지금 폰에서 해볼 것:** Dropbox 앱에서 `톤미러.apk`를 열어 설치(출처 불명 앱 허용 필요) → 실행했을 때 **주소창 없이** 열리면 assetlinks가 제대로 된 것.
+**남은 것 (사용자)**
+- [ ] §1 Google Play 개발자 계정 ($25, 신분증 확인)
+- [ ] 폰 스크린샷 2~8장 (세로). 자기 얼굴 대신 '사진 올리기'로 다른 사진을 써도 됨
+- [ ] 비공개 테스트용 테스터 이메일 12~20개 (Gmail). 가족·지인
+- [ ] 새 apk로 재설치해 앱 이름이 'Color Mirror'로 뜨고 주소창이 없는지 확인
+
+**남은 것 (계정 생긴 뒤, 같이)**
+- [ ] §6 Play Console 입력 → §7 내부 테스트 → 비공개 테스트 14일 → 프로덕션
+- [ ] 첫 업로드 후 Play 앱 서명 키 지문을 assetlinks에 세 번째로 추가
 
 ## 0. 원리 한 줄
 
@@ -124,13 +133,45 @@ PWABuilder가 노란 경고를 내는 항목. 없어도 패키징되지만 스�
 | **그래픽 이미지(feature graphic)** | **1024×500** PNG/JPG | 필수. 아직 없음 → 만들어야 한다 |
 | 휴대전화 스크린샷 | 2~8장, 세로 16:9 권장 (예 1080×1920) | 필수. 실제 폰에서 찍는다 |
 
-### 짧은 설명 (80자) 초안
-> 카메라에 비친 얼굴에 사계절 드레이프 색을 대보는 퍼스널컬러 미러
+### 스토어 문안 초안 — 한국어 (기본 언어)
 
-### 자세한 설명 초안
-> Personal Color Mirror는 퍼스널컬러 진단에서 쓰는 '드레이핑'을 폰 카메라로 해 보는 도구입니다.
-> 봄·여름·가을·겨울 네 계절의 대표색을 얼굴 아래에 천처럼 대보고, 어울리는 색을 저장해 비교할 수 있습니다.
-> 카메라 영상과 사진은 기기 안에서만 처리되며 어디에도 전송되지 않습니다.
+**앱 이름 (30자)**: Personal Color Mirror
+
+**짧은 설명 (80자)**
+> 카메라에 비친 얼굴에 사계절 색을 직접 대보는 퍼스널컬러 거울. 회원가입·광고 없음
+
+**자세한 설명 (4000자)**
+> 퍼스널컬러 진단에서 쓰는 '드레이핑'을 폰 카메라로 해 보는 거울입니다.
+> 봄·여름·가을·겨울 네 계절의 옷 색 48가지를 얼굴 아래에 천처럼 대보고,
+> 얼굴이 맑아 보이는 색에 ♥를 눌러 모으세요. 한 계절에 몰리면 그쪽이 유력합니다.
+>
+> • 판정하지 않습니다. 눈으로 직접 비교합니다.
+> • 색마다 흐리게·기본·선명하게 3단계. 같은 빨강도 어울리는 톤이 다릅니다.
+> • ♥한 색끼리만 모아 다시 비교
+> • 직전 색과 꾹 눌러 비교
+> • 후면 카메라로 바꾸면 친구가 대신 대봐 줄 수 있어요
+> • 회원가입, 광고, 결제 없음. 카메라 영상은 폰 밖으로 나가지 않습니다.
+>
+> 결과는 절대적인 답이 아니라 참고용입니다. 조명에 따라 다르게 보이니 창가 자연광에서 해 보세요.
+
+### 스토어 문안 초안 — English
+
+**Short description**
+> Drape four-season colors over your face with the live camera. No sign-up, no ads.
+
+**Full description**
+> A mirror for personal color draping. Hold 48 everyday clothing colors from the four seasons
+> under your face like fabric swatches, and tap ♥ on the ones that make your face look clearer.
+> If they cluster in one season, that season is likely yours.
+>
+> • No verdicts. You compare with your own eyes.
+> • Three saturation levels per color: muted, base, vivid.
+> • Compare only your liked colors.
+> • Hold to compare with the previous color.
+> • Switch to the rear camera so a friend can drape you.
+> • No account, no ads, no payments. The camera feed never leaves your phone.
+>
+> It's a suggestion, not a diagnosis. Lighting changes everything, so try it in daylight by a window.
 
 ## 7. 출시 순서
 
