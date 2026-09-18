@@ -53,10 +53,10 @@ PWABuilder는 우리 사이트를 여는 얇은 안드로이드 앱(TWA, Trusted
 **`com.altairresearchlab.colormirror`** 로 확정. 한 번 올리면 영영 못 바꾼다.
 
 - 왜 `com.altairresearchlab.*` 인가: WearCast가 09-18에 "개발자 계정 이름을 따른다"로 정했다. 같은 계정의 앱은 같은 접두사를 쓰는 게
-  관례이고, GitHub 계정(`io.github.altair0622`)보다 오래 갈 이름이다.
+  관례이고, 개인 GitHub 계정을 뒤집은 이름보다 오래 간다.
 - 왜 `colormirror` 인가 (`tonemirror`가 아니라): 앱 이름이 Personal Color Mirror / Color Mirror로 확정됐다. `tonemirror`는 버린 이름(톤미러)이라
   영구 식별자에 남길 이유가 없다. **업로드 전 유일한 변경 기회**이므로 지금 바꿨다.
-- 버린 것: `io.github.altair0622.tonemirror` (PWABuilder 첫 패키지). Play에 올린 적 없으므로 비용 없음.
+- 버린 것: 개인 GitHub 계정 도메인 + 옛 앱 이름으로 만든 첫 패키지. Play에 올린 적 없으므로 비용 없음.
 
 ### 2-1. 서명 없는 aab/apk 받기 (Claude가 함, 09-18 완료)
 
@@ -92,19 +92,31 @@ versionCode는 정수이고 **올릴 때마다 반드시 커진다.**
 
 ### 2-5. 도메인이 바뀌면 AAB 를 다시 만들어야 한다 (2026-09-18)
 
-저장소가 `altair0622/drape` → **`altair-research/drape`** 로 이전되면서 배포 주소가 바뀌었다.
+저장소가 개인 계정에서 **`altair-research` 조직**으로 이전되면서 배포 주소가 바뀌었다.
 
 | | 전 | 후 |
 |---|---|---|
-| 사이트 | https://altair0622.github.io/drape/ (**지금 404**) | https://altair-research.github.io/drape/ |
-| 루트 저장소 | `altair0622/altair0622.github.io` | **`altair-research/altair-research.github.io`** (새로 만듦) |
+| 사이트 | 개인 계정 도메인의 `/drape/` (**지금 404**) | https://altair-research.github.io/drape/ |
+| 루트 저장소 | 개인 계정의 사용자 사이트 (2026-09-18 비공개로 전환) | **`altair-research/altair-research.github.io`** (새로 만듦) |
 
 **TWA 는 여는 주소가 패키지 안에 구워져 있다.** 그래서 도메인이 바뀌면 사이트를 고치는 것만으로는 안 되고
 패키지를 다시 만들어야 한다 (사이트 내용만 바뀔 때는 재생성이 필요 없다 — §0 참고).
-옛 AAB 는 `C:\Users\altai\keys\colormirror-build\old-altair0622-domain\` 로 치웠다.
+옛 AAB 는 `C:\Users\altai\keys\colormirror-build\old-domain\` 로 치웠다.
 
 GitHub 은 저장소를 옮겨도 **프로젝트 페이지 주소를 리다이렉트해 주지 않는다** (확인함: 옛 주소 404).
 그러므로 옛 주소로 구운 앱은 빈 화면이 된다.
+
+### 2-6. 이 저장소는 공개다 (비공개로 바꿀 수 없다)
+
+`altair-research/drape` 는 **공개 저장소**다. 비공개로 바꾸면 **GitHub Pages 가 멈추고 앱이 빈 화면이 된다** —
+무료 플랜에서 Pages 는 공개 저장소에서만 서비스되기 때문이다 (조직 플랜: free, 2026-09-18 확인).
+Pro/Team 으로 올리면 비공개 저장소에서도 Pages 가 되지만, 지금은 아니다.
+
+그래서 **이 저장소에 적는 것은 남이 그대로 읽는다고 보아야 한다.** 개인 이메일·실명·개인 계정 아이디를
+문서에 적지 않는다. 앱이 서비스하는 파일(`index.html`, `privacy.html`, `manifest.json`)에도 마찬가지다.
+
+커밋 작성자 정보(이름·GitHub 아이디)는 이력에 남아 공개로 보인다. 바꾸려면 전체 이력을 다시 써야 하므로
+**앞으로 만드는 커밋에만** 적용할 수 있다. 결정 사항은 사용자 전역 규칙(`~/.claude/CLAUDE.md`)에 있다.
 
 ## 3. 서명 키 보관
 
