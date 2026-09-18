@@ -5,6 +5,18 @@
     ],
     "target": {
       "namespace": "android_app",
+      "package_name": "com.altairresearchlab.colormirror",
+      "sha256_cert_fingerprints": [
+        "B2:09:7C:63:7A:45:5E:24:02:11:AD:65:1B:31:80:7F:C4:E1:5B:76:55:0B:F0:3D:8B:DC:42:A9:0F:54:B4:24"
+      ]
+    }
+  },
+  {
+    "relation": [
+      "delegate_permission/common.handle_all_urls"
+    ],
+    "target": {
+      "namespace": "android_app",
       "package_name": "io.github.altair0622.tonemirror",
       "sha256_cert_fingerprints": [
         "A3:C8:62:6E:48:E1:ED:6F:8B:F8:42:2B:DC:74:29:0A:4D:EC:EB:26:ED:50:47:46:CC:6C:EA:33:E3:95:46:CB",
