@@ -12,11 +12,26 @@
 $ErrorActionPreference = "Stop"
 
 $JBR = "C:\Program Files\Android\Android Studio\jbr\bin"          # Android Studio 에 딸린 JDK (keytool, jarsigner)
-# build-tools 는 zipalign.exe 가 실제로 들어 있는 가장 새 버전을 고른다 (버전 폴더가 여럿일 수 있음)
-$BT  = Get-ChildItem "$env:LOCALAPPDATA\Android\Sdk\build-tools" -Directory |
-       Where-Object { Test-Path "$($_.FullName)\zipalign.exe" } |
-       Sort-Object { [version]$_.Name } -Descending | Select-Object -First 1 -ExpandProperty FullName
-if (-not $BT) { throw "Android SDK build-tools 에 zipalign.exe 가 없습니다. Android Studio > SDK Manager > SDK Tools > Android SDK Build-Tools 설치" }
+
+# build-tools 에서 zipalign.exe 가 들어 있는 버전을 찾는다.
+# 열거(Get-ChildItem)는 백신이 SDK 폴더를 잠깐 잠그면 "없다"고 throw 하므로,
+# 정해진 버전을 Test-Path 로 먼저 확인하고(안 던짐) 몇 번 재시도한다.
+$SDK = "$env:LOCALAPPDATA\Android\Sdk\build-tools"
+$BT = $null
+foreach ($try in 1..3) {
+    foreach ($ver in @("36.1.0", "36.0.0")) {           # 알려진 버전 우선
+        if (Test-Path "$SDK\$ver\zipalign.exe") { $BT = "$SDK\$ver"; break }
+    }
+    if (-not $BT -and (Test-Path $SDK)) {               # 그 외 버전은 열거로 (실패해도 무시)
+        $BT = Get-ChildItem $SDK -Directory -ErrorAction SilentlyContinue |
+              Where-Object { Test-Path "$($_.FullName)\zipalign.exe" } |
+              Sort-Object { [version]$_.Name } -Descending | Select-Object -First 1 -ExpandProperty FullName
+    }
+    if ($BT) { break }
+    Write-Host "build-tools 접근 재시도 $try/3..." -ForegroundColor DarkYellow
+    Start-Sleep -Seconds 2
+}
+if (-not $BT) { throw "build-tools 에서 zipalign.exe 를 못 찾음. 백신이 잠갔을 수 있으니 창을 닫고 다시 실행. 계속되면 Android Studio > SDK Manager > SDK Tools > Android SDK Build-Tools 재설치." }
 Write-Host "build-tools: $BT" -ForegroundColor DarkGray
 $K   = "C:\Users\altai\keys"                                        # 키 보관 폴더 (저장소 밖, WearCast 키와 같은 곳)
 $JKS = "$K\colormirror-upload.jks"
