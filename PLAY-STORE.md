@@ -1,30 +1,28 @@
 # 플레이 스토어 등록 절차 (PWABuilder → Google Play)
 
+> 갱신: 2026-09-18 09:20
+> 상태: 개발자 계정 인증 완료(09-17). 서명 없는 aab/apk 준비됨(패키지 com.altairresearchlab.colormirror). 사용자 키 서명 대기.
+> 다음: 사용자가 `tools\sign-android.ps1` 실행(키 생성+서명) → Claude가 지문을 assetlinks에 반영 → 콘솔 입력(§6) → 내부 테스트(§7)
+> 막힘: 없음 (사용자 차례)
+> 더 볼 곳: 이 문서 §2(패키지·서명), §6(콘솔 입력값), tools/sign-android.ps1
+
 Personal Color Mirror를 Google Play에 올리는 순서. 하나 끝내면 체크하고 다음으로.
 
 배포 URL: https://altair0622.github.io/drape/
 개인정보처리방침: https://altair0622.github.io/drape/privacy.html
 
-## 진행 상황 (2026-09-17 갱신)
+## 진행 상황 (2026-09-18 갱신)
 
-**끝난 것 (Claude)**
-- [x] 앱 이름 Personal Color Mirror, 한/영 UI, 개인정보처리방침(한/영) — https://altair0622.github.io/drape/privacy.html
-- [x] §2 패키징 — `Dropbox (Personal)\99 drape\keys\` 에 `Personal Color Mirror.aab`(업로드용) / `.apk`(테스트용) / `signing.keystore` / `PASSWORDS-DO-NOT-SHARE.txt`
-      (`old-tonemirror-key-UNUSED/`는 예전 키. Play에 올린 적 없으니 지워도 됨)
-- [x] §3 서명 키 보관 — 위 폴더. git에는 없음
-- [x] §4 assetlinks.json — 도메인 루트(`altair0622.github.io` 저장소)에 새 키·옛 키 지문 2개. Google 검증 통과
-- [x] 그래픽 이미지 1024×500 — `store/feature-graphic.png`. 앱 아이콘 512 — `icon-512.png`
-- [x] 스토어 문안 초안 (아래 §6, 한/영)
-
-**남은 것 (사용자)**
-- [ ] §1 Google Play 개발자 계정 ($25, 신분증 확인)
-- [ ] 폰 스크린샷 2~8장 (세로). 자기 얼굴 대신 '사진 올리기'로 다른 사진을 써도 됨
-- [ ] 비공개 테스트용 테스터 이메일 12~20개 (Gmail). 가족·지인
-- [ ] 새 apk로 재설치해 앱 이름이 'Color Mirror'로 뜨고 주소창이 없는지 확인
-
-**남은 것 (계정 생긴 뒤, 같이)**
-- [ ] §6 Play Console 입력 → §7 내부 테스트 → 비공개 테스트 14일 → 프로덕션
-- [ ] 첫 업로드 후 Play 앱 서명 키 지문을 assetlinks에 세 번째로 추가
+- [x] §1 Google Play 개발자 계정 — altair.research.lab@gmail.com. 09-17 신분확인·기기·전화 인증 전부 완료
+- [x] 앱 이름 Personal Color Mirror, 한/영 UI, 개인정보처리방침(한/영), 그래픽 이미지, 스토어 문안(§6)
+- [x] 패키지 ID 결정 — `com.altairresearchlab.colormirror` (§2-0에 이유)
+- [x] §2-1 서명 없는 aab/apk — `C:\Users\altai\keys\colormirror-build\unsigned\` (PWABuilder API, 09-18)
+- [ ] §2-2 업로드 키 생성 + 서명 — **사용자**가 `tools\sign-android.ps1` 실행 (비밀번호는 사용자가 정함)
+- [ ] §4 assetlinks.json — 서명 뒤 새 지문으로 교체 (Claude)
+- [ ] 폰에서 새 apk 설치 확인 — 옛 앱(톤미러, Color Mirror) 먼저 삭제
+- [ ] §6 콘솔 입력 → §7 내부 테스트 업로드 → 두 계정으로 설치 확인
+- [ ] 첫 업로드 후 Play 앱 서명 키 지문을 assetlinks에 추가
+- [ ] 폰 스크린샷 2~8장, 테스터 12명 이메일
 
 ## 0. 원리 한 줄
 
@@ -36,41 +34,63 @@ PWABuilder는 우리 사이트를 여는 얇은 안드로이드 앱(TWA, Trusted
 
 ## 1. 사전 준비 (사람이 해야 하는 일)
 
-- [ ] **Google Play 개발자 계정** — https://play.google.com/console, 등록비 $25 1회.
-      본인 확인(신분증, 전화)에 하루 이틀 걸릴 수 있다. Claude가 대신 못 한다.
-- [ ] **개인 계정 주의**: 2023-11 이후 만든 개인 개발자 계정은 프로덕션 출시 전에
-      **비공개 테스트를 14일간 최소 인원(Console 화면이 알려 주는 수, 12~20명) 이상**으로 돌려야 한다.
-      테스터 이메일(Gmail)을 미리 모아 둘 것. 이게 실제로 가장 오래 걸리는 단계다.
+- [x] **Google Play 개발자 계정** — 2026-09-17 완료. 계정 = altair.research.lab@gmail.com (WearCast와 공용).
+      기기 확인이 이틀 막혔던 원인과 해법은 `C:\dev\wearcast\docs\RELEASE.md` 머리말 참고.
+- [ ] **개인 계정의 비공개 테스트 조건**: 프로덕션 출시 전에 **테스터 12명 × 14일**. 계정당 한 번 통과하면 되므로
+      WearCast와 이 앱 중 먼저 준비되는 쪽으로 돌린다. 정책은 콘솔 안내를 최종 근거로.
 
-## 2. PWABuilder로 패키지 만들기
+## 2. 패키지 만들기 — PWABuilder(서명 없음) + 내 키로 서명
 
-1. https://www.pwabuilder.com 접속 → URL에 `https://altair0622.github.io/drape/` 입력 → Start.
-2. 점수 화면에서 빨간 항목이 있으면 매니페스트를 고친다 (아래 §5 참고). 노란(권장)은 무시해도 패키징된다.
-3. **Package for stores → Android → Generate Package**. 옵션:
+### 2-0. 패키지 ID 결정 (2026-09-18)
 
-   | 항목 | 값 | 이유 |
-   |---|---|---|
-   | Package ID | `io.github.altair0622.tonemirror` | 소유한 도메인을 뒤집어 쓰는 관례. `com.example.*`은 Play가 거부. **한번 올리면 못 바꾼다.** |
-   | App name | Personal Color Mirror | 스토어 표시명 |
-   | Launcher name | Color Mirror | 홈 화면 아이콘 밑 글자, 12자 이내 |
-   | App version / code | 1.0.0 / 1 | 올릴 때마다 version code를 1씩 올린다 |
-   | Display mode | Standalone | 매니페스트와 동일 |
-   | Signing key | **Create new** | 처음이니 새로 만든다. 아래 3번 참고 |
-   | Include source code | 켜기 | 나중에 Android Studio에서 손볼 수 있게 |
+**`com.altairresearchlab.colormirror`** 로 확정. 한 번 올리면 영영 못 바꾼다.
 
-4. 내려받은 zip 안에는 대략 이런 파일이 있다:
-   - `*.aab` — Play에 올리는 파일 (Android App Bundle)
-   - `*.apk` — 폰에 직접 설치해 테스트하는 파일
-   - `signing.keystore` + `signing-key-info.txt` — **서명 키와 비밀번호**
-   - `assetlinks.json` — 사이트에 올릴 소유 증명 파일
+- 왜 `com.altairresearchlab.*` 인가: WearCast가 09-18에 "개발자 계정 이름을 따른다"로 정했다. 같은 계정의 앱은 같은 접두사를 쓰는 게
+  관례이고, GitHub 계정(`io.github.altair0622`)보다 오래 갈 이름이다.
+- 왜 `colormirror` 인가 (`tonemirror`가 아니라): 앱 이름이 Personal Color Mirror / Color Mirror로 확정됐다. `tonemirror`는 버린 이름(톤미러)이라
+  영구 식별자에 남길 이유가 없다. **업로드 전 유일한 변경 기회**이므로 지금 바꿨다.
+- 버린 것: `io.github.altair0622.tonemirror` (PWABuilder 첫 패키지). Play에 올린 적 없으므로 비용 없음.
 
-## 3. 서명 키 보관 — 가장 중요
+### 2-1. 서명 없는 aab/apk 받기 (Claude가 함, 09-18 완료)
 
-`signing.keystore`와 `signing-key-info.txt`를 잃으면 **같은 앱을 다시 업데이트할 수 없다.**
-새 앱으로 다시 올려야 하고 기존 사용자는 업데이트를 못 받는다.
+PWABuilder 웹사이트 대신 같은 백엔드 API를 `signingMode: "none"` 으로 호출했다.
+이유: 웹사이트가 만들어 주는 키는 비밀번호를 PWABuilder가 정하고, "내 키 사용" 경로는 서버 오류(500)가 났다.
+서명을 우리 PC에서 하면 **키와 비밀번호가 처음부터 우리 손에만 있다.**
 
-- 보관 위치: **Dropbox** (자료 창고 원칙). 예: `Dropbox/99 drape/keys/`
-- **git에 절대 넣지 않는다.** 이 저장소는 공개(public)다. `.gitignore`에 `*.keystore`가 들어 있다.
+결과: `C:\Users\altai\keys\colormirror-build\unsigned\Personal Color Mirror-unsigned.{aab,apk}`
+확인함: 패키지 `com.altairresearchlab.colormirror`, versionCode 1, targetSdk 36, 라벨 "Personal Color Mirror".
+
+### 2-2. 업로드 키 만들고 서명하기 (사용자가 함)
+
+```powershell
+powershell -ExecutionPolicy Bypass -File C:\dev\drape\tools\sign-android.ps1
+```
+
+스크립트가 하는 일: 키가 없으면 `C:\Users\altai\keys\colormirror-upload.jks` 생성(비밀번호는 keytool이 물음) →
+aab는 jarsigner, apk는 zipalign+apksigner로 서명 → 서명자와 SHA-256 지문 출력.
+**비밀번호는 어디에도 적히지 않는다.** 물을 때마다 같은 것을 넣고, 비밀번호 관리자에 보관한다.
+
+도구 출처: keytool·jarsigner는 Android Studio에 딸린 JDK(`...\Android Studio\jbr\bin`), zipalign·apksigner는
+Android SDK build-tools 36.1.0. 둘 다 WearCast 때 깔린 것을 그대로 쓴다.
+
+### 2-3. 서명 확인 (스크립트 마지막에 자동 출력)
+
+- `keytool -printcert -jarfile ...aab` 첫 줄에 `CN=Altair Research Lab` 이 나와야 한다.
+- `apksigner verify --print-certs ...apk` 의 SHA-256 이 assetlinks에 들어갈 지문이다. **이 값을 Claude에게 알려준다.**
+
+### 2-4. 다음 버전을 올릴 때
+
+PWABuilder API 호출의 `appVersion`/`appVersionCode`를 올려 서명 없는 패키지를 다시 받고, 같은 스크립트로 서명한다.
+versionCode는 정수이고 **올릴 때마다 반드시 커진다.**
+
+## 3. 서명 키 보관
+
+- 위치: **`C:\Users\altai\keys\colormirror-upload.jks`** — 저장소 밖, WearCast 키(`wearcast-upload.jks`)와 같은 폴더.
+- 백업: `.jks`와 비밀번호를 사용자 계정 밖(비밀번호 관리자·외장 저장소)에 한 벌 더.
+- 이 키는 **업로드 키**다. 실제 앱 서명은 Google이 보관하는 앱 서명 키가 한다(Play App Signing).
+  업로드 키를 잃으면 Google에 재설정을 요청할 수 있어 앱이 영영 죽지는 않지만 며칠 걸린다.
+- **git에 절대 넣지 않는다.** 이 저장소는 공개다. `.gitignore`에 `*.jks`, `*.keystore`.
+- 예전 PWABuilder 키(`Dropbox (Personal)\99 drape\keys\`)는 Play에 올린 적 없으므로 폐기 대상.
 
 ## 4. assetlinks.json 올리기
 
@@ -79,7 +99,7 @@ PWABuilder는 우리 사이트를 여는 얇은 안드로이드 앱(TWA, Trusted
    루트는 별도 저장소 `altair0622/altair0622.github.io`가 담당한다. 지문이 바뀌면 **그 저장소**의 파일을 고친다.
 2. 확인: https://altair0622.github.io/.well-known/assetlinks.json 이 JSON으로 열려야 한다.
 3. **함정**: Play Console에 aab를 올리면 Google이 **자기 키로 다시 서명**한다(Play App Signing).
-   그러면 사용자 폰에 설치되는 앱의 지문은 PWABuilder 키가 아니라 **Google 키**다.
+   그러면 사용자 폰에 설치되는 앱의 지문은 업로드 키가 아니라 **Google 키**다.
    Play Console → 앱 → **설정 → 앱 무결성 → 앱 서명 키 인증서**의 SHA-256을 복사해
    `assetlinks.json`에 **두 지문 모두** 넣는다:
 
@@ -88,9 +108,9 @@ PWABuilder는 우리 사이트를 여는 얇은 안드로이드 앱(TWA, Trusted
      "relation": ["delegate_permission/common.handle_all_urls"],
      "target": {
        "namespace": "android_app",
-       "package_name": "io.github.altair0622.tonemirror",
+       "package_name": "com.altairresearchlab.colormirror",
        "sha256_cert_fingerprints": [
-         "PWABuilder가_준_지문",
+         "업로드_키_지문(apksigner가_출력)",
          "Play_Console_앱_서명_키_지문"
        ]
      }
