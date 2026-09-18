@@ -1,28 +1,30 @@
 # 플레이 스토어 등록 절차 (PWABuilder → Google Play)
 
-> 갱신: 2026-09-18 09:20
-> 상태: 개발자 계정 인증 완료(09-17). 서명 없는 aab/apk 준비됨(패키지 com.altairresearchlab.colormirror). 사용자 키 서명 대기.
-> 다음: 사용자가 `tools\sign-android.ps1` 실행(키 생성+서명) → Claude가 지문을 assetlinks에 반영 → 콘솔 입력(§6) → 내부 테스트(§7)
-> 막힘: 없음 (사용자 차례)
-> 더 볼 곳: 이 문서 §2(패키지·서명), §6(콘솔 입력값), tools/sign-android.ps1
+> 갱신: 2026-09-18 10:40
+> 상태: AAB 서명 완료(업로드 키 지문 assetlinks 반영·Google 검증 통과). Play Console 입력 대기.
+> 다음: 사용자가 콘솔에서 §6 순서대로 입력 → 내부 테스트에 AAB 업로드 → 앱 서명 키 지문을 Claude에게
+> 막힘: 없음 (사용자 차례 — 콘솔 조작)
+> 더 볼 곳: §6 콘솔 입력값, §7 출시 순서, tools/sign-android.ps1
 
 Personal Color Mirror를 Google Play에 올리는 순서. 하나 끝내면 체크하고 다음으로.
 
 배포 URL: https://altair0622.github.io/drape/
 개인정보처리방침: https://altair0622.github.io/drape/privacy.html
 
-## 진행 상황 (2026-09-18 갱신)
+## 진행 상황 (2026-09-18 10:40)
 
-- [x] §1 Google Play 개발자 계정 — altair.research.lab@gmail.com. 09-17 신분확인·기기·전화 인증 전부 완료
-- [x] 앱 이름 Personal Color Mirror, 한/영 UI, 개인정보처리방침(한/영), 그래픽 이미지, 스토어 문안(§6)
-- [x] 패키지 ID 결정 — `com.altairresearchlab.colormirror` (§2-0에 이유)
-- [x] §2-1 서명 없는 aab/apk — `C:\Users\altai\keys\colormirror-build\unsigned\` (PWABuilder API, 09-18)
-- [ ] §2-2 업로드 키 생성 + 서명 — **사용자**가 `tools\sign-android.ps1` 실행 (비밀번호는 사용자가 정함)
-- [ ] §4 assetlinks.json — 서명 뒤 새 지문으로 교체 (Claude)
-- [ ] 폰에서 새 apk 설치 확인 — 옛 앱(톤미러, Color Mirror) 먼저 삭제
-- [ ] §6 콘솔 입력 → §7 내부 테스트 업로드 → 두 계정으로 설치 확인
-- [ ] 첫 업로드 후 Play 앱 서명 키 지문을 assetlinks에 추가
-- [ ] 폰 스크린샷 2~8장, 테스터 12명 이메일
+- [x] §1 개발자 계정 — altair.research.lab@gmail.com (09-17 인증 완료)
+- [x] 패키지 ID `com.altairresearchlab.colormirror`, 앱 이름 Personal Color Mirror / Color Mirror
+- [x] §2 업로드 키 + **AAB 서명 완료** — `C:\Users\altai\keys\colormirror-build\Personal Color Mirror.aab` (1.22MB)
+      키: `C:\Users\altai\keys\colormirror-upload.jks`, 비밀번호 파일 `colormirror-upload.password.txt` (둘 다 저장소 밖)
+      업로드 키 지문: `B2:09:7C:63:7A:45:5E:24:02:11:AD:65:1B:31:80:7F:C4:E1:5B:76:55:0B:F0:3D:8B:DC:42:A9:0F:54:B4:24`
+- [x] §4 assetlinks.json — 새 패키지 + 업로드 키 지문. Google Digital Asset Links 검증 통과
+- [ ] §6 Play Console 입력 (사용자) → §7 내부 테스트에 AAB 업로드
+- [ ] **첫 업로드 후**: 콘솔 > 테스트 및 출시 > 설정 > 앱 서명 > 앱 서명 키 인증서의 SHA-256 을 Claude에게 → assetlinks 에 추가
+- [ ] 폰 스크린샷 2~8장 (스토어 등록정보 필수), 테스터 12명 이메일
+- [ ] APK 는 미생성 (build-tools 접근 실패로 건너뜀). 내부 테스트로 설치해 확인하면 되므로 불필요
+
+메모: JKS 형식 경고("migrate to PKCS12")는 무해하다. Play 는 JKS 로 서명한 AAB 를 정상 처리한다. 바꾸지 않는다.
 
 ## 0. 원리 한 줄
 
@@ -127,6 +129,52 @@ PWABuilder가 노란 경고를 내는 항목. 없어도 패키징되지만 스�
 
 ## 6. Play Console 입력 항목
 
+### 6-0. 입력 순서 (콘솔 화면 그대로, 사용자가 조작)
+
+**A. 앱 만들기** — 모든 앱 > 앱 만들기
+
+| 칸 | 넣을 값 |
+|---|---|
+| 앱 이름 | `Personal Color Mirror` |
+| 기본 언어 | 한국어 - ko-KR |
+| 앱 또는 게임 | 앱 |
+| 무료 또는 유료 | 무료 (유료→무료는 되지만 반대는 안 됨) |
+| 선언 | 프로그램 정책·미국 수출법 둘 다 체크 |
+
+**B. 대시보드 > 앱 설정** (순서대로 나오는 질문들)
+
+| 항목 | 답 |
+|---|---|
+| 앱 액세스 권한 | 모든 기능을 제한 없이 사용 가능 |
+| 광고 | 아니요, 광고 없음 |
+| 콘텐츠 등급 | 이메일 `altair.research.lab@gmail.com`, 카테고리 **유틸리티·생산성·커뮤니케이션·기타**, 이후 모든 질문에 "아니요" (폭력·성적 내용·욕설·약물·도박 전부 없음) |
+| 타겟층 | 18세 이상. "아동의 관심을 끌 수 있나요" → 아니요 |
+| 뉴스 앱 | 아니요 |
+| 코로나19 접촉 확인 앱 | 아니요 |
+| 데이터 보안 | **데이터를 수집하거나 공유하지 않음**. 아래 6-1 참고 |
+| 정부 앱 | 아니요 |
+| 금융 기능 | 해당 없음 |
+| 앱 카테고리 | 앱 > **뷰티** (없으면 라이프스타일) |
+| 태그 | 최대 5개. 뷰티/스타일 관련만 |
+| 스토어 등록정보 연락처 | 이메일 `altair.research.lab@gmail.com`, 웹사이트 `https://altair0622.github.io/drape/` |
+| 개인정보처리방침 URL | `https://altair0622.github.io/drape/privacy.html` |
+
+**C. 스토어 등록정보** — 문안은 아래 6-2, 이미지는 6-3.
+
+**D. 내부 테스트** — §7 참고. AAB 는 `C:\Users\altai\keys\colormirror-build\Personal Color Mirror.aab`
+
+### 6-1. 데이터 보안 답안 (왜 "수집 없음"인가)
+
+카메라 영상은 화면에 그려지기만 하고 기기를 떠나지 않는다. 좋아요한 색 목록은 브라우저 localStorage
+(기기 내부)에 있고 서버가 없다. Google Play 의 "수집"은 **개발자 서버로 전송하거나 제3자와 공유**하는 것을
+뜻하므로 해당 없음. 글꼴을 jsDelivr CDN 에서 받는 것은 앱 기능 수행을 위한 일반 네트워크 요청이며
+사용자 데이터 전송이 아니다.
+
+- 데이터 수집·공유: **없음**
+- 전송 중 암호화: 해당 없음 (전송하는 사용자 데이터가 없음)
+- 삭제 요청 방법 제공: 해당 없음
+
+
 앱 만들기 → 기본 정보 → 왼쪽 메뉴 순서대로. 대부분 한 번만 한다.
 
 | 항목 | 입력값 / 판단 |
@@ -145,7 +193,7 @@ PWABuilder가 노란 경고를 내는 항목. 없어도 패키징되지만 스�
 | 카테고리 | 뷰티 (또는 라이프스타일) |
 | 연락처 이메일 | altair.research.lab@gmail.com |
 
-### 스토어 등록정보에 필요한 이미지
+### 6-3. 스토어 등록정보에 필요한 이미지
 
 | 이미지 | 크기 | 비고 |
 |---|---|---|
@@ -153,7 +201,7 @@ PWABuilder가 노란 경고를 내는 항목. 없어도 패키징되지만 스�
 | **그래픽 이미지(feature graphic)** | **1024×500** PNG/JPG | 필수. 아직 없음 → 만들어야 한다 |
 | 휴대전화 스크린샷 | 2~8장, 세로 16:9 권장 (예 1080×1920) | 필수. 실제 폰에서 찍는다 |
 
-### 스토어 문안 초안 — 한국어 (기본 언어)
+### 6-2. 스토어 문안 — 한국어 (기본 언어)
 
 **앱 이름 (30자)**: Personal Color Mirror
 
@@ -174,7 +222,7 @@ PWABuilder가 노란 경고를 내는 항목. 없어도 패키징되지만 스�
 >
 > 결과는 절대적인 답이 아니라 참고용입니다. 조명에 따라 다르게 보이니 창가 자연광에서 해 보세요.
 
-### 스토어 문안 초안 — English
+### 6-2b. 스토어 문안 — English (두 번째 언어로 추가)
 
 **Short description**
 > Drape four-season colors over your face with the live camera. No sign-up, no ads.
