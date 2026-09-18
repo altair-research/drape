@@ -1,15 +1,15 @@
 # 플레이 스토어 등록 절차 (PWABuilder → Google Play)
 
-> 갱신: 2026-09-18 10:40
-> 상태: AAB 서명 완료(업로드 키 지문 assetlinks 반영·Google 검증 통과). Play Console 입력 대기.
-> 다음: 사용자가 콘솔에서 §6 순서대로 입력 → 내부 테스트에 AAB 업로드 → 앱 서명 키 지문을 Claude에게
-> 막힘: 없음 (사용자 차례 — 콘솔 조작)
-> 더 볼 곳: §6 콘솔 입력값, §7 출시 순서, tools/sign-android.ps1
+> 갱신: 2026-09-18 15:10
+> 상태: 저장소가 altair-research 조직으로 이전. 새 주소 https://altair-research.github.io/drape/ 로 AAB 재생성 완료(서명 대기).
+> 다음: 사용자가 sign-android.ps1 재실행 → 내부 테스트 업로드 → App integrity 의 앱 서명 키 SHA-256 을 Claude 에게
+> 막힘: 없음 (사용자 차례)
+> 더 볼 곳: §2-5 도메인 이전, §4 assetlinks, §7-2 업로드 순서
 
 Personal Color Mirror를 Google Play에 올리는 순서. 하나 끝내면 체크하고 다음으로.
 
-배포 URL: https://altair0622.github.io/drape/
-개인정보처리방침: https://altair0622.github.io/drape/privacy.html
+배포 URL: https://altair-research.github.io/drape/
+개인정보처리방침: https://altair-research.github.io/drape/privacy.html
 
 ## 진행 상황 (2026-09-18 10:40)
 
@@ -20,6 +20,9 @@ Personal Color Mirror를 Google Play에 올리는 순서. 하나 끝내면 체�
       업로드 키 지문: `B2:09:7C:63:7A:45:5E:24:02:11:AD:65:1B:31:80:7F:C4:E1:5B:76:55:0B:F0:3D:8B:DC:42:A9:0F:54:B4:24`
 - [x] §4 assetlinks.json — 새 패키지 + 업로드 키 지문. Google Digital Asset Links 검증 통과
 - [x] 콘솔에 앱 생성 완료 (09-18) — Personal Color Mirror / com.altairresearchlab.colormirror, 상태 Draft
+- [x] 저장소 altair-research 조직 이전 반영 (09-18) — git remote, 문서 URL, 새 루트 사이트 저장소 생성
+- [x] 새 도메인용 AAB 재생성 (서명 없음). **옛 AAB 는 폐기** — 옛 주소가 404 라 열리지 않는다
+- [ ] 사용자: `tools\sign-android.ps1` 재실행해 새 AAB 서명
 - [ ] §7-2 내부 테스트에 AAB 업로드 + 테스터 목록 연결 (사용자)
 - [ ] §6 앱 콘텐츠 답변 (업로드가 막히면 그때 필요한 것만)
 - [ ] **첫 업로드 후**: 콘솔 > 테스트 및 출시 > 설정 > 앱 서명 > 앱 서명 키 인증서의 SHA-256 을 Claude에게 → assetlinks 에 추가
@@ -87,6 +90,22 @@ Android SDK build-tools 36.1.0. 둘 다 WearCast 때 깔린 것을 그대로 쓴
 PWABuilder API 호출의 `appVersion`/`appVersionCode`를 올려 서명 없는 패키지를 다시 받고, 같은 스크립트로 서명한다.
 versionCode는 정수이고 **올릴 때마다 반드시 커진다.**
 
+### 2-5. 도메인이 바뀌면 AAB 를 다시 만들어야 한다 (2026-09-18)
+
+저장소가 `altair0622/drape` → **`altair-research/drape`** 로 이전되면서 배포 주소가 바뀌었다.
+
+| | 전 | 후 |
+|---|---|---|
+| 사이트 | https://altair0622.github.io/drape/ (**지금 404**) | https://altair-research.github.io/drape/ |
+| 루트 저장소 | `altair0622/altair0622.github.io` | **`altair-research/altair-research.github.io`** (새로 만듦) |
+
+**TWA 는 여는 주소가 패키지 안에 구워져 있다.** 그래서 도메인이 바뀌면 사이트를 고치는 것만으로는 안 되고
+패키지를 다시 만들어야 한다 (사이트 내용만 바뀔 때는 재생성이 필요 없다 — §0 참고).
+옛 AAB 는 `C:\Users\altai\keys\colormirror-build\old-altair0622-domain\` 로 치웠다.
+
+GitHub 은 저장소를 옮겨도 **프로젝트 페이지 주소를 리다이렉트해 주지 않는다** (확인함: 옛 주소 404).
+그러므로 옛 주소로 구운 앱은 빈 화면이 된다.
+
 ## 3. 서명 키 보관
 
 - 위치: **`C:\Users\altai\keys\colormirror-upload.jks`** — 저장소 밖, WearCast 키(`wearcast-upload.jks`)와 같은 폴더.
@@ -98,10 +117,10 @@ versionCode는 정수이고 **올릴 때마다 반드시 커진다.**
 
 ## 4. assetlinks.json 올리기
 
-1. **위치가 중요하다.** 안드로이드는 `https://altair0622.github.io/.well-known/assetlinks.json` — **도메인 루트**에서만 찾는다.
+1. **위치가 중요하다.** 안드로이드는 `https://altair-research.github.io/.well-known/assetlinks.json` — **도메인 루트**에서만 찾는다.
    `/drape/.well-known/`은 무시된다 (2026-09-17 실제로 이 때문에 주소창이 떴다).
-   루트는 별도 저장소 `altair0622/altair0622.github.io`가 담당한다. 지문이 바뀌면 **그 저장소**의 파일을 고친다.
-2. 확인: https://altair0622.github.io/.well-known/assetlinks.json 이 JSON으로 열려야 한다.
+   루트는 별도 저장소 `altair-research/altair-research.github.io`가 담당한다. 지문이 바뀌면 **그 저장소**의 파일을 고친다.
+2. 확인: https://altair-research.github.io/.well-known/assetlinks.json 이 JSON으로 열려야 한다.
 3. **함정**: Play Console에 aab를 올리면 Google이 **자기 키로 다시 서명**한다(Play App Signing).
    그러면 사용자 폰에 설치되는 앱의 지문은 업로드 키가 아니라 **Google 키**다.
    Play Console → 앱 → **설정 → 앱 무결성 → 앱 서명 키 인증서**의 SHA-256을 복사해
@@ -158,8 +177,8 @@ PWABuilder가 노란 경고를 내는 항목. 없어도 패키징되지만 스�
 | 금융 기능 | 해당 없음 |
 | 앱 카테고리 | 앱 > **뷰티** (없으면 라이프스타일) |
 | 태그 | 최대 5개. 뷰티/스타일 관련만 |
-| 스토어 등록정보 연락처 | 이메일 `altair.research.lab@gmail.com`, 웹사이트 `https://altair0622.github.io/drape/` |
-| 개인정보처리방침 URL | `https://altair0622.github.io/drape/privacy.html` |
+| 스토어 등록정보 연락처 | 이메일 `altair.research.lab@gmail.com`, 웹사이트 `https://altair-research.github.io/drape/` |
+| 개인정보처리방침 URL | `https://altair-research.github.io/drape/privacy.html` |
 
 **C. 스토어 등록정보** — 문안은 아래 6-2, 이미지는 6-3.
 
@@ -185,7 +204,7 @@ PWABuilder가 노란 경고를 내는 항목. 없어도 패키징되지만 스�
 | 기본 언어 | 한국어 |
 | 앱/게임 | 앱 |
 | 무료/유료 | 무료 (유료→무료는 되지만 반대는 안 된다) |
-| **개인정보처리방침 URL** | https://altair0622.github.io/drape/privacy.html |
+| **개인정보처리방침 URL** | https://altair-research.github.io/drape/privacy.html |
 | 앱 액세스 권한 | 모든 기능이 제한 없이 사용 가능 |
 | 광고 | 광고 없음 |
 | 콘텐츠 등급 | 설문 → 전체이용가 예상 |
