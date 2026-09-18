@@ -19,7 +19,9 @@ Personal Color Mirror를 Google Play에 올리는 순서. 하나 끝내면 체�
       키: `C:\Users\altai\keys\colormirror-upload.jks`, 비밀번호 파일 `colormirror-upload.password.txt` (둘 다 저장소 밖)
       업로드 키 지문: `B2:09:7C:63:7A:45:5E:24:02:11:AD:65:1B:31:80:7F:C4:E1:5B:76:55:0B:F0:3D:8B:DC:42:A9:0F:54:B4:24`
 - [x] §4 assetlinks.json — 새 패키지 + 업로드 키 지문. Google Digital Asset Links 검증 통과
-- [ ] §6 Play Console 입력 (사용자) → §7 내부 테스트에 AAB 업로드
+- [x] 콘솔에 앱 생성 완료 (09-18) — Personal Color Mirror / com.altairresearchlab.colormirror, 상태 Draft
+- [ ] §7-2 내부 테스트에 AAB 업로드 + 테스터 목록 연결 (사용자)
+- [ ] §6 앱 콘텐츠 답변 (업로드가 막히면 그때 필요한 것만)
 - [ ] **첫 업로드 후**: 콘솔 > 테스트 및 출시 > 설정 > 앱 서명 > 앱 서명 키 인증서의 SHA-256 을 Claude에게 → assetlinks 에 추가
 - [ ] 폰 스크린샷 2~8장 (스토어 등록정보 필수), 테스터 12명 이메일
 - [ ] APK 는 미생성 (build-tools 접근 실패로 건너뜀). 내부 테스트로 설치해 확인하면 되므로 불필요
@@ -251,6 +253,22 @@ PWABuilder가 노란 경고를 내는 항목. 없어도 패키징되지만 스�
 2. **비공개 테스트** 트랙 만들고 테스터 12명 등록 → 14일 유지 (개인 계정 조건).
 3. 조건 충족 후 **프로덕션 액세스 신청** → 승인되면 프로덕션에 같은 aab 승격.
 4. 심사는 보통 며칠. 첫 앱은 더 걸릴 수 있다.
+
+### 7-2. 내부 테스트 업로드 순서 (사용자가 조작)
+
+1. 왼쪽 **Test and release → Testing → Internal testing**
+2. 오른쪽 위 **Create new release**
+3. **App bundles** 에 업로드: `C:\Users\altai\keys\colormirror-build\Personal Color Mirror.aab`
+   (첫 업로드 때 **Play App Signing** 안내가 나오면 그대로 동의. 신규 앱 필수이고, 이때 Google 이 앱 서명 키를 만든다)
+4. **Release name** 은 자동값(`1 (1.0.0)`) 그대로 둔다
+5. **Release notes** (en-US): `First internal test build.`
+6. **Next → Save → Review release → Start rollout to Internal testing**
+7. 같은 화면의 **Testers** 탭에서 이메일 목록 `internal` 체크 → **Save**
+   (목록은 계정 공통이지만 연결은 앱마다 해야 한다 — 7-1 참고)
+8. 아래 **Copy link** 로 opt-in 링크를 받아 폰에서 두 계정으로 각각 열어 설치
+
+**업로드 직후 Claude 에게 줄 것**: Test and release → **Setup → App signing** 의
+**App signing key certificate** 의 SHA-256 값. assetlinks 에 추가해야 스토어로 설치한 앱에 주소창이 안 뜬다.
 
 ### 7-1. 계정 공통인 것 / 앱마다 해야 하는 것 (2026-09-18 확인)
 
