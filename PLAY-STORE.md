@@ -193,13 +193,6 @@ PWABuilder가 노란 경고를 내는 항목. 없어도 패키징되지만 스�
 | 카테고리 | 뷰티 (또는 라이프스타일) |
 | 연락처 이메일 | altair.research.lab@gmail.com |
 
-### 6-3. 스토어 등록정보에 필요한 이미지
-
-| 이미지 | 크기 | 비고 |
-|---|---|---|
-| 앱 아이콘 | 512×512 PNG | `icon-512.png` 그대로 사용 가능 |
-| **그래픽 이미지(feature graphic)** | **1024×500** PNG/JPG | 필수. 아직 없음 → 만들어야 한다 |
-| 휴대전화 스크린샷 | 2~8장, 세로 16:9 권장 (예 1080×1920) | 필수. 실제 폰에서 찍는다 |
 
 ### 6-2. 스토어 문안 — 한국어 (기본 언어)
 
@@ -240,6 +233,17 @@ PWABuilder가 노란 경고를 내는 항목. 없어도 패키징되지만 스�
 > • No account, no ads, no payments. The camera feed never leaves your phone.
 >
 > It's a suggestion, not a diagnosis. Lighting changes everything, so try it in daylight by a window.
+
+### 6-3. 스토어 등록정보에 필요한 이미지
+
+| 이미지 | 크기 | 상태 / 파일 |
+|---|---|---|
+| 앱 아이콘 | 512×512 PNG | ✅ `C:\dev\drape\icon-512.png` |
+| 그래픽 이미지 (feature graphic) | 1024×500 PNG | ✅ `C:\dev\drape\storeeature-graphic.png` |
+| 휴대전화 스크린샷 | 2~8장, 세로 (예 1080×1920) | ⬜ **사용자가 폰에서 찍는다** |
+
+찍을 화면 4장 권장: ① 색을 대본 카메라 화면 ② ♥ 탭으로 좋아요한 색끼리 비교 ③ 색을 꾹 눌러 채도 3단계가 뜬 화면 ④ 처음 안내 팝업.
+얼굴을 넣고 싶지 않으면 ⋯ 메뉴에서 후면 카메라로 바꾸거나 '사진 올리기'로 다른 사진을 쓴다.
 
 ## 7. 출시 순서
 
