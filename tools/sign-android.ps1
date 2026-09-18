@@ -1,4 +1,4 @@
-# Personal Color Mirror — 안드로이드 패키지 서명 스크립트 (Windows PowerShell 5.1)
+﻿# Personal Color Mirror — 안드로이드 패키지 서명 스크립트 (Windows PowerShell 5.1)
 #
 # 하는 일:
 #   1) 업로드 키가 없으면 만든다  (비밀번호는 keytool이 직접 물어본다 — 이 파일에 적지 않는다)
