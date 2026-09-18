@@ -258,22 +258,54 @@ PWABuilder가 노란 경고를 내는 항목. 없어도 패키징되지만 스�
 
 ### 6-2b. 스토어 문안 — English (기본 언어, 먼저 입력)
 
-**Short description**
-> Drape four-season colors over your face with the live camera. No sign-up, no ads.
+**App name** (30자 한도, 현재 21자)
+```
+Personal Color Mirror
+```
 
-**Full description**
-> A mirror for personal color draping. Hold 48 everyday clothing colors from the four seasons
-> under your face like fabric swatches, and tap ♥ on the ones that make your face look clearer.
-> If they cluster in one season, that season is likely yours.
->
-> • No verdicts. You compare with your own eyes.
-> • Three saturation levels per color: muted, base, vivid.
-> • Compare only your liked colors.
-> • Hold to compare with the previous color.
-> • Switch to the rear camera so a friend can drape you.
-> • No account, no ads, no payments. The camera feed never leaves your phone.
->
-> It's a suggestion, not a diagnosis. Lighting changes everything, so try it in daylight by a window.
+**Short description** (80자 한도, 현재 67자)
+```
+Hold seasonal colors up to your face on camera. No sign-up, no ads.
+```
+
+**Full description** (4000자 한도)
+```
+A mirror for personal color draping.
+
+Hold 48 everyday clothing colors from the four seasons under your face like fabric
+swatches, and tap the heart on the ones that make your face look clearer. When your
+picks cluster in one season, that season is likely yours.
+
+WHAT MAKES IT DIFFERENT
+
+No verdicts. Most color apps take a selfie and announce a season. Lighting changes
+that answer, and you cannot see why. This app shows you the colors instead and lets
+you judge with your own eyes, the way a draping session works.
+
+WHAT YOU CAN DO
+
+- 48 colors across Spring, Summer, Autumn and Winter, chosen from clothes people
+  actually wear: beige, grey, navy, brown, olive, burgundy, coral.
+- Three saturation levels for every color. The same red can suit you muted and fight
+  you vivid. Press and hold a color to switch.
+- Compare only your liked colors. Tap the heart tab to narrow down to your shortlist.
+- Hold to compare with the previous color.
+- Switch to the rear camera so a friend can drape you.
+- Lock the light so the camera stops re-adjusting while you swipe.
+- Korean and English.
+
+PRIVACY
+
+No account. No ads. No payments. The camera feed is drawn on your screen and never
+leaves your phone. Liked colors are saved in your browser storage on the device.
+
+A NOTE ON ACCURACY
+
+This is a suggestion, not a diagnosis. Screens and lighting change how colors look,
+so try it in daylight near a window, and try again another day to see what overlaps.
+```
+
+**참고**: 한국어는 등록 후 **스토어 설정 → 번역 관리**에서 ko-KR 을 추가하고 §6-2 문안을 넣는다.
 
 ### 6-3. 스토어 등록정보에 필요한 이미지
 
