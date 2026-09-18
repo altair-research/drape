@@ -23,7 +23,8 @@ Personal Color Mirror를 Google Play에 올리는 순서. 하나 끝내면 체�
 - [x] 저장소 altair-research 조직 이전 반영 (09-18) — git remote, 문서 URL, 새 루트 사이트 저장소 생성
 - [x] 새 도메인용 AAB 재생성 (서명 없음). **옛 AAB 는 폐기** — 옛 주소가 404 라 열리지 않는다
 - [ ] 사용자: `tools\sign-android.ps1` 재실행해 새 AAB 서명
-- [ ] §7-2 내부 테스트에 AAB 업로드 + 테스터 목록 연결 (사용자)
+- [x] 내부 테스트에 AAB 업로드 완료 (09-18) — 1 (1.0.0), 설치 용량 663KB, targetSdk 36
+- [ ] 테스터 목록 `internal` 연결 + 앱 서명 키 지문 확보 (사용자)
 - [ ] §6 앱 콘텐츠 답변 (업로드가 막히면 그때 필요한 것만)
 - [ ] **첫 업로드 후**: 콘솔 > 테스트 및 출시 > 설정 > 앱 서명 > 앱 서명 키 인증서의 SHA-256 을 Claude에게 → assetlinks 에 추가
 - [ ] 폰 스크린샷 2~8장 (스토어 등록정보 필수), 테스터 12명 이메일
@@ -305,8 +306,11 @@ PWABuilder가 노란 경고를 내는 항목. 없어도 패키징되지만 스�
    (목록은 계정 공통이지만 연결은 앱마다 해야 한다 — 7-1 참고)
 8. 아래 **Copy link** 로 opt-in 링크를 받아 폰에서 두 계정으로 각각 열어 설치
 
-**업로드 직후 Claude 에게 줄 것**: Test and release → **Setup → App signing** 의
-**App signing key certificate** 의 SHA-256 값. assetlinks 에 추가해야 스토어로 설치한 앱에 주소창이 안 뜬다.
+**업로드 직후 Claude 에게 줄 것**: **앱 서명 키 인증서의 SHA-256**.
+위치는 왼쪽 **Test and release → App integrity** 인데, 2026-09 개편으로 그 화면이 비었고
+**Go to Protected with Play** 버튼으로 옮겨 갔다. 거기 **App signing** 항목의
+**App signing key certificate** 에서 SHA-256 을 복사한다.
+assetlinks 에 추가해야 스토어로 설치한 앱에 주소창이 안 뜬다.
 
 ### 7-1. 계정 공통인 것 / 앱마다 해야 하는 것 (2026-09-18 확인)
 
