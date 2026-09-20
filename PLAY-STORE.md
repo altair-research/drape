@@ -351,10 +351,23 @@ so try it in daylight near a window, and try again another day to see what overl
 |---|---|---|
 | 앱 아이콘 | 512×512 PNG | ✅ `C:\dev\drape\icon-512.png` |
 | 그래픽 이미지 (feature graphic) | 1024×500 PNG | ✅ `C:\dev\drape\storeeature-graphic.png` |
-| 휴대전화 스크린샷 | 2~8장, 세로 (예 1080×1920) | ⬜ **사용자가 폰에서 찍는다** |
+| 휴대전화 스크린샷 | 1080×1920 (9:16) 4장 | ✅ `store/screenshots/01-main.png` ~ `04-intro.png` |
 
-찍을 화면 4장 권장: ① 색을 대본 카메라 화면 ② ♥ 탭으로 좋아요한 색끼리 비교 ③ 색을 꾹 눌러 채도 3단계가 뜬 화면 ④ 처음 안내 팝업.
-얼굴을 넣고 싶지 않으면 ⋯ 메뉴에서 후면 카메라로 바꾸거나 '사진 올리기'로 다른 사진을 쓴다.
+**얼굴은 일러스트를 쓴다.** 스토어 스크린샷은 영구히 공개되므로 실제 얼굴을 넣지 않는다.
+`tools/make-model.py` 가 단정한 일러스트 인물(`model.png`)을 그리고,
+`tools/make-screenshots.py` 가 실제 앱을 headless Chrome 으로 띄워 4장을 캡처한다.
+
+```powershell
+python C:\dev\drape	ools\make-model.py
+python C:\dev\drape	ools\make-screenshots.py
+```
+
+원리: 앱을 임시 폴더에 복사해 화면마다 상태(언어·좋아요 목록·팝업 표시)를 미리 세팅하는 스크립트를 끼워 넣고,
+카메라 대신 일러스트를 `#shot` 에 물린 뒤 **540×960 CSS 뷰포트 ×2 배율 = 1080×1920** 으로 찍는다.
+뷰포트를 좁게(360·432) 잡으면 ♥ 탭과 ⋯ 버튼이 화면 밖으로 밀리니 540 을 쓴다.
+
+찍는 4장: ① 색을 얼굴 아래 댄 기본 화면 ② 채도 3단계가 뜬 화면 ③ ♥ 탭으로 좋아요한 색끼리 비교 ④ 처음 안내 팝업.
+결과물은 `store/screenshots/` 에 생기고 **git 에는 올리지 않는다**(폰 캡처에 개인 정보가 섞일 수 있어 `.gitignore` 에 넣었다).
 
 ## 7. 출시 순서
 
