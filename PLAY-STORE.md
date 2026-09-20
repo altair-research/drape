@@ -24,7 +24,9 @@ Personal Color Mirror를 Google Play에 올리는 순서. 하나 끝내면 체�
 - [x] 새 도메인용 AAB 재생성 (서명 없음). **옛 AAB 는 폐기** — 옛 주소가 404 라 열리지 않는다
 - [ ] 사용자: `tools\sign-android.ps1` 재실행해 새 AAB 서명
 - [x] 내부 테스트에 AAB 업로드 완료 (09-18) — 1 (1.0.0), 설치 용량 663KB, targetSdk 36
-- [ ] 테스터 목록 `internal` 연결 + 앱 서명 키 지문 확보 (사용자)
+- [x] 앱 서명 키 지문 확보 및 assetlinks 반영 (09-18). **콘솔 값만으로는 부족했다 — §4-1 참고**
+- [ ] 폰에서 주소창 사라졌는지 최종 확인
+- [ ] 테스터 목록 `internal` 연결 (사용자)
 - [ ] §6 앱 콘텐츠 답변 (업로드가 막히면 그때 필요한 것만)
 - [ ] **첫 업로드 후**: 콘솔 > 테스트 및 출시 > 설정 > 앱 서명 > 앱 서명 키 인증서의 SHA-256 을 Claude에게 → assetlinks 에 추가
 - [ ] 폰 스크린샷 2~8장 (스토어 등록정보 필수), 테스터 12명 이메일
@@ -160,6 +162,38 @@ Pro/Team 으로 올리면 비공개 저장소에서도 Pages 가 되지만, 지�
    }]
    ```
    지문이 하나라도 빠지면 그 경로로 설치된 앱에 주소창이 뜬다.
+
+### 4-1. 함정 — 콘솔이 보여 주는 지문이 실제 배포 서명과 다를 수 있다 (2026-09-18)
+
+주소창이 사라지지 않아 반나절을 썼다. 원인은 **콘솔에서 복사한 앱 서명 키 지문이 실제로 배포되는
+APK 의 서명과 달랐기** 때문이다.
+
+- 콘솔 > Protected with Play > Protect app signing key > Manage Play app signing 에는
+  **Classical key** 와 **Post-quantum cryptography key** 가 있었고, 그 화면의 앱 서명 키는
+  **`Quantum-ready (beta)` 전환 중이라 `Install base 0.0%`** 였다. 즉 **아직 아무 설치본도 그 키를 쓰지 않는다.**
+  화면 아래 **Previous app signing keys** 표에 있는 이전 키가 실제 배포에 쓰이고 있었다.
+- 그래서 콘솔 값(Classical/PQC)만 넣었더니 검증이 실패했다.
+
+**확실한 확인 방법 — 설치된 앱에서 직접 읽는다.** 추측하지 말고 이걸 한다.
+
+```powershell
+$adb = "$env:LOCALAPPDATA\Android\Sdk\platform-tools\adb.exe"
+& $adb shell pm path com.altairresearchlab.colormirror        # base.apk 경로 확인
+& $adb pull "<위에서 나온 base.apk 경로>" "$env:TEMP\base.apk"
+& "$env:LOCALAPPDATA\Android\Sdk\build-tools\36.1.0\apksigner.bat" verify --print-certs "$env:TEMP\base.apk"
+```
+
+`Signer #1 certificate SHA-256 digest` 가 **진짜 검증에 쓰이는 값**이다.
+(`keytool -printcert -jarfile` 은 v1 서명만 읽으므로 apksigner 를 쓴다.)
+
+**결론: assetlinks 에는 지문을 넉넉히 넣는다.** 여러 개를 넣을 수 있고 하나만 맞으면 통과한다.
+지금 넣은 것 4개 — 실제 배포 서명(43:B0:FC), Play classical(56:77:B5), Play PQC(C0:62:AC), 업로드 키(B2:09:7C).
+
+**서버 쪽 확인은 `list` 말고 `check` 로 한다.** 특정 지문이 연결됐는지 참/거짓으로 답한다.
+
+```
+https://digitalassetlinks.googleapis.com/v1/assetlinks:check?source.web.site=https://altair-research.github.io&relation=delegate_permission/common.handle_all_urls&target.android_app.package_name=com.altairresearchlab.colormirror&target.android_app.certificate.sha256_fingerprint=<지문>
+```
 
 ## 5. 매니페스트 점수 올리기 (선택)
 
