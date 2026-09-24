@@ -7,8 +7,9 @@
 #   4) 서명자와 지문(SHA-256)을 출력한다
 #
 # 실행:  powershell -ExecutionPolicy Bypass -File C:\dev\drape\tools\sign-android.ps1
-# 비밀번호: C:\Users\altai\keys\colormirror-upload.password.txt 가 있으면 그 파일에서 읽는다 (묻지 않음).
-#           없으면 도구가 직접 물어본다. keystore 비밀번호 = 키 비밀번호로 통일.
+# 비밀번호: 도구가 물어본다. 값은 구글 비밀번호 관리자의 "drape 업로드 키 (colormirror-upload.jks)" 항목에 있다.
+#           keystore 비밀번호 = 키 비밀번호로 통일.
+#           (colormirror-upload.password.txt 가 있으면 읽지만, 2026-09-24 에 삭제했다. 다시 만들지 않는다.)
 
 $ErrorActionPreference = "Stop"
 

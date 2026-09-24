@@ -89,7 +89,7 @@ powershell -ExecutionPolicy Bypass -File C:\dev\drape\tools\sign-android.ps1
 
 스크립트가 하는 일: 키가 없으면 `C:\Users\altai\keys\colormirror-upload.jks` 생성(비밀번호는 keytool이 물음) →
 aab는 jarsigner, apk는 zipalign+apksigner로 서명 → 서명자와 SHA-256 지문 출력.
-**비밀번호는 어디에도 적히지 않는다.** 물을 때마다 같은 것을 넣고, 비밀번호 관리자에 보관한다.
+**비밀번호는 파일에 적지 않는다.** 물을 때마다 같은 것을 넣는다. 보관처는 §3.
 
 도구 출처: keytool·jarsigner는 Android Studio에 딸린 JDK(`...\Android Studio\jbr\bin`), zipalign·apksigner는
 Android SDK build-tools 36.1.0. 둘 다 WearCast 때 깔린 것을 그대로 쓴다.
@@ -142,11 +142,15 @@ Pro/Team 으로 올리면 비공개 저장소에서도 Pages 가 되지만, 지�
 ## 3. 서명 키 보관
 
 - 위치: **`C:\Users\altai\keys\colormirror-upload.jks`** — 저장소 밖, WearCast 키(`wearcast-upload.jks`)와 같은 폴더.
-- 백업: `.jks`와 비밀번호를 사용자 계정 밖(비밀번호 관리자·외장 저장소)에 한 벌 더.
+- **비밀번호: 구글 비밀번호 관리자** — 항목 이름 `drape 업로드 키 (colormirror-upload.jks)`, 메모에 키 위치와 alias `upload`.
+  (2026-09-24 정리. 예전의 `colormirror-upload.password.txt` 는 삭제했다. 서명 스크립트는 파일이 없으면 비밀번호를 묻는다.)
+- 백업: `.jks` 는 `Dropbox (Personal)\99 drape\keys\colormirror-upload.jks` 에 한 벌 더. 비밀번호는 Dropbox 에 두지 않는다 — 키와 비밀번호가 한 폴더에 있으면 백업이 아니라 유출 경로다.
 - 이 키는 **업로드 키**다. 실제 앱 서명은 Google이 보관하는 앱 서명 키가 한다(Play App Signing).
   업로드 키를 잃으면 Google에 재설정을 요청할 수 있어 앱이 영영 죽지는 않지만 며칠 걸린다.
 - **git에 절대 넣지 않는다.** 이 저장소는 공개다. `.gitignore`에 `*.jks`, `*.keystore`.
-- 예전 PWABuilder 키(`Dropbox (Personal)\99 drape\keys\`)는 Play에 올린 적 없으므로 폐기 대상.
+- 예전 PWABuilder 키(`signing.keystore`, alias `colormirror`)는 Play에 올린 적 없으므로 폐기 대상. 그 비밀번호 메모
+  (`PASSWORDS-DO-NOT-SHARE.txt`, `signing-key-info.txt`)는 Dropbox 에서 빼서 `C:\Users\altai\keys` 로 옮겼다(로컬 전용).
+  **함정: 그 txt 의 비밀번호는 옛 키 것이다.** 업로드 키 비밀번호가 필요하면 txt 가 아니라 구글 비밀번호 관리자를 본다.
 
 ## 4. assetlinks.json 올리기
 
@@ -460,7 +464,7 @@ assetlinks 에 추가해야 스토어로 설치한 앱에 주소창이 안 뜬�
 
 - **사이트만 고칠 때**: push하면 끝. 스토어 작업 없음. `sw.js`의 `VERSION` 문자열을 바꿔야 캐시가 갈린다.
 - **앱 껍데기를 고칠 때**(이름, 아이콘, 패키지 설정): PWABuilder에서 다시 생성.
-  이때 **Signing key → Use mine**으로 Dropbox의 keystore를 넣고, version code를 올린다.
+  이때 §2 대로 서명 없는 패키지를 받아 `tools/sign-android.ps1` 로 `C:\Users\altai\keys\colormirror-upload.jks` 서명을 하고, version code를 올린다.
 
 ---
 
