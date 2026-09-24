@@ -1,10 +1,10 @@
 # 플레이 스토어 등록 절차 (PWABuilder → Google Play)
 
-> 갱신: 2026-09-22 (세션 인계)
-> 상태: **비공개 테스트 승인 완료.** Alpha 트랙 Active, 릴리스 1 (1.0.0). opt-in 링크 발급됨.
-> 다음: 지인에게 계정 주소 받기 → Testers 목록에 추가 → 링크 배포 → 12명 설치 → 14일 시계
-> 막힘: 테스터 12명 미모집 (현재 목록 `internal` 2명)
-> 더 볼 곳: §9 새 세션 인계, 진행 상황의 '남은 순서' 표, §7-4 테스터 자격
+> 갱신: 2026-09-24
+> 상태: 비공개 테스트 Active(릴리스 1). **v2 패키지(versionCode 2, 링크 범위 `/drape/`) 서명 대기** — 서명 없는 AAB 준비됨. sw.js 캐시 정리 범위 수정은 사이트에 반영 완료(v28).
+> 다음: 사용자가 `sign-android.ps1 -Build v2` 실행 → Alpha 트랙에 릴리스 2 업로드 (§2-7) → 테스터 모집 계속
+> 막힘: 테스터 12명 미모집 (현재 목록 `internal` 2명) · v2 서명은 비밀번호가 필요해 사용자만 가능
+> 더 볼 곳: §2-7 (v2 를 왜·어떻게), §9 새 세션 인계, '남은 순서' 표, §7-4 테스터 자격
 
 Personal Color Mirror를 Google Play에 올리는 순서. 하나 끝내면 체크하고 다음으로.
 
@@ -30,6 +30,7 @@ Personal Color Mirror를 Google Play에 올리는 순서. 하나 끝내면 체�
 | ~~2~~ | ~~앱 콘텐츠 답변 (광고 ID 선언 포함)~~ | ✅ 09-22 | |
 | ~~3~~ | ~~비공개 테스트 트랙 개설 + 릴리스 + 심사 제출~~ | ✅ 09-22 | |
 | ~~4~~ | ~~심사 승인~~ — Alpha 트랙 Active, opt-in 링크 발급 | ✅ 09-22 | |
+| 4b | **v2 AAB 서명 → Alpha 트랙에 릴리스 2 업로드** — §2-7. 링크 범위를 `/drape/` 로 좁힌 패키지. 테스터가 받기 전에 올리는 게 좋다 | 사용자 | 10분 |
 | 5 | **테스터 12명 모으기** — 안드로이드 쓰는 지인의 구글 계정 주소 | 사용자 | — |
 | 6 | 받은 주소를 **Testers 탭 > 이메일 목록 `internal`** 에 추가 | 사용자 | 5분 |
 | 7 | **opt-in 링크 배포** (Join on the web 쪽) | 사용자 | 5분 |
@@ -104,6 +105,15 @@ Android SDK build-tools 36.1.0. 둘 다 WearCast 때 깔린 것을 그대로 쓴
 PWABuilder API 호출의 `appVersion`/`appVersionCode`를 올려 서명 없는 패키지를 다시 받고, 같은 스크립트로 서명한다.
 versionCode는 정수이고 **올릴 때마다 반드시 커진다.**
 
+실제 호출 (2026-09-24 v2 때 쓴 것). 옵션 파일은 `C:\Users\altai\keys\colormirror-build\v2\options.json` 에 있다 — 다음 버전은 이걸 복사해 버전만 올린다.
+
+```bash
+curl -L -o pkg.zip -H "Content-Type: application/json" --data @options.json https://pwabuilder-cloudapk.azurewebsites.net/generateAppPackage
+```
+
+zip 안에 `Personal Color Mirror-unsigned.aab` 와 `.apk` 가 들어 있다. `unsigned\` 에 풀고 `tools/sign-android.ps1 -Build v2` 로 서명한다.
+받은 뒤 반드시 확인하는 것: `aapt2 dump xmltree --file AndroidManifest.xml <apk>` 에서 `versionCode`, `pathPrefix`.
+
 ### 2-5. 도메인이 바뀌면 AAB 를 다시 만들어야 한다 (2026-09-18)
 
 저장소가 개인 계정에서 **`altair-research` 조직**으로 이전되면서 배포 주소가 바뀌었다.
@@ -138,6 +148,27 @@ Pro/Team 으로 올리면 비공개 저장소에서도 Pages 가 되지만, 지�
 
 **남는 노출 하나**: 푸시하는 GitHub 계정은 여전히 개인 계정이므로, 저장소 Activity 탭에는 그 계정이 보인다.
 커밋 목록(사람들이 실제로 보는 곳)에는 안 보인다.
+
+### 2-7. v2 — 링크 범위를 `/drape/` 로 좁힘 (2026-09-24, 보드 `GC-DRAPE-SCOPE`)
+
+**현상**: 폰에서 같은 사이트의 다른 앱 링크(`altair-research.github.io/sprout-frame/`)를 열면 Color Mirror 앱 안에서 열렸다.
+**원인**: v1 패키지의 인텐트 필터가 호스트만 잡고 경로 제한이 없었다 (`<data scheme="https" host="altair-research.github.io"/>`).
+안드로이드는 "이 앱이 이 주소를 연다"를 패키지 안의 인텐트 필터로 정하는데, 경로가 없으면 그 도메인 **전체**를 자기 것으로 주장한다.
+**왜 문제인가**: Sprout Frame 이 스토어에 올라가면 두 앱이 같은 링크를 다투고, 사용자에게 "어느 앱으로 열까" 창이 뜨거나 엉뚱한 앱이 연다.
+**고침**: PWABuilder 옵션에 `"fullScopeUrl": "https://altair-research.github.io/drape/"` 를 넣으면 `android:pathPrefix="/drape/"` 가 붙는다
+(Sprout Frame 패키지를 뜯어 보고 확인한 것. `startUrl` 만으로는 안 붙는다). versionCode 2, versionName 1.0.1.
+
+이건 **사이트를 고쳐서는 안 되고 패키지를 다시 올려야 한다** — 인텐트 필터는 앱 안에 구워져 있다 (§0 의 예외).
+
+**사용자가 할 일 (10분)**
+1. 서명: `powershell -ExecutionPolicy Bypass -File C:\dev\drape\tools\sign-android.ps1 -Build v2`
+   비밀번호는 구글 비밀번호 관리자(§3). 결과: `C:\Users\altai\keys\colormirror-build\v2\Personal Color Mirror.aab`
+   마지막 출력의 `CN=Altair Research Lab` 과 SHA-256 이 v1 과 같은지 본다 (같은 업로드 키이므로 같아야 한다 — assetlinks 를 손댈 필요 없음).
+2. 콘솔: **Test and release → Testing → Closed testing → Alpha → Manage track → Create new release**
+3. **App bundles** 에 위 AAB 업로드 (이번엔 새 versionCode 라 Add from library 가 아니라 업로드)
+4. Release name 자동값 `2 (1.0.1)` 그대로. Release notes (en-US): `Limit app links to /drape/ so other apps on the same site open separately.`
+5. **Next → Save → Review release → Start rollout to Alpha**. 비공개 테스트라 심사가 다시 붙는다 (하루 안팎).
+6. 이미 설치한 테스터는 Play 가 자동 갱신한다. 확인법: 폰에서 `altair-research.github.io/sprout-frame/` 링크를 열었을 때 Color Mirror 가 **안** 뜨면 된다.
 
 ## 3. 서명 키 보관
 
@@ -463,6 +494,11 @@ assetlinks 에 추가해야 스토어로 설치한 앱에 주소창이 안 뜬�
 지금 결정할 것은 없다. 무료로 올려 두면 나중에 둘 다 가능하다.
 
 - **사이트만 고칠 때**: push하면 끝. 스토어 작업 없음. `sw.js`의 `VERSION` 문자열을 바꿔야 캐시가 갈린다.
+  - 캐시 이름은 반드시 `drape-` 로 시작한다. **같은 사이트(`altair-research.github.io`)를 다른 앱(Sprout Frame)도 쓰고,
+    브라우저 캐시 저장소는 사이트 단위로 공유되므로** activate 에서 "내 것 말고 전부 삭제"를 하면 남의 오프라인 캐시를 지운다
+    (2026-09-24 실제로 그랬다, 보드 `GC-SHARED-ORIGIN`). v28 부터 `drape-` 접두사가 붙은 것만 지운다.
+    로컬 서버에서 `sprout-frame-v37` 캐시를 심고 v28 을 활성화해 남는 것을 확인했다.
+  - 서비스 워커·`index.html` 은 앱 껍데기가 아니라 사이트다. **AAB 를 다시 올릴 필요 없다.** 설치된 앱도 다음 실행 때 새 sw.js 를 받는다.
 - **앱 껍데기를 고칠 때**(이름, 아이콘, 패키지 설정): PWABuilder에서 다시 생성.
   이때 §2 대로 서명 없는 패키지를 받아 `tools/sign-android.ps1` 로 `C:\Users\altai\keys\colormirror-upload.jks` 서명을 하고, version code를 올린다.
 
@@ -481,6 +517,7 @@ assetlinks 에 추가해야 스토어로 설치한 앱에 주소창이 안 뜬�
 
 ### 다음 세션이 할 일
 
+0. (2026-09-24 추가) v2 AAB 서명·업로드가 끝났는지 확인 — §2-7. 안 됐으면 사용자에게 1번 명령부터 안내
 1. 사용자가 지인 계정 주소를 모아 오면 → 콘솔 Testers 목록에 넣는 방법 안내 (콘솔 조작은 사용자가 한다)
 2. 12명이 설치하면 14일을 센다. 중간에 누가 앱을 지우면 집계에서 빠진다
 3. 14일 뒤 **프로덕션 액세스 신청** → 신청서에 "테스트에서 무엇을 배웠는지" 쓰는 칸이 있다
@@ -497,6 +534,7 @@ assetlinks 에 추가해야 스토어로 설치한 앱에 주소창이 안 뜬�
 | 스크린샷 다시 만들기 | §6-3, `tools/make-model.py`, `tools/make-screenshots.py` |
 | 테스터 자격 (안드로이드 필수, Gmail 불필요) | §7-4 |
 | 같은 versionCode 재업로드 불가 → Add from library | §7-3 |
+| 같은 사이트를 두 앱이 쓴다 — sw 캐시 접두사, 링크 범위 `/drape/` | §8, §2-7 |
 
 ### 사용자 방침 (어기면 안 되는 것)
 

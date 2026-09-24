@@ -6,11 +6,14 @@
 #   3) (build-tools 가 있으면) apk 도 서명한다  ← 폰에 직접 설치해 볼 때만 필요. 없으면 건너뛴다
 #   4) 서명자와 지문(SHA-256)을 출력한다
 #
-# 실행:  powershell -ExecutionPolicy Bypass -File C:\dev\drape\tools\sign-android.ps1
+# 실행:  powershell -ExecutionPolicy Bypass -File C:\dev\drape\tools\sign-android.ps1 -Build v2
+#        -Build 는 C:\Users\altai\keys\colormirror-build\ 아래 버전 폴더 이름. 생략하면 v2 (2026-09-24 현재 최신).
+#        v1 (versionCode 1) 은 폴더 없이 colormirror-build\unsigned 에 바로 있다 — 그때는 -Build "" 로.
 # 비밀번호: 도구가 물어본다. 값은 구글 비밀번호 관리자의 "drape 업로드 키 (colormirror-upload.jks)" 항목에 있다.
 #           keystore 비밀번호 = 키 비밀번호로 통일.
 #           (colormirror-upload.password.txt 가 있으면 읽지만, 2026-09-24 에 삭제했다. 다시 만들지 않는다.)
 
+param([string]$Build = "v2")
 $ErrorActionPreference = "Stop"
 
 $JBR = "C:\Program Files\Android\Android Studio\jbr\bin"          # Android Studio 에 딸린 JDK (keytool, jarsigner)
@@ -19,8 +22,9 @@ $JKS = "$K\colormirror-upload.jks"
 $ALIAS = "upload"
 $PWFILE = "$K\colormirror-upload.password.txt"                    # 비밀번호 파일 (있으면 자동, 없으면 프롬프트)
 $usePw = Test-Path $PWFILE
-$IN  = "$K\colormirror-build\unsigned"                            # PWABuilder 결과물 (서명 없음)
-$OUT = "$K\colormirror-build"
+$OUT = if ($Build) { "$K\colormirror-build\$Build" } else { "$K\colormirror-build" }   # 버전 폴더 (options.json 도 여기)
+$IN  = "$OUT\unsigned"                                            # PWABuilder 결과물 (서명 없음)
+Write-Host "빌드 폴더: $OUT" -ForegroundColor DarkGray
 
 # AAB 서명에 반드시 있어야 하는 것만 확인한다.
 foreach ($p in @("$JBR\keytool.exe", "$JBR\jarsigner.exe", "$IN\Personal Color Mirror-unsigned.aab")) {
