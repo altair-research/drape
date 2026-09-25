@@ -1,9 +1,9 @@
 # 플레이 스토어 등록 절차 (PWABuilder → Google Play)
 
-> 갱신: 2026-09-24
-> 상태: 비공개 테스트 Active(릴리스 1). **v2 패키지(versionCode 2, 링크 범위 `/drape/`) 서명 대기** — 서명 없는 AAB 준비됨. sw.js 캐시 정리 범위 수정은 사이트에 반영 완료(v28).
-> 다음: 사용자가 `sign-android.ps1 -Build v2` 실행 → Alpha 트랙에 릴리스 2 업로드 (§2-7) → 테스터 모집 계속
-> 막힘: 테스터 12명 미모집 (현재 목록 `internal` 2명) · v2 서명은 비밀번호가 필요해 사용자만 가능
+> 갱신: 2026-09-25
+> 상태: 비공개 테스트 Active(릴리스 1). **릴리스 2 (1.0.1, 링크 범위 `/drape/`) 심사 제출 완료** — 09-25 서명·업로드·제출. sw.js 캐시 수정은 사이트에 반영 완료(v28).
+> 다음: 릴리스 2 승인 확인 → 폰에서 `/sprout-frame/` 링크가 Color Mirror 로 안 열리는지 확인 → 테스터 모집 계속
+> 막힘: 테스터 12명 미모집 (현재 목록 `internal` 2명)
 > 더 볼 곳: §2-7 (v2 를 왜·어떻게), §9 새 세션 인계, '남은 순서' 표, §7-4 테스터 자격
 
 Personal Color Mirror를 Google Play에 올리는 순서. 하나 끝내면 체크하고 다음으로.
@@ -30,7 +30,8 @@ Personal Color Mirror를 Google Play에 올리는 순서. 하나 끝내면 체�
 | ~~2~~ | ~~앱 콘텐츠 답변 (광고 ID 선언 포함)~~ | ✅ 09-22 | |
 | ~~3~~ | ~~비공개 테스트 트랙 개설 + 릴리스 + 심사 제출~~ | ✅ 09-22 | |
 | ~~4~~ | ~~심사 승인~~ — Alpha 트랙 Active, opt-in 링크 발급 | ✅ 09-22 | |
-| 4b | **v2 AAB 서명 → Alpha 트랙에 릴리스 2 업로드** — §2-7. 링크 범위를 `/drape/` 로 좁힌 패키지. 테스터가 받기 전에 올리는 게 좋다 | 사용자 | 10분 |
+| ~~4b~~ | ~~v2 AAB 서명 → Alpha 트랙에 릴리스 2 업로드 → 심사 제출~~ (§2-7) | ✅ 09-25 | |
+| 4c | 릴리스 2 **심사 승인** → 폰에서 링크 확인 (§2-7 의 6번) | 대기 → 사용자 | 하루 안팎 |
 | 5 | **테스터 12명 모으기** — 안드로이드 쓰는 지인의 구글 계정 주소 | 사용자 | — |
 | 6 | 받은 주소를 **Testers 탭 > 이메일 목록 `internal`** 에 추가 | 사용자 | 5분 |
 | 7 | **opt-in 링크 배포** (Join on the web 쪽) | 사용자 | 5분 |
@@ -167,7 +168,11 @@ Pro/Team 으로 올리면 비공개 저장소에서도 Pages 가 되지만, 지�
 2. 콘솔: **Test and release → Testing → Closed testing → Alpha → Manage track → Create new release**
 3. **App bundles** 에 위 AAB 업로드 (이번엔 새 versionCode 라 Add from library 가 아니라 업로드)
 4. Release name 자동값 `2 (1.0.1)` 그대로. Release notes (en-US): `Limit app links to /drape/ so other apps on the same site open separately.`
-5. **Next → Save → Review release → Start rollout to Alpha**. 비공개 테스트라 심사가 다시 붙는다 (하루 안팎).
+5. **Next → Save**. 2026-09 콘솔에서는 여기에 "Start rollout" 버튼이 없다. 저장하면 **Go to Publishing overview?** 창이 뜬다.
+   → **Go to overview** (Not now 를 누르면 저장만 되고 심사로 안 간다)
+   → Publishing overview 에서 **Send changes for review**. 먼저 자동 점검이 최대 12분 돌고, 통과하면 저절로 심사로 넘어간다.
+   비공개 테스트라 심사가 다시 붙는다 (하루 안팎).
+   **기록 (2026-09-25)**: 서명 지문이 v1 과 같음을 확인(`B2:09:7C…B4:24`) → 업로드 → 제출. APK 는 build-tools 를 못 찾아 건너뜀 — Play 업로드엔 AAB 만 필요해 문제없다.
 6. 이미 설치한 테스터는 Play 가 자동 갱신한다. 확인법: 폰에서 `altair-research.github.io/sprout-frame/` 링크를 열었을 때 Color Mirror 가 **안** 뜨면 된다.
 
 ## 3. 서명 키 보관
@@ -517,7 +522,7 @@ assetlinks 에 추가해야 스토어로 설치한 앱에 주소창이 안 뜬�
 
 ### 다음 세션이 할 일
 
-0. (2026-09-24 추가) v2 AAB 서명·업로드가 끝났는지 확인 — §2-7. 안 됐으면 사용자에게 1번 명령부터 안내
+0. 릴리스 2 (1.0.1) 심사 결과 확인 — 09-25 제출. 승인되면 §2-7 의 6번으로 폰에서 링크 확인
 1. 사용자가 지인 계정 주소를 모아 오면 → 콘솔 Testers 목록에 넣는 방법 안내 (콘솔 조작은 사용자가 한다)
 2. 12명이 설치하면 14일을 센다. 중간에 누가 앱을 지우면 집계에서 빠진다
 3. 14일 뒤 **프로덕션 액세스 신청** → 신청서에 "테스트에서 무엇을 배웠는지" 쓰는 칸이 있다
