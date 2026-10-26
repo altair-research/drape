@@ -454,6 +454,7 @@
     </div>
     <div class="actions" style="padding:0">
       <button class="btn wide" id="compareKept" hidden>담은 색끼리 비교</button>
+      <button class="btn wide" id="shareResult" hidden>결과 공유</button>
       <button class="btn wide" id="closeSheet">돌아가기</button>
       <button class="btn" id="clearSaved">전체 지우기</button>
     </div>
@@ -463,7 +464,7 @@
 <script>
 (function(){
   "use strict";
-  var APP_VERSION = "29";
+  var APP_VERSION = "30";
 
   /* ---- 언어 ---- 기기 언어가 한국어면 ko, 아니면 en. 화면의 EN/한국어 버튼으로 바꾸면 기억한다. */
   var T = {
@@ -487,6 +488,7 @@
          introNote:"여기서 고른 색은 절대적인 답이 아니라 참고용 추천이에요. 조명과 화면에 따라 다르게 보일 수 있어요.",
          introGo:"시작하기", help:"사용법", more:"더보기", privacy:"개인정보처리방침",
          share:"친구에게 공유", shareText:"카메라로 얼굴 옆에 색을 대보는 퍼스널컬러 거울. 가입·광고 없음", copied:"링크 복사됨",
+         shareResult:"결과 공유", resultHead:function(n){ return "내가 ♥한 색 "+n+"개"; }, resultTail:"Personal Color Mirror로 얼굴에 대봤어요. 너도 해볼래?",
          feedback:"의견 보내기", fbSubject:"Personal Color Mirror 의견",
          keptCompare:"좋아요끼리 비교", keptExit:"전체 색 보기", keptCountOf:function(n){ return n+"색 · 밀어서 넘기기"; },
          camLabel:"카메라", lockLabel:"빛 고정", guideLabel:"얼굴 가이드", langLabel:"언어", on:"켜짐", off:"꺼짐",
@@ -512,6 +514,7 @@
          introNote:"What you pick here is a suggestion, not a verdict. Lighting and screens change how colors look.",
          introGo:"Start", help:"How to use", more:"More", privacy:"Privacy policy",
          share:"Share with a friend", shareText:"A personal color mirror: hold colors next to your face with the camera. No sign-up, no ads", copied:"Link copied",
+         shareResult:"Share result", resultHead:function(n){ return "I liked "+n+(n===1?" color":" colors"); }, resultTail:"Tried on with Personal Color Mirror. Want to try?",
          feedback:"Send feedback", fbSubject:"Personal Color Mirror feedback",
          keptCompare:"Compare liked colors", keptExit:"All colors", keptCountOf:function(n){ return n+(n===1?" color":" colors")+" · swipe"; },
          camLabel:"Camera", lockLabel:"Lock light", guideLabel:"Face guide", langLabel:"Language", on:"On", off:"Off",
@@ -755,6 +758,7 @@
       else renderKeptStrip();
     }
     $("compareKept").hidden = keptKeys().length < 1;
+    $("shareResult").hidden = keptKeys().length < 1;
   }
 
   /* ---- drape height ---- */
@@ -1098,6 +1102,7 @@
     heartTab.setAttribute("aria-label", t("keptCompare"));
     $("keptExit").textContent = t("keptExit");
     $("compareKept").textContent = t("keptCompare");
+    $("shareResult").textContent = t("shareResult");
     if(keptOnly) renderKeptStrip();
     $("privacyLabel").textContent = t("privacy");
     $("shareLabel").textContent = t("share");
@@ -1153,13 +1158,26 @@
   $("helpBtn").addEventListener("click", function(){ $("menu").hidden = true; showIntro(); });
   /* ---- 공유 ---- 링크 하나로 열리는 게 이 앱의 강점(MARKET.md §5-3). 공유 시트가 없으면 링크를 복사한다. */
   var SHARE_URL = "https://altair-research.github.io/drape/";
-  $("shareBtn").addEventListener("click", function(){
-    var data = {title:t("title"), text:t("shareText"), url:SHARE_URL};
+  function shareLink(text, stateEl){
+    var data = {title:t("title"), text:text, url:SHARE_URL};
     if(navigator.share){ navigator.share(data).catch(function(){}); return; }
-    var done = function(){ $("shareState").textContent = t("copied"); };
-    if(navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(SHARE_URL).then(done, function(){ prompt(t("share"), SHARE_URL); });
-    else prompt(t("share"), SHARE_URL);
-  });
+    var all = text + "\n" + SHARE_URL;
+    var done = function(){ if(stateEl) stateEl.textContent = t("copied"); };
+    if(navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(all).then(done, function(){ prompt(t("share"), all); });
+    else prompt(t("share"), all);
+  }
+  $("shareBtn").addEventListener("click", function(){ shareLink(t("shareText"), $("shareState")); });
+  /* 결과 공유: 계절별 개수(많은 순) + 좋아요한 색 이름. 판정이 아니라 "내가 고른 것"으로 쓴다. */
+  function resultText(){
+    var keys = keptKeys(), counts = SEASONS.map(function(){ return 0; }), names = [];
+    keys.forEach(function(k){ var pk = parseKey(k), fi = findFlat(pk.h); counts[FLAT[fi].si]++; names.push(labelOf(FLAT[fi], pk.lv)); });
+    var order = SEASONS.map(function(s,si){ return si; }).filter(function(si){ return counts[si]; })
+                       .sort(function(a,b){ return counts[b]-counts[a]; });
+    return t("resultHead")(keys.length) + "\n"
+      + order.map(function(si){ return sName(SEASONS[si]) + " " + counts[si]; }).join(" · ") + "\n"
+      + names.slice(0,8).join(", ") + (names.length>8 ? " …" : "") + "\n\n" + t("resultTail");
+  }
+  $("shareResult").addEventListener("click", function(){ shareLink(resultText(), null); });
   $("menuBtn").addEventListener("click", function(){ applyLang(); $("menu").hidden = false; });
   $("closeMenu").addEventListener("click", function(){ $("menu").hidden = true; });
   if(!introSeen) showIntro();

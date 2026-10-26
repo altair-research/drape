@@ -1,7 +1,7 @@
 /* Personal Color Mirror — service worker
    앱 껍데기(index, manifest, 아이콘)는 캐시에서 먼저 열고,
    새 버전이 올라오면 다음 실행 때 자동으로 바뀝니다. */
-var VERSION = "drape-v29"; // index.html의 APP_VERSION과 숫자를 맞춘다
+var VERSION = "drape-v30"; // index.html의 APP_VERSION과 숫자를 맞춘다
 var PREFIX = "drape-";        // 이 앱의 캐시 이름 접두사. 같은 사이트(altair-research.github.io)를 다른 앱도 쓰므로
                               // 정리할 때 내 접두사가 붙은 것만 지운다 (2026-09-24, 보드 GC-SHARED-ORIGIN)
 var SHELL = ["./", "./index.html", "./manifest.json", "./icon-192.png", "./icon-512.png", "./icon-maskable-512.png"];
