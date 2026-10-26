@@ -1,0 +1,12 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "drape",
+      "runtimeExecutable": "python",
+      "runtimeArgs": ["-m", "http.server", "8779"],
+      "port": 8779,
+      "autoPort": false
+    }
+  ]
+}

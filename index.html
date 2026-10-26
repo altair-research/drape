@@ -434,6 +434,8 @@
       <button class="mrow" id="guideBtn" type="button" aria-pressed="true"><span id="guideLabel">얼굴 가이드</span><span class="state" id="guideState"></span></button>
       <button class="mrow" id="langBtn" type="button"><span id="langLabel">언어</span><span class="state" id="langState"></span></button>
       <button class="mrow" id="helpBtn" type="button"><span id="helpLabel">사용법</span><span class="state">›</span></button>
+      <button class="mrow" id="shareBtn" type="button"><span id="shareLabel">친구에게 공유</span><span class="state" id="shareState">›</span></button>
+      <a class="mrow" id="feedbackLink" href="mailto:altair.research.lab@gmail.com"><span id="feedbackLabel">의견 보내기</span><span class="state">›</span></a>
       <a class="mrow" id="privacyLink" href="privacy.html"><span id="privacyLabel">개인정보처리방침</span><span class="state">›</span></a>
     </div>
     <div class="actions" style="padding:0">
@@ -461,7 +463,7 @@
 <script>
 (function(){
   "use strict";
-  var APP_VERSION = "28";
+  var APP_VERSION = "29";
 
   /* ---- 언어 ---- 기기 언어가 한국어면 ko, 아니면 en. 화면의 EN/한국어 버튼으로 바꾸면 기억한다. */
   var T = {
@@ -484,6 +486,8 @@
          i3t:"어울리는 색에 ♥를 누르세요", i3p:"5~6개 모이면 계절이 보여요. 위 ♥ 탭에서 좋아요한 색끼리 다시 비교할 수 있어요.",
          introNote:"여기서 고른 색은 절대적인 답이 아니라 참고용 추천이에요. 조명과 화면에 따라 다르게 보일 수 있어요.",
          introGo:"시작하기", help:"사용법", more:"더보기", privacy:"개인정보처리방침",
+         share:"친구에게 공유", shareText:"카메라로 얼굴 옆에 색을 대보는 퍼스널컬러 거울. 가입·광고 없음", copied:"링크 복사됨",
+         feedback:"의견 보내기", fbSubject:"Personal Color Mirror 의견",
          keptCompare:"좋아요끼리 비교", keptExit:"전체 색 보기", keptCountOf:function(n){ return n+"색 · 밀어서 넘기기"; },
          camLabel:"카메라", lockLabel:"빛 고정", guideLabel:"얼굴 가이드", langLabel:"언어", on:"켜짐", off:"꺼짐",
          camFront:"셀프", camRear:"상대방", camHint:"전면/후면 카메라 전환. 후면으로 하면 다른 사람이 폰을 들고 대볼 수 있어요",
@@ -507,6 +511,8 @@
          i3t:"Tap ♥ on the good ones", i3p:"After 5–6, a season shows up. Use the ♥ tab above to compare only your liked colors.",
          introNote:"What you pick here is a suggestion, not a verdict. Lighting and screens change how colors look.",
          introGo:"Start", help:"How to use", more:"More", privacy:"Privacy policy",
+         share:"Share with a friend", shareText:"A personal color mirror: hold colors next to your face with the camera. No sign-up, no ads", copied:"Link copied",
+         feedback:"Send feedback", fbSubject:"Personal Color Mirror feedback",
          keptCompare:"Compare liked colors", keptExit:"All colors", keptCountOf:function(n){ return n+(n===1?" color":" colors")+" · swipe"; },
          camLabel:"Camera", lockLabel:"Lock light", guideLabel:"Face guide", langLabel:"Language", on:"On", off:"Off",
          camFront:"Selfie", camRear:"Someone else", camHint:"Switch front/rear camera. Rear lets another person hold the phone and drape you",
@@ -1094,6 +1100,10 @@
     $("compareKept").textContent = t("keptCompare");
     if(keptOnly) renderKeptStrip();
     $("privacyLabel").textContent = t("privacy");
+    $("shareLabel").textContent = t("share");
+    $("shareState").textContent = "›";
+    $("feedbackLabel").textContent = t("feedback");
+    $("feedbackLink").href = "mailto:altair.research.lab@gmail.com?subject=" + encodeURIComponent(t("fbSubject") + " (v" + APP_VERSION + ")");
     $("helpLabel").textContent = t("help");
     $("langLabel").textContent = t("langLabel");
     $("langState").textContent = t("langBtn");
@@ -1141,6 +1151,15 @@
     try{ localStorage.setItem("drape.intro","1"); }catch(e){}
   });
   $("helpBtn").addEventListener("click", function(){ $("menu").hidden = true; showIntro(); });
+  /* ---- 공유 ---- 링크 하나로 열리는 게 이 앱의 강점(MARKET.md §5-3). 공유 시트가 없으면 링크를 복사한다. */
+  var SHARE_URL = "https://altair-research.github.io/drape/";
+  $("shareBtn").addEventListener("click", function(){
+    var data = {title:t("title"), text:t("shareText"), url:SHARE_URL};
+    if(navigator.share){ navigator.share(data).catch(function(){}); return; }
+    var done = function(){ $("shareState").textContent = t("copied"); };
+    if(navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(SHARE_URL).then(done, function(){ prompt(t("share"), SHARE_URL); });
+    else prompt(t("share"), SHARE_URL);
+  });
   $("menuBtn").addEventListener("click", function(){ applyLang(); $("menu").hidden = false; });
   $("closeMenu").addEventListener("click", function(){ $("menu").hidden = true; });
   if(!introSeen) showIntro();

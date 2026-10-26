@@ -1,0 +1,45 @@
+{
+  "name": "Personal Color Mirror (drape)",
+  "track": "public",
+  "header": "HANDOFF.md",
+  "sources": {
+    "handoff": {"path": "HANDOFF.md", "label": "인계"},
+    "playstore": {"path": "PLAY-STORE.md", "label": "Play 등록 절차"},
+    "testers": {"path": "store/tester-invite.md", "label": "테스터 모집"},
+    "production": {"path": "store/production-application.md", "label": "프로덕션 신청 초안"},
+    "market": {"path": "MARKET.md", "label": "시장 조사"}
+  },
+  "links": [
+    {"title": "앱 (웹)", "url": "https://altair-research.github.io/drape/"},
+    {"title": "개인정보처리방침", "url": "https://altair-research.github.io/drape/privacy.html"}
+  ],
+  "public": ["market"],
+  "goal": {
+    "text": "Play 14일 비공개 테스트를 통과해 프로덕션 출시",
+    "target": "2026-11-30",
+    "started": "2026-09-04"
+  },
+  "milestones": [
+    {"name": "웹앱 완성 (48색 × 3단계, 한/영, PWA)", "due": "2026-09-17", "done": "2026-09-17"},
+    {"name": "스토어 등록정보·앱 콘텐츠·비공개 테스트 심사 통과", "due": "2026-09-22", "done": "2026-09-22"},
+    {"name": "릴리스 2 (1.0.1, 링크 범위 /drape/) 게시", "due": "2026-09-30", "done": "2026-09-25"},
+    {"name": "테스터 12명 이상 등록 (PLAY-TESTERS)", "due": "2026-11-02"},
+    {"name": "14일 연속 테스트 완료", "due": "2026-11-16"},
+    {"name": "프로덕션 액세스 신청·승인", "due": "2026-11-23"},
+    {"name": "프로덕션 출시", "due": "2026-11-30"}
+  ],
+  "overview": {
+    "how": [
+      "웹앱 한 장(index.html)이 본체다. GitHub Pages 의 /drape/ 에 올라가 링크로도 열린다.",
+      "Play 앱은 그 웹앱을 감싼 껍데기(TWA)라, 사이트를 고치면 앱도 다음 실행 때 바뀐다. 스토어 재제출은 껍데기를 바꿀 때만.",
+      "카메라 영상 위에 색 띠를 대보고 사용자가 직접 고른다. 판정하지 않고, 서버·로그인·광고가 없다.",
+      "출시 관문은 Play 개인 계정 규칙: 테스터 12명이 14일 연속 참여해야 프로덕션 신청이 열린다."
+    ],
+    "decided": [
+      {"date": "2026-09-05", "what": "AI 판정을 넣지 않고 '눈으로 대보는 거울'로 간다", "why": "경쟁 앱 1위 불만이 조명 따라 바뀌는 판정 — 정직함이 경쟁력 (MARKET.md)"},
+      {"date": "2026-09-25", "what": "링크 범위를 /drape/ 로 좁힌 릴리스 2", "why": "같은 사이트의 Sprout Frame 링크가 이 앱에서 열리던 문제"},
+      {"date": "2026-10-23", "what": "중요도 ★★★", "why": "사용자가 핵심 프로젝트로 고름"},
+      {"date": "2026-10-26", "what": "테스터 모집은 WearCast 와 한 번에 (같은 명단, 링크 두 개)", "why": "명단이 계정 공통이라 부탁 한 번으로 두 앱의 14일이 같이 돈다"}
+    ]
+  }
+}
