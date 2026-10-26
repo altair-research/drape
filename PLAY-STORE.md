@@ -300,6 +300,10 @@ PWABuilder가 노란 경고를 내는 항목. 없어도 패키징되지만 스�
 - 전송 중 암호화: 해당 없음 (전송하는 사용자 데이터가 없음)
 - 삭제 요청 방법 제공: 해당 없음
 
+**v29~v30 메뉴 추가 후에도 "수집 없음"이 맞는 이유 (10-26):** "의견 보내기"는 기기 메일 앱을 여는 `mailto:` 링크라
+앱이 아무것도 보내지 않는다(사용자가 메일 앱에서 직접 보냄). "공유"는 기기 공유 화면이나 클립보드에 링크·색 이름을 넘길 뿐이다.
+개인정보처리방침에는 메일을 받으면 답장·개선에만 쓴다는 항목을 넣었다(10-26 시행).
+
 
 앱 만들기 → 기본 정보 → 왼쪽 메뉴 순서대로. 대부분 한 번만 한다.
 
@@ -325,7 +329,9 @@ PWABuilder가 노란 경고를 내는 항목. 없어도 패키징되지만 스�
 **앱 이름 (30자)**: Personal Color Mirror
 
 **짧은 설명 (80자)**
-> 카메라에 비친 얼굴에 사계절 색을 직접 대보는 퍼스널컬러 거울. 회원가입·광고 없음
+> 카메라 속 내 얼굴에 사계절 색을 직접 대보는 퍼스널컬러 거울. 가입·광고 없음, 영상은 폰 밖으로 안 나가요
+
+(10-26 다듬음: MARKET §5-2 "사진은 폰 밖으로 안 나감"을 첫 줄에. 61자)
 
 **자세한 설명 (4000자)**
 > 퍼스널컬러 진단에서 쓰는 '드레이핑'을 폰 카메라로 해 보는 거울입니다.
@@ -337,6 +343,7 @@ PWABuilder가 노란 경고를 내는 항목. 없어도 패키징되지만 스�
 > • ♥한 색끼리만 모아 다시 비교
 > • 직전 색과 꾹 눌러 비교
 > • 후면 카메라로 바꾸면 친구가 대신 대봐 줄 수 있어요
+> • 고른 결과를 친구에게 공유 — 링크로 열려서 친구는 설치하지 않아도 대볼 수 있어요
 > • 회원가입, 광고, 결제 없음. 카메라 영상은 폰 밖으로 나가지 않습니다.
 >
 > 결과는 절대적인 답이 아니라 참고용입니다. 조명에 따라 다르게 보이니 창가 자연광에서 해 보세요.
@@ -348,9 +355,9 @@ PWABuilder가 노란 경고를 내는 항목. 없어도 패키징되지만 스�
 Personal Color Mirror
 ```
 
-**Short description** (80자 한도, 현재 67자)
+**Short description** (80자 한도, 현재 76자 — 10-26 "no uploads" 추가)
 ```
-Hold seasonal colors up to your face on camera. No sign-up, no ads.
+Hold seasonal colors to your face on camera. No sign-up, no ads, no uploads.
 ```
 
 **Full description** (4000자 한도)
@@ -376,6 +383,8 @@ WHAT YOU CAN DO
 - Compare only your liked colors. Tap the heart tab to narrow down to your shortlist.
 - Hold to compare with the previous color.
 - Switch to the rear camera so a friend can drape you.
+- Share your picks with a friend. The link opens in any browser, so they can try
+  it without installing anything.
 - Lock the light so the camera stops re-adjusting while you swipe.
 - Korean and English.
 
@@ -391,6 +400,24 @@ so try it in daylight near a window, and try again another day to see what overl
 ```
 
 **참고**: 한국어는 등록 후 **스토어 설정 → 번역 관리**에서 ko-KR 을 추가하고 §6-2 문안을 넣는다.
+
+### 6-2c. 출시 날 쓸 것 — 프로덕션 릴리스 노트 (사용자가 붙여 넣기)
+
+프로덕션 트랙의 **Release notes** 칸. 앱 껍데기는 1.0.1 그대로(사이트만 v30 으로 바뀜)라 같은 번들을 `Add from library` 로 붙인다.
+
+```
+<en-US>
+First public release. Hold 48 seasonal colors up to your face on camera, like each one,
+then compare only your favorites. No sign-up, no ads, and the camera never leaves your phone.
+</en-US>
+<ko-KR>
+첫 정식 출시. 사계절 48색을 카메라 속 얼굴에 대보고 ♥한 색끼리 다시 비교하세요.
+가입·광고 없음, 카메라 영상은 폰 밖으로 나가지 않아요.
+</ko-KR>
+```
+
+스토어 문구(위 6-2·6-2b)를 바꿨다면 **스토어 등록정보 → 기본 스토어 등록정보** 에서 고친 뒤 릴리스와 함께 심사에 보낸다.
+스크린샷은 지금 4장 그대로 써도 된다(공유 메뉴는 ⋯ 안에 있어 화면이 바뀌지 않았다).
 
 ### 6-3. 스토어 등록정보에 필요한 이미지
 
