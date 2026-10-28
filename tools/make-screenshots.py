@@ -1,4 +1,4 @@
-"""스토어 스크린샷 4장을 실제 앱에서 만든다.
+"""스토어 스크린샷 4장(+시안 1장)을 실제 앱에서 만든다.
 
 - 앱을 임시 폴더에 복사하고, 화면마다 '상태를 미리 세팅하는 스크립트'를 끼워 넣은 html 을 만든다.
 - headless Chrome 으로 540x960 CSS 뷰포트 x2 배율 = 1080x1920 (Play 요구 9:16) 로 캡처한다.
@@ -20,6 +20,8 @@ SHOTS = [
     ("02-levels",  "1", "[]",    "chips[4].click(); q('levels').classList.add('show'); hideHint();"),
     ("03-liked",   "1", LIKED,   "q('heartTab').click(); hideHint();"),      # 좋아요한 색끼리 비교
     ("04-intro",   "",  "[]",    "chips[4].click();"),                       # 처음 안내 팝업
+    # 10-28 시안: 결과 화면(좋아요 목록의 계절 분포 + 결과 공유 버튼). MARKET §5-4 "비교가 우리의 결과 화면"
+    ("05-result",  "1", LIKED[:-1] + ',"#A8C8E8","#FF7F6E@2"]', "q('openSaved').click(); hideHint();"),
 ]
 
 HEAD = """<script>
@@ -87,6 +89,9 @@ def shoot():
         print(f"  {name}.png  {size/1024:.0f}KB")
 
 if __name__ == "__main__":
+    import sys
+    if len(sys.argv) > 1:   # 이름을 주면 그 장만 (예: python make-screenshots.py 05-result)
+        SHOTS[:] = [s for s in SHOTS if s[0] in sys.argv[1:]]
     build()
     httpd = serve()
     time.sleep(1)

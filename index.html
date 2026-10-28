@@ -464,7 +464,7 @@
 <script>
 (function(){
   "use strict";
-  var APP_VERSION = "30";
+  var APP_VERSION = "31";
 
   /* ---- 언어 ---- 기기 언어가 한국어면 ko, 아니면 en. 화면의 EN/한국어 버튼으로 바꾸면 기억한다. */
   var T = {
@@ -848,6 +848,16 @@
   $("closeSheet").addEventListener("click", function(){ $("sheet").hidden=true; });
   $("clearSaved").addEventListener("click", function(){ saved=[]; persist(); render(); renderSheet(); });
 
+  /* 계절 대표색: 그 계절에서 가장 채도 높은 색(rgb 최대−최소가 큰 것) */
+  function seasonSwatch(s){
+    var best = s.colors[0].h, bc = -1;
+    s.colors.forEach(function(c){
+      var n = parseInt(c.h.slice(1),16), r = n>>16, g = (n>>8)&255, b = n&255;
+      var ch = Math.max(r,g,b) - Math.min(r,g,b);
+      if(ch > bc){ bc = ch; best = c.h; }
+    });
+    return best;
+  }
   function renderSheet(){
     var tally=$("tally"), list=$("savedList");
     tally.innerHTML=""; list.innerHTML="";
@@ -873,7 +883,7 @@
       if(!counts[si]) return;
       var i=document.createElement("i");
       i.style.width=(counts[si]/saved.length*100)+"%";
-      i.style.background=s.colors[0].h;
+      i.style.background=seasonSwatch(s); // 첫 색은 계절마다 흰색 계열이라 막대가 구분되지 않았다(v31)
       i.title=sName(s)+" "+counts[si];
       bar.appendChild(i);
     });
