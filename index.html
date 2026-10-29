@@ -468,7 +468,7 @@
 <script>
 (function(){
   "use strict";
-  var APP_VERSION = "32";
+  var APP_VERSION = "33";
 
   /* ---- 언어 ---- 기기 언어가 한국어면 ko, 아니면 en. 화면의 EN/한국어 버튼으로 바꾸면 기억한다. */
   var T = {
@@ -527,7 +527,8 @@
   };
   /* 만든 사람 한 줄 (전역 §6-c 사람 손길). 문장은 사용자가 직접 쓴다 — AI 가 채우지 않는다. 비어 있으면 줄 전체가 숨는다.
      한 언어만 있으면 그 문장을 두 언어 모두에 보인다. */
-  var MAKER = { ko:"", en:"" };
+  var MAKER = { ko:"내게 어울리는 색이 궁금해서 만든 작은 거울이에요. 편하게 비춰 보세요.",   // 10-28 사용자가 고른 문장
+                en:"A little mirror I made because I wondered which colors suit me. Take an easy look." };
   var LANG = "ko";
   try{ LANG = localStorage.getItem("drape.lang") || ((navigator.language||"").slice(0,2)==="ko" ? "ko" : "en"); }catch(e){}
   if(!T[LANG]) LANG="ko";
