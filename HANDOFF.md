@@ -12,7 +12,7 @@
 > AI 결정: 만든 사람 한 줄 영어판은 AI 가 옮김("A little mirror I made because I wondered which colors suit me. Take an easy look.") — 한국어는 사용자 문장 그대로. 바꾸려면 `index.html` `MAKER.en`
 > AI 결정: 스크린샷 5번째로 결과 화면 시안 `store/screenshots/05-result.png`(로컬, git 제외) 추천 — `PLAY-STORE.md` §6-3
 > AI 결정: 스토어 짧은 설명에 "영상은 폰 밖으로 안 나가요 / no uploads" 추가(MARKET §5-2) — 콘솔 반영은 출시 때 사용자가, 원문은 `PLAY-STORE.md` §6-2
-> 더 볼 곳: `PLAY-STORE.md` §6-2·§6-2c, `store/tester-invite.md`, `store/production-application.md`, `plans/`, 의도서 `C:\dev\_control-tower\intent\drape.md`
+> 더 볼 곳: 산출물 목록 `docs/OUTPUTS.md`, `PLAY-STORE.md` §6-2·§6-2c, `store/tester-invite.md`, `store/production-application.md`, `plans/`, 의도서 `C:\dev\_control-tower\intent\drape.md`
 
 ## 이 문서
 프로젝트 타워(`drape 프로젝트 타워` 세션)가 관리하는 대표 인계 문서. 위 머리말이 정본이고, Play 등록 절차의 상세는 `PLAY-STORE.md` 에 있다.
@@ -27,3 +27,4 @@
 - 2026-10-28 — 총괄 타워 "쉬지 말고 되돌릴 수 있는 일": 결과 화면 스크린샷 시안을 찍다가 좋아요 목록 계절 막대가 사실상 한 색으로 보이는 버그 발견(계절 첫 색이 모두 흰색 계열) → v31 에서 계절의 가장 채도 높은 색으로(스크린샷 픽셀로 노랑·자주 구분 확인, 운영 v31 확인). `make-screenshots.py` 에 05-result 와 "그 장만 찍기" 인자. 사람 손길 두 안을 머리말 `결정:` 에.
 - 2026-10-28 — 사람 손길 자리 ①(안내 팝업 아래) — 총괄 타워 결정(의도서 기록). v32: `MAKER` 상수가 비면 줄 전체 숨김, 한 언어만 있으면 두 언어에 같은 문장, 서명 "— altair research lab". 샘플 문장으로 렌더 확인 후 빈 상태로 배포. 한글 기울임은 어색해 바로 세움.
 - 2026-10-28 — 사용자가 고른 만든 사람 한 줄(총괄 타워 전달) v33 반영: ko 사용자 문장 그대로, en 은 AI 번역. 한국어 안내 팝업 렌더 확인.
+- 2026-11-02 — 산출물 한 곳에 모으기(사용자 11-02, 총괄 타워 전달): `docs/OUTPUTS.md` 신설. 루트 파일이 공개 사이트에 그대로 떠서 docs/ 아래로(지시대로 — 단 docs/ 도 Pages 로 공개된다, 내용은 공개해도 되는 것만).
