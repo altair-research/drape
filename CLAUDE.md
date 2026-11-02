@@ -3,7 +3,7 @@
 - 대표 인계 문서는 `HANDOFF.md`(맨 위 15줄 머리말이 정본). 세션 시작 때 먼저 읽는다. Play 절차 상세는 `PLAY-STORE.md`.
 - 이 저장소는 **공개**다. 테스터 이메일·키·비밀번호를 적지 않는다. 서명 키는 `C:\Users\altai\keys\` (저장소 밖).
 - 사이트를 고치면 `index.html` 의 `APP_VERSION` 과 `sw.js` 의 `VERSION` 숫자를 함께 올린다. 캐시 이름은 `drape-` 접두사 유지.
-- 산출물(보고서·시안·주요 문서·배포 주소)은 `docs/OUTPUTS.md` 에 한 줄씩(날짜·제목·경로·설명, 최신 위), 만든 커밋에 같이. 얼굴 사진·열쇠 링크 제외.
+- 산출물 목록(전역 CLAUDE.md §6)은 이 저장소에서는 `docs/OUTPUTS.md` 에 둔다.
 - 커밋 신원: `altair research lab` / `altair.research.lab@gmail.com`.
 
 ## 플랜 기록
