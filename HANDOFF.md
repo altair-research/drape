@@ -1,6 +1,6 @@
 # drape (Personal Color Mirror) — 인계
 
-> 갱신: 2026-10-28 22시 (v33 만든 사람 한 줄 반영)
+> 갱신: 2026-11-02 (앱 소개·차별점 보고서, 배경색 보정·매칭 유료판 검토)
 > 상태: Play 비공개 테스트(Alpha) — 릴리스 2 (1.0.1) Published. 사이트 **v33** 운영 반영: 공유·의견(v29), 결과 공유(v30), 좋아요 목록 계절 막대 색 구분 수정(v31), 처음 안내 팝업 아래 만든 사람 한 줄(v32 자리, v33 사용자 문장). 개인정보처리방침 10-26 시행.
 > 다음: ① 폰 링크 확인(아래 3줄) ② **테스터 12명 10-28 까지** → 14일(11-11) → 신청(`store/production-application.md`) → ~11-18 승인 → **~11-20 출시**(순서 `PLAY-STORE.md` §7-5). 명단이 하루 늦으면 출시도 하루 늦다
 > 폰 확인(사용자, 1분): 1. Play 스토어 > 내 앱에서 Color Mirror 업데이트(1.0.1)가 깔렸는지 본다
@@ -10,9 +10,9 @@
 > AI 결정: v29~v30 공유·의견·결과 공유 추가(MARKET §5-3 링크 공유가 유입 경로, 신청서 피드백 칸 대비) — 되돌리려면 index.html shareBtn·feedbackLink·shareResult 삭제 후 버전 올림
 > AI 결정: 출시 목표 11-30 → 11-20. 바닥은 Play 개인 계정 테스터 14일 + 승인 ~7일 + 심사 1~2일(§7-5). 조직 계정 우회는 D-U-N-S·비용 때문에 추천 안 함
 > AI 결정: 만든 사람 한 줄 영어판은 AI 가 옮김("A little mirror I made because I wondered which colors suit me. Take an easy look.") — 한국어는 사용자 문장 그대로. 바꾸려면 `index.html` `MAKER.en`
-> AI 결정: 스크린샷 5번째로 결과 화면 시안 `store/screenshots/05-result.png`(로컬, git 제외) 추천 — `PLAY-STORE.md` §6-3
-> AI 결정: 스토어 짧은 설명에 "영상은 폰 밖으로 안 나가요 / no uploads" 추가(MARKET §5-2) — 콘솔 반영은 출시 때 사용자가, 원문은 `PLAY-STORE.md` §6-2
-> 더 볼 곳: 산출물 목록 `docs/OUTPUTS.md`, `PLAY-STORE.md` §6-2·§6-2c, `store/tester-invite.md`, `store/production-application.md`, `plans/`, 의도서 `C:\dev\_control-tower\intent\drape.md`
+> AI 결정: 스크린샷 5번째로 결과 화면 시안(`PLAY-STORE.md` §6-3), 짧은 설명에 "영상은 폰 밖으로 안 나가요 / no uploads"(§6-2) — 콘솔 반영은 출시 때 사용자가
+> 결정: 매칭 점수 유료판 — ① 지금은 무료 '내가 고른 색 요약' 키우고 출시 뒤 테스터 반응 보고 정함 (추천) ② 출시 뒤 유료 정밀 비교(흰 종이 보정+색별 점수) ③ 지금 바로 유료 · 근거 `plans/archive/2026-11-02-report.html` · 풀리면 ①은 AI 가 바로 만듦
+> 더 볼 곳: 산출물 목록 `docs/OUTPUTS.md`, 앱 소개 보고서 `plans/archive/2026-11-02-report.html`, `PLAY-STORE.md` §6-2·§6-2c, `store/tester-invite.md`, `store/production-application.md`, `plans/`, 의도서 `C:\dev\_control-tower\intent\drape.md`
 
 ## 이 문서
 프로젝트 타워(`drape 프로젝트 타워` 세션)가 관리하는 대표 인계 문서. 위 머리말이 정본이고, Play 등록 절차의 상세는 `PLAY-STORE.md` 에 있다.
@@ -28,3 +28,4 @@
 - 2026-10-28 — 사람 손길 자리 ①(안내 팝업 아래) — 총괄 타워 결정(의도서 기록). v32: `MAKER` 상수가 비면 줄 전체 숨김, 한 언어만 있으면 두 언어에 같은 문장, 서명 "— altair research lab". 샘플 문장으로 렌더 확인 후 빈 상태로 배포. 한글 기울임은 어색해 바로 세움.
 - 2026-10-28 — 사용자가 고른 만든 사람 한 줄(총괄 타워 전달) v33 반영: ko 사용자 문장 그대로, en 은 AI 번역. 한국어 안내 팝업 렌더 확인.
 - 2026-11-02 — 산출물 한 곳에 모으기(사용자 11-02, 총괄 타워 전달): `docs/OUTPUTS.md` 신설. 루트 파일이 공개 사이트에 그대로 떠서 docs/ 아래로(지시대로 — 단 docs/ 도 Pages 로 공개된다, 내용은 공개해도 되는 것만).
+- 2026-11-02 — 사용자 질문 4가지(차별점·배경 따라 바뀌는 얼굴색·다른 앱 매칭 점수·매칭 유료판) 답을 보고서로(`plans/archive/2026-11-02-report.html`). 배경색은 흰 종이 한 번 누르는 보정 추천(시제품은 되돌릴 수 있어 AI 가 해도 됨, 실제 폰 확인 필요). 색마다 점수를 믿을 만하게 주는 앱은 못 찾음(추정, 한국어 검색 실패). "페이드버전"은 유료판으로 읽음(추정). 유료화는 의도서상 사용자 결정이라 머리말 `결정:` 으로.
