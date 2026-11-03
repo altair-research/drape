@@ -490,7 +490,7 @@
 <script>
 (function(){
   "use strict";
-  var APP_VERSION = "34";
+  var APP_VERSION = "35";
 
   /* ---- 언어 ---- 기기 언어가 한국어면 ko, 아니면 en. 화면의 EN/한국어 버튼으로 바꾸면 기억한다. */
   var T = {
@@ -1178,7 +1178,8 @@
      카메라 자동 화이트밸런스는 화면 전체를 보고 색을 맞춰서, 노란 벽 앞이면 얼굴이 파래지는 식으로 배경에 끌려간다.
      얼굴 옆에 든 흰 종이를 한 번 누르면 그 부분이 무채색이 되도록 R·G·B 배율을 구해 영상에 SVG 색 행렬(#wbf)로 입힌다.
      배율은 선형 RGB에서 구하고(필터도 linearRGB), 세 채널 평균을 기준으로 해 밝기는 거의 그대로다.
-     배율이 0.6~1.7 밖이거나 너무 어두우면 종이가 아니라고 본다 — 종이도 증백제로 살짝 푸를 수 있어 "크게 틀어진 걸 바로잡는" 정도.
+     배율이 0.5~2.0 밖이거나, 너무 어둡거나, 붉은기(Lab a > 10)가 강하면 종이가 아니라고 본다 — 노란 조명 속 종이는 노랑(a≈0)이고
+     피부는 주황(a 10~20)이라 a 로 가른다(v34 시험: 0.6~1.7 은 노란 조명 종이를 거절해 넓힘). 종이도 증백제로 살짝 푸를 수 있어 "크게 틀어진 걸 바로잡는" 정도.
      카메라가 다시 색을 맞추면 배율이 어긋나므로, 빛 고정이 되는 기기에서는 먼저 고정한다. */
   var wbOn=false, wbPicking=false;
   function toLin(v){ v/=255; return v<=0.04045 ? v/12.92 : Math.pow((v+0.055)/1.055,2.4); }
@@ -1222,7 +1223,8 @@
     e.stopImmediatePropagation(); e.preventDefault();
     var c=wbSample(e.clientX, e.clientY), m=c ? (c[0]+c[1]+c[2])/3 : 0;
     var g=c && m>0.12 ? [m/c[0], m/c[1], m/c[2]] : null;
-    if(!g || g.some(function(v){ return v<0.6 || v>1.7; })){ $("wbTipText").textContent=t("wbFail"); return; }
+    var lab=c ? srgbToLab.apply(null, c.map(function(v){ return 255*(v<=0.0031308 ? 12.92*v : 1.055*Math.pow(v,1/2.4)-0.055); })) : null;
+    if(!g || lab.a>10 || g.some(function(v){ return v<0.5 || v>2.0; })){ $("wbTipText").textContent=t("wbFail"); return; }
     wbPick(false); setWb(true, g);
   }, true);
 
