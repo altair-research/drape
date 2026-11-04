@@ -1,6 +1,6 @@
 # 작은 폰·WebKit 점검 — 2026-11-04
 
-최종 전체 검사 **43통과·7실패**, skip 0. `codex/e2e-tests`의 `8e39e55` 위에서 `codex/mobile-fixes`로 작업했다. 수정 전 v35 → 검토용 v36. main 병합·푸시·배포 없음.
+최종 전체 검사 **43통과·7실패**, skip 0. `codex/e2e-tests`의 `8e39e55` 위에서 `codex/mobile-fixes`로 작업했다. 수정 전 v35 → 검토용 v36. 이 작업에서는 main 병합·푸시·배포를 하지 않았다. 최종 확인 때 별도 작업의 ①·② main 반영을 확인했다(main d56a6f5). main의 앱은 v35이며 ③은 포함되지 않았다.
 
 ## 고친 문제
 

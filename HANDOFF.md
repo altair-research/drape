@@ -2,7 +2,7 @@
 
 > 갱신: 2026-11-04 — Codex ①·②·③ 완료, 검토 브랜치만 푸시
 > 상태: ① 자동 검사 29통과·5실패, ② 색 감사 267통과·0실패(유사색 3쌍), ③ 전체 43통과·7실패(WebKit 시간 초과 6·종료 1). 운영 v35·Play Alpha 릴리스 2 Published 유지. 검토용 CSS v36, 전후 사진 172장, 보충 후 모바일 16조합 배치 문제 0건.
-> 다음: 프로젝트 타워가 codex/e2e-tests·codex/color-audit·codex/mobile-fixes 보고서 검토 후 병합 판단. WebKit 실패 원인·실제 iOS 영상/노치 확인. 기존 일정: ① 폰 링크 확인(아래 3줄) ② **테스터 12명 10-28 까지** → 14일(11-11) → 신청(`store/production-application.md`) → ~11-18 승인 → **~11-20 출시**(순서 `PLAY-STORE.md` §7-5). 명단이 하루 늦으면 출시도 하루 늦다
+> 다음: 별도 작업에서 ①·② main 병합 확인(d56a6f5). 프로젝트 타워는 ③ codex/mobile-fixes 보고서 검토 후 병합 판단. WebKit 실패 원인·실제 iOS 영상/노치 확인. 기존 일정: ① 폰 링크 확인(아래 3줄) ② **테스터 12명 10-28 까지** → 14일(11-11) → 신청(`store/production-application.md`) → ~11-18 승인 → **~11-20 출시**(순서 `PLAY-STORE.md` §7-5). 명단이 하루 늦으면 출시도 하루 늦다
 > 폰 확인(사용자, 1분): 1. Play 스토어 > 내 앱에서 Color Mirror 업데이트(1.0.1)가 깔렸는지 본다
 >   2. 카톡·메모 등에서 `https://altair-research.github.io/sprout-frame/` 링크를 누른다
 >   3. Color Mirror 가 **안** 뜨고 브라우저(또는 Sprout Frame)로 열리면 성공 — 뜨면 총괄 타워에 한마디
@@ -35,3 +35,5 @@
 - 2026-11-04 — ① codex/e2e-tests: 합성 canvas 사진 기반 Playwright 34건. Chromium 17/0, WebKit 12/5. WebKit 영어 이미지 준비 시간 초과 1·페이지 생성 실패 4를 그대로 기록. 사진 필터는 Chromium 한/영·WebKit 한국어에서 회색 픽셀 확인. 앱·sw 미수정, main 미병합·미배포. 보고서 tests/e2e/REPORT.md. 실제 iOS 카메라는 확인 필요.
 
 - 2026-11-04 — ③ codex/mobile-fixes(① 8e39e55 위): 320px 안내 상단 잘림, 목록/좋아요 취소 버튼 넘침, 작은 터치 영역, safe-area 침범과 WebKit 패널 비침을 CSS로 수정. APP_VERSION·sw VERSION 모두 36, 기능·문구·색 데이터 변경 없음. 최종 전체 검사 Chromium 25/0, WebKit 18/7 = 43통과·7실패(시간 초과 6·브라우저 종료 1). 누락 촬영 WebKit 360px 한국어 보충 1/0으로 16조합 측정 문제 0건·PNG 172장(각 96,343 bytes 이하) 확보. 이전 실패는 유지, skip 없음. tests/e2e/MOBILE-REPORT.md에 상세·사진 목록. ② 별도 브랜치 감사는 가을 기본색 요약이 선명한 쪽임을 지적. 실제 iOS 카메라 영상·노치는 확인 필요. 세 브랜치만 공유, main 병합/배포 없음.
+
+- 2026-11-04 최종 원격 확인 — 작업 도중 이 세션 밖에서 ①·②가 main에 반영됨(main d56a6f5). 운영 코드 APP_VERSION은 여전히 35, ③은 main의 조상이 아님을 확인. 이 작업에서는 main 병합·푸시를 하지 않았다. ③ 검토 대기와 외부 반영을 구분한다.
