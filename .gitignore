@@ -4,3 +4,6 @@ drape-pwa.zip
 signing-key-info.txt
 *.jks
 store/screenshots/
+node_modules/
+test-results/
+playwright-report/
