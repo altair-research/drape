@@ -7,3 +7,4 @@ store/screenshots/
 node_modules/
 test-results/
 playwright-report/
+tests/e2e/mobile-shots/
