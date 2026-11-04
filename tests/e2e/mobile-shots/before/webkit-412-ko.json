@@ -1,0 +1,1178 @@
+{
+  "phase": "before",
+  "browser": "webkit",
+  "viewport": {
+    "width": 412,
+    "height": 915
+  },
+  "lang": "ko",
+  "shots": [
+    {
+      "file": "webkit-412-ko-intro.png",
+      "bytes": 49913
+    },
+    {
+      "file": "webkit-412-ko-base.png",
+      "bytes": 43939
+    },
+    {
+      "file": "webkit-412-ko-menu.png",
+      "bytes": 32165
+    },
+    {
+      "file": "webkit-412-ko-balance.png",
+      "bytes": 48050
+    },
+    {
+      "file": "webkit-412-ko-saved.png",
+      "bytes": 57319
+    }
+  ],
+  "measurements": [
+    {
+      "state": "intro",
+      "issues": [],
+      "targets": [
+        {
+          "id": "introGo",
+          "width": 334,
+          "height": 51
+        }
+      ]
+    },
+    {
+      "state": "base",
+      "issues": [
+        "handle: target 104.0×34.0 <40",
+        "봄 웜: target 76.0×33.0 <40",
+        "여름 쿨: target 76.0×33.0 <40",
+        "가을 웜: target 76.0×33.0 <40",
+        "겨울 쿨: target 76.0×33.0 <40",
+        "heartTab: target 56.0×33.0 <40",
+        "compare: target 95.4×37.0 <40",
+        "save: target 163.6×37.0 <40",
+        "openSaved: target 63.2×37.0 <40",
+        "menuBtn: target 37.9×36.0 <40"
+      ],
+      "targets": [
+        {
+          "id": "handle",
+          "width": 104,
+          "height": 34
+        },
+        {
+          "id": "봄 웜",
+          "width": 76,
+          "height": 33
+        },
+        {
+          "id": "여름 쿨",
+          "width": 76,
+          "height": 33
+        },
+        {
+          "id": "가을 웜",
+          "width": 76,
+          "height": 33
+        },
+        {
+          "id": "겨울 쿨",
+          "width": 76,
+          "height": 33
+        },
+        {
+          "id": "heartTab",
+          "width": 56,
+          "height": 33
+        },
+        {
+          "id": "봄 웜 · 아이보리",
+          "width": 46.6,
+          "height": 46.6
+        },
+        {
+          "id": "봄 웜 · 웜 베이지",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "봄 웜 · 카멜",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "봄 웜 · 피치",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "봄 웜 · 코랄",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "봄 웜 · 살몬 핑크",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "봄 웜 · 토마토 레드",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "봄 웜 · 골든 옐로",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "봄 웜 · 애플 그린",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "봄 웜 · 아쿠아",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "봄 웜 · 브라이트 네이비",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "봄 웜 · 라이트 카키",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "여름 쿨 · 오프 화이트",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "여름 쿨 · 라이트 그레이",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "여름 쿨 · 미디엄 그레이",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "여름 쿨 · 파우더 블루",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "여름 쿨 · 그레이시 블루",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "여름 쿨 · 소프트 네이비",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "여름 쿨 · 라벤더",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "여름 쿨 · 로즈 핑크",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "여름 쿨 · 더스티 로즈",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "여름 쿨 · 라즈베리",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "여름 쿨 · 소프트 민트",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "여름 쿨 · 로즈 브라운",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "가을 웜 · 크림 베이지",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "가을 웜 · 샌드 베이지",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "가을 웜 · 캐러멜",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "가을 웜 · 카키 브라운",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "가을 웜 · 다크 브라운",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "가을 웜 · 올리브",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "가을 웜 · 카키 그린",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "가을 웜 · 포레스트",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "가을 웜 · 머스터드",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "가을 웜 · 펌킨",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "가을 웜 · 테라코타",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "가을 웜 · 브릭 와인",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "겨울 쿨 · 퓨어 화이트",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "겨울 쿨 · 아이시 블루",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "겨울 쿨 · 아이시 핑크",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "겨울 쿨 · 트루 블랙",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "겨울 쿨 · 차콜",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "겨울 쿨 · 딥 네이비",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "겨울 쿨 · 로열 블루",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "겨울 쿨 · 퍼플",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "겨울 쿨 · 에메랄드",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "겨울 쿨 · 트루 레드",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "겨울 쿨 · 버건디",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "겨울 쿨 · 마젠타",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "compare",
+          "width": 95.4,
+          "height": 37
+        },
+        {
+          "id": "save",
+          "width": 163.6,
+          "height": 37
+        },
+        {
+          "id": "openSaved",
+          "width": 63.2,
+          "height": 37
+        },
+        {
+          "id": "menuBtn",
+          "width": 37.9,
+          "height": 36
+        }
+      ]
+    },
+    {
+      "state": "menu",
+      "issues": [
+        "closeMenu: target 372.0×37.0 <40"
+      ],
+      "targets": [
+        {
+          "id": "wbBtn",
+          "width": 372,
+          "height": 47
+        },
+        {
+          "id": "guideBtn",
+          "width": 372,
+          "height": 47
+        },
+        {
+          "id": "langBtn",
+          "width": 372,
+          "height": 47
+        },
+        {
+          "id": "helpBtn",
+          "width": 372,
+          "height": 47
+        },
+        {
+          "id": "shareBtn",
+          "width": 372,
+          "height": 47
+        },
+        {
+          "id": "feedbackLink",
+          "width": 372,
+          "height": 47
+        },
+        {
+          "id": "privacyLink",
+          "width": 372,
+          "height": 47
+        },
+        {
+          "id": "closeMenu",
+          "width": 372,
+          "height": 37
+        }
+      ]
+    },
+    {
+      "state": "balance",
+      "issues": [
+        "handle: target 104.0×34.0 <40",
+        "wbCancel: target 47.0×27.5 <40",
+        "봄 웜: target 76.0×33.0 <40",
+        "여름 쿨: target 76.0×33.0 <40",
+        "가을 웜: target 76.0×33.0 <40",
+        "겨울 쿨: target 76.0×33.0 <40",
+        "heartTab: target 56.0×33.0 <40",
+        "compare: target 95.4×37.0 <40",
+        "save: target 163.6×37.0 <40",
+        "openSaved: target 63.2×37.0 <40",
+        "menuBtn: target 37.9×36.0 <40"
+      ],
+      "targets": [
+        {
+          "id": "handle",
+          "width": 104,
+          "height": 34
+        },
+        {
+          "id": "wbCancel",
+          "width": 47,
+          "height": 27.5
+        },
+        {
+          "id": "봄 웜",
+          "width": 76,
+          "height": 33
+        },
+        {
+          "id": "여름 쿨",
+          "width": 76,
+          "height": 33
+        },
+        {
+          "id": "가을 웜",
+          "width": 76,
+          "height": 33
+        },
+        {
+          "id": "겨울 쿨",
+          "width": 76,
+          "height": 33
+        },
+        {
+          "id": "heartTab",
+          "width": 56,
+          "height": 33
+        },
+        {
+          "id": "봄 웜 · 아이보리",
+          "width": 46.6,
+          "height": 46.6
+        },
+        {
+          "id": "봄 웜 · 웜 베이지",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "봄 웜 · 카멜",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "봄 웜 · 피치",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "봄 웜 · 코랄",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "봄 웜 · 살몬 핑크",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "봄 웜 · 토마토 레드",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "봄 웜 · 골든 옐로",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "봄 웜 · 애플 그린",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "봄 웜 · 아쿠아",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "봄 웜 · 브라이트 네이비",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "봄 웜 · 라이트 카키",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "여름 쿨 · 오프 화이트",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "여름 쿨 · 라이트 그레이",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "여름 쿨 · 미디엄 그레이",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "여름 쿨 · 파우더 블루",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "여름 쿨 · 그레이시 블루",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "여름 쿨 · 소프트 네이비",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "여름 쿨 · 라벤더",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "여름 쿨 · 로즈 핑크",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "여름 쿨 · 더스티 로즈",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "여름 쿨 · 라즈베리",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "여름 쿨 · 소프트 민트",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "여름 쿨 · 로즈 브라운",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "가을 웜 · 크림 베이지",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "가을 웜 · 샌드 베이지",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "가을 웜 · 캐러멜",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "가을 웜 · 카키 브라운",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "가을 웜 · 다크 브라운",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "가을 웜 · 올리브",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "가을 웜 · 카키 그린",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "가을 웜 · 포레스트",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "가을 웜 · 머스터드",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "가을 웜 · 펌킨",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "가을 웜 · 테라코타",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "가을 웜 · 브릭 와인",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "겨울 쿨 · 퓨어 화이트",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "겨울 쿨 · 아이시 블루",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "겨울 쿨 · 아이시 핑크",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "겨울 쿨 · 트루 블랙",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "겨울 쿨 · 차콜",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "겨울 쿨 · 딥 네이비",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "겨울 쿨 · 로열 블루",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "겨울 쿨 · 퍼플",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "겨울 쿨 · 에메랄드",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "겨울 쿨 · 트루 레드",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "겨울 쿨 · 버건디",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "겨울 쿨 · 마젠타",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "compare",
+          "width": 95.4,
+          "height": 37
+        },
+        {
+          "id": "save",
+          "width": 163.6,
+          "height": 37
+        },
+        {
+          "id": "openSaved",
+          "width": 63.2,
+          "height": 37
+        },
+        {
+          "id": "menuBtn",
+          "width": 37.9,
+          "height": 36
+        }
+      ]
+    },
+    {
+      "state": "saved",
+      "issues": [
+        ".actions: internal horizontal overflow 388/372",
+        "아이보리: target 90.0×28.0 <40",
+        "웜 베이지: target 93.3×28.0 <40",
+        "카멜: target 66.0×28.0 <40",
+        "오프 화이트: target 105.3×28.0 <40",
+        "라이트 그레이: target 117.3×28.0 <40",
+        "미디엄 그레이: target 117.3×28.0 <40",
+        "compareKept: target 116.9×37.0 <40",
+        "shareResult: target 79.4×37.0 <40",
+        "closeSheet: target 76.0×37.0 <40",
+        "clearSaved: target 91.9×37.0 <40"
+      ],
+      "targets": [
+        {
+          "id": "아이보리",
+          "width": 90,
+          "height": 28
+        },
+        {
+          "id": "웜 베이지",
+          "width": 93.3,
+          "height": 28
+        },
+        {
+          "id": "카멜",
+          "width": 66,
+          "height": 28
+        },
+        {
+          "id": "오프 화이트",
+          "width": 105.3,
+          "height": 28
+        },
+        {
+          "id": "라이트 그레이",
+          "width": 117.3,
+          "height": 28
+        },
+        {
+          "id": "미디엄 그레이",
+          "width": 117.3,
+          "height": 28
+        },
+        {
+          "id": "compareKept",
+          "width": 116.9,
+          "height": 37
+        },
+        {
+          "id": "shareResult",
+          "width": 79.4,
+          "height": 37
+        },
+        {
+          "id": "closeSheet",
+          "width": 76,
+          "height": 37
+        },
+        {
+          "id": "clearSaved",
+          "width": 91.9,
+          "height": 37
+        }
+      ]
+    },
+    {
+      "state": "base",
+      "issues": [
+        "handle: target 104.0×34.0 <40",
+        "흐리게: target 26.0×26.0 <40",
+        "기본: target 26.0×26.0 <40",
+        "선명하게: target 26.0×26.0 <40",
+        "봄 웜: target 76.0×33.0 <40",
+        "여름 쿨: target 76.0×33.0 <40",
+        "가을 웜: target 76.0×33.0 <40",
+        "겨울 쿨: target 76.0×33.0 <40",
+        "heartTab: target 56.0×33.0 <40",
+        "봄 웜 · 아이보리: text exceeds button width",
+        "봄 웜 · 웜 베이지: text exceeds button width",
+        "봄 웜 · 카멜: text exceeds button width",
+        "여름 쿨 · 오프 화이트: text exceeds button width",
+        "여름 쿨 · 라이트 그레이: text exceeds button width",
+        "여름 쿨 · 미디엄 그레이: text exceeds button width",
+        "compare: target 95.4×37.0 <40",
+        "save: target 163.6×37.0 <40",
+        "openSaved: target 63.2×37.0 <40",
+        "menuBtn: target 37.9×36.0 <40"
+      ],
+      "targets": [
+        {
+          "id": "handle",
+          "width": 104,
+          "height": 34
+        },
+        {
+          "id": "흐리게",
+          "width": 26,
+          "height": 26
+        },
+        {
+          "id": "기본",
+          "width": 26,
+          "height": 26
+        },
+        {
+          "id": "선명하게",
+          "width": 26,
+          "height": 26
+        },
+        {
+          "id": "봄 웜",
+          "width": 76,
+          "height": 33
+        },
+        {
+          "id": "여름 쿨",
+          "width": 76,
+          "height": 33
+        },
+        {
+          "id": "가을 웜",
+          "width": 76,
+          "height": 33
+        },
+        {
+          "id": "겨울 쿨",
+          "width": 76,
+          "height": 33
+        },
+        {
+          "id": "heartTab",
+          "width": 56,
+          "height": 33
+        },
+        {
+          "id": "봄 웜 · 아이보리",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "봄 웜 · 웜 베이지",
+          "width": 46.6,
+          "height": 46.6
+        },
+        {
+          "id": "봄 웜 · 카멜",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "봄 웜 · 피치",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "봄 웜 · 코랄",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "봄 웜 · 살몬 핑크",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "봄 웜 · 토마토 레드",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "봄 웜 · 골든 옐로",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "봄 웜 · 애플 그린",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "봄 웜 · 아쿠아",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "봄 웜 · 브라이트 네이비",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "봄 웜 · 라이트 카키",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "여름 쿨 · 오프 화이트",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "여름 쿨 · 라이트 그레이",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "여름 쿨 · 미디엄 그레이",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "여름 쿨 · 파우더 블루",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "여름 쿨 · 그레이시 블루",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "여름 쿨 · 소프트 네이비",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "여름 쿨 · 라벤더",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "여름 쿨 · 로즈 핑크",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "여름 쿨 · 더스티 로즈",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "여름 쿨 · 라즈베리",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "여름 쿨 · 소프트 민트",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "여름 쿨 · 로즈 브라운",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "가을 웜 · 크림 베이지",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "가을 웜 · 샌드 베이지",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "가을 웜 · 캐러멜",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "가을 웜 · 카키 브라운",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "가을 웜 · 다크 브라운",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "가을 웜 · 올리브",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "가을 웜 · 카키 그린",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "가을 웜 · 포레스트",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "가을 웜 · 머스터드",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "가을 웜 · 펌킨",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "가을 웜 · 테라코타",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "가을 웜 · 브릭 와인",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "겨울 쿨 · 퓨어 화이트",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "겨울 쿨 · 아이시 블루",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "겨울 쿨 · 아이시 핑크",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "겨울 쿨 · 트루 블랙",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "겨울 쿨 · 차콜",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "겨울 쿨 · 딥 네이비",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "겨울 쿨 · 로열 블루",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "겨울 쿨 · 퍼플",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "겨울 쿨 · 에메랄드",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "겨울 쿨 · 트루 레드",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "겨울 쿨 · 버건디",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "겨울 쿨 · 마젠타",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "compare",
+          "width": 95.4,
+          "height": 37
+        },
+        {
+          "id": "save",
+          "width": 163.6,
+          "height": 37
+        },
+        {
+          "id": "openSaved",
+          "width": 63.2,
+          "height": 37
+        },
+        {
+          "id": "menuBtn",
+          "width": 37.9,
+          "height": 36
+        }
+      ]
+    },
+    {
+      "state": "simulated-safe-area",
+      "issues": [
+        "compare: simulated safe area",
+        "menuBtn: simulated safe area",
+        "menu: simulated safe top/side",
+        "sheet: simulated safe top/side"
+      ]
+    }
+  ],
+  "issues": [
+    "base: handle: target 104.0×34.0 <40",
+    "base: 봄 웜: target 76.0×33.0 <40",
+    "base: 여름 쿨: target 76.0×33.0 <40",
+    "base: 가을 웜: target 76.0×33.0 <40",
+    "base: 겨울 쿨: target 76.0×33.0 <40",
+    "base: heartTab: target 56.0×33.0 <40",
+    "base: compare: target 95.4×37.0 <40",
+    "base: save: target 163.6×37.0 <40",
+    "base: openSaved: target 63.2×37.0 <40",
+    "base: menuBtn: target 37.9×36.0 <40",
+    "menu: closeMenu: target 372.0×37.0 <40",
+    "balance: handle: target 104.0×34.0 <40",
+    "balance: wbCancel: target 47.0×27.5 <40",
+    "balance: 봄 웜: target 76.0×33.0 <40",
+    "balance: 여름 쿨: target 76.0×33.0 <40",
+    "balance: 가을 웜: target 76.0×33.0 <40",
+    "balance: 겨울 쿨: target 76.0×33.0 <40",
+    "balance: heartTab: target 56.0×33.0 <40",
+    "balance: compare: target 95.4×37.0 <40",
+    "balance: save: target 163.6×37.0 <40",
+    "balance: openSaved: target 63.2×37.0 <40",
+    "balance: menuBtn: target 37.9×36.0 <40",
+    "saved: .actions: internal horizontal overflow 388/372",
+    "saved: 아이보리: target 90.0×28.0 <40",
+    "saved: 웜 베이지: target 93.3×28.0 <40",
+    "saved: 카멜: target 66.0×28.0 <40",
+    "saved: 오프 화이트: target 105.3×28.0 <40",
+    "saved: 라이트 그레이: target 117.3×28.0 <40",
+    "saved: 미디엄 그레이: target 117.3×28.0 <40",
+    "saved: compareKept: target 116.9×37.0 <40",
+    "saved: shareResult: target 79.4×37.0 <40",
+    "saved: closeSheet: target 76.0×37.0 <40",
+    "saved: clearSaved: target 91.9×37.0 <40",
+    "base: handle: target 104.0×34.0 <40",
+    "base: 흐리게: target 26.0×26.0 <40",
+    "base: 기본: target 26.0×26.0 <40",
+    "base: 선명하게: target 26.0×26.0 <40",
+    "base: 봄 웜: target 76.0×33.0 <40",
+    "base: 여름 쿨: target 76.0×33.0 <40",
+    "base: 가을 웜: target 76.0×33.0 <40",
+    "base: 겨울 쿨: target 76.0×33.0 <40",
+    "base: heartTab: target 56.0×33.0 <40",
+    "base: 봄 웜 · 아이보리: text exceeds button width",
+    "base: 봄 웜 · 웜 베이지: text exceeds button width",
+    "base: 봄 웜 · 카멜: text exceeds button width",
+    "base: 여름 쿨 · 오프 화이트: text exceeds button width",
+    "base: 여름 쿨 · 라이트 그레이: text exceeds button width",
+    "base: 여름 쿨 · 미디엄 그레이: text exceeds button width",
+    "base: compare: target 95.4×37.0 <40",
+    "base: save: target 163.6×37.0 <40",
+    "base: openSaved: target 63.2×37.0 <40",
+    "base: menuBtn: target 37.9×36.0 <40",
+    "simulated-safe-area: compare: simulated safe area",
+    "simulated-safe-area: menuBtn: simulated safe area",
+    "simulated-safe-area: menu: simulated safe top/side",
+    "simulated-safe-area: sheet: simulated safe top/side"
+  ]
+}

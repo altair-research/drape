@@ -26,6 +26,6 @@ module.exports = defineConfig({
     url: 'http://127.0.0.1:8765/index.html',
     reuseExistingServer: false,
     stderr: 'ignore',
-    timeout: 20_000,
+    timeout: 60_000,
   },
 });

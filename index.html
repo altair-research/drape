@@ -46,6 +46,8 @@
     width:100%;
     height:100dvh;
     min-height:520px;
+    padding-left:env(safe-area-inset-left);
+    padding-right:env(safe-area-inset-right);
     overflow:hidden;
     display:flex;
     flex-direction:column;
@@ -76,7 +78,7 @@
     position:absolute;left:50%;top:calc(var(--drape-top) + 46px);
     transform:translateX(-50%);
     z-index:4;
-    width:104px;height:34px;
+    width:104px;height:40px;
     display:flex;align-items:center;justify-content:center;
     border:0;padding:0;background:none;cursor:grab;
     touch-action:none;
@@ -160,7 +162,7 @@
     background:rgba(0,0,0,.38);backdrop-filter:blur(6px);
   }
   .levels button{
-    width:26px;height:26px;border-radius:50%;padding:0;cursor:pointer;
+    width:40px;height:40px;border-radius:50%;padding:0;cursor:pointer;
     border:2px solid transparent;box-shadow:0 0 0 1px rgba(0,0,0,.35);
     touch-action:manipulation;
   }
@@ -193,7 +195,7 @@
     width:max-content;max-width:calc(100% - 28px);
   }
   .wbtip[hidden]{display:none}
-  .wbtip button{flex:none;font:inherit;color:#fff;background:rgba(255,255,255,.16);border:0;border-radius:999px;padding:5px 11px;cursor:pointer}
+  .wbtip button{flex:none;min-width:40px;min-height:40px;font:inherit;color:#fff;background:rgba(255,255,255,.16);border:0;border-radius:999px;padding:5px 11px;cursor:pointer}
 
   /* ---------- console ---------- */
   .console{
@@ -205,6 +207,7 @@
   .tabs{display:flex;gap:6px;padding:0 14px}
   .tab{
     flex:1;appearance:none;cursor:pointer;
+    min-height:40px;
     background:transparent;color:var(--fg-dim);
     border:1px solid transparent;border-radius:8px;
     font-family:var(--sans);font-size:13px;font-weight:400;
@@ -253,6 +256,7 @@
   .actions{display:flex;gap:8px;padding:0 14px;align-items:center}
   .btn{
     appearance:none;cursor:pointer;
+    min-width:40px;min-height:40px;
     background:var(--ink-2);color:var(--fg);
     border:1px solid var(--line);border-radius:9px;
     font-family:var(--sans);font-size:12.5px;font-weight:400;
@@ -268,17 +272,23 @@
   .btn .num{font-family:var(--mono);font-size:11.5px;color:var(--fg-dim)}
   .btn.wide{flex:1;justify-content:center}
   .btn.hold:active{background:#26262b}
+  /* Keep all four controls reachable, including the longer "Unlike" label. */
+  .console > .actions{display:grid;grid-template-columns:repeat(3,minmax(0,1fr)) 40px;gap:6px;padding:0 10px;align-items:stretch}
+  .console > .actions .btn{min-width:0;min-height:44px;padding:8px 4px;white-space:normal;justify-content:center}
+  #saveText{min-width:0}
 
   /* ---------- saved sheet ---------- */
   .sheet{
     position:absolute;inset:0;z-index:20;
-    background:rgba(8,8,10,.86);
+    background:rgba(8,8,10,.96);
     backdrop-filter:blur(14px);
     display:flex;flex-direction:column;
-    padding:22px 20px max(20px,env(safe-area-inset-bottom));
+    padding:max(22px,env(safe-area-inset-top)) max(20px,env(safe-area-inset-right)) max(20px,env(safe-area-inset-bottom)) max(20px,env(safe-area-inset-left));
     gap:16px;overflow-y:auto;
   }
   .sheet[hidden]{display:none!important}
+  .sheet .actions{flex-wrap:wrap;align-items:stretch}
+  .sheet .actions .btn{flex:1 1 120px;white-space:normal;justify-content:center}
   .sheet h2{font-family:var(--serif);font-size:22px;font-weight:400;margin:0}
   .sheet .lede{margin:-8px 0 0;font-size:12.5px;line-height:1.65;color:var(--fg-dim);max-width:48ch}
   .group{display:flex;flex-direction:column;gap:8px}
@@ -299,6 +309,7 @@
   .savedlist{display:flex;flex-wrap:wrap;gap:7px}
   .savedlist button{
     appearance:none;cursor:pointer;
+    min-width:40px;min-height:40px;
     display:inline-flex;align-items:center;gap:7px;
     background:var(--ink-2);border:1px solid var(--line);
     border-radius:999px;padding:5px 11px 5px 6px;
@@ -325,11 +336,12 @@
     position:fixed;inset:0;z-index:50;
     background:rgba(0,0,0,.72);backdrop-filter:blur(8px);
     display:flex;align-items:flex-end;justify-content:center;
-    padding:16px;padding-bottom:max(16px,env(safe-area-inset-bottom));
+    padding:max(16px,env(safe-area-inset-top)) max(16px,env(safe-area-inset-right)) max(16px,env(safe-area-inset-bottom)) max(16px,env(safe-area-inset-left));
   }
   .intro[hidden]{display:none}
   .intro .card{
     width:100%;max-width:480px;
+    max-height:100%;overflow-y:auto;overscroll-behavior:contain;
     background:linear-gradient(180deg,#1E1C24 0%,#151419 100%);
     border:1px solid rgba(255,255,255,.1);border-radius:30px;
     padding:26px 22px 20px;
@@ -490,7 +502,7 @@
 <script>
 (function(){
   "use strict";
-  var APP_VERSION = "35";
+  var APP_VERSION = "36";
 
   /* ---- 언어 ---- 기기 언어가 한국어면 ko, 아니면 en. 화면의 EN/한국어 버튼으로 바꾸면 기억한다. */
   var T = {

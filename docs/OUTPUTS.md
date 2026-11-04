@@ -5,6 +5,8 @@
 
 | 날짜 | 제목 | 경로 / 주소 | 한 줄 설명 |
 |---|---|---|---|
+| 2026-11-04 | ③ 모바일 CSS 점검 | `tests/e2e/MOBILE-REPORT.md` (codex/mobile-fixes) | 검토용 v36. 전체 43통과·7실패, 보충 후 모바일 16조합 문제 0건, 전후 사진 172장 |
+| 2026-11-04 | ② 색 데이터 감사 (별도 브랜치) | [COLOR-AUDIT.md](https://github.com/altair-research/drape/blob/codex/color-audit/docs/COLOR-AUDIT.md) | 267통과·0실패, 유사색 3쌍, 가을 요약 방향·대표색 대안 |
 | 2026-11-04 | ① 자동 테스트 보고서 | `tests/e2e/REPORT.md` (codex/e2e-tests) | Chromium 17통과, WebKit 12통과·5실패. 합성 사진·화면 픽셀 검사, 앱 변경 없음 |
 | 2026-11-03 | 바뀐 점 보고서 (v34·v35) | `plans/archive/2026-11-03-report.html` | 흰 종이 보정 메뉴·안내·전후, 내가 고른 색 요약을 스크린샷으로(시험 그림, 사람 사진 없음) |
 | 2026-11-03 | Codex 지시문 3개 | `docs/codex-2026-11-03.md` | e2e 테스트(크롬+사파리 엔진)·색 데이터 감사·작은 폰 점검. 붙여넣기용, 결과는 codex/ 브랜치 |

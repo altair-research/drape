@@ -1,0 +1,1093 @@
+{
+  "phase": "after",
+  "browser": "webkit",
+  "viewport": {
+    "width": 360,
+    "height": 780
+  },
+  "lang": "en",
+  "cssSupport": {
+    "backdrop": true,
+    "webkitBackdrop": true
+  },
+  "shots": [
+    {
+      "file": "webkit-360-en-intro.png",
+      "bytes": 46629
+    },
+    {
+      "file": "webkit-360-en-base.png",
+      "bytes": 40896
+    },
+    {
+      "file": "webkit-360-en-menu.png",
+      "bytes": 25010
+    },
+    {
+      "file": "webkit-360-en-balance.png",
+      "bytes": 45220
+    },
+    {
+      "file": "webkit-360-en-saved.png",
+      "bytes": 46340
+    }
+  ],
+  "measurements": [
+    {
+      "state": "intro",
+      "issues": [],
+      "targets": [
+        {
+          "id": "introGo",
+          "width": 282,
+          "height": 51
+        }
+      ]
+    },
+    {
+      "state": "base",
+      "issues": [],
+      "targets": [
+        {
+          "id": "handle",
+          "width": 104,
+          "height": 40
+        },
+        {
+          "id": "Spring",
+          "width": 63,
+          "height": 40
+        },
+        {
+          "id": "Summer",
+          "width": 63,
+          "height": 40
+        },
+        {
+          "id": "Autumn",
+          "width": 63,
+          "height": 40
+        },
+        {
+          "id": "Winter",
+          "width": 63,
+          "height": 40
+        },
+        {
+          "id": "heartTab",
+          "width": 56,
+          "height": 40
+        },
+        {
+          "id": "Spring Warm · Ivory",
+          "width": 46.6,
+          "height": 46.6
+        },
+        {
+          "id": "Spring Warm · Warm Beige",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "Spring Warm · Camel",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "Spring Warm · Peach",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "Spring Warm · Coral",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "Spring Warm · Salmon Pink",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "Spring Warm · Tomato Red",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "Spring Warm · Golden Yellow",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "Spring Warm · Apple Green",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "Spring Warm · Aqua",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "Spring Warm · Bright Navy",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "Spring Warm · Light Khaki",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "Summer Cool · Off White",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "Summer Cool · Light Gray",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "Summer Cool · Medium Gray",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "Summer Cool · Powder Blue",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "Summer Cool · Grayish Blue",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "Summer Cool · Soft Navy",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "Summer Cool · Lavender",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "Summer Cool · Rose Pink",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "Summer Cool · Dusty Rose",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "Summer Cool · Raspberry",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "Summer Cool · Soft Mint",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "Summer Cool · Rose Brown",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "Autumn Warm · Cream Beige",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "Autumn Warm · Sand Beige",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "Autumn Warm · Caramel",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "Autumn Warm · Khaki Brown",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "Autumn Warm · Dark Brown",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "Autumn Warm · Olive",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "Autumn Warm · Khaki Green",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "Autumn Warm · Forest",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "Autumn Warm · Mustard",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "Autumn Warm · Pumpkin",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "Autumn Warm · Terracotta",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "Autumn Warm · Brick Wine",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "Winter Cool · Pure White",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "Winter Cool · Icy Blue",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "Winter Cool · Icy Pink",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "Winter Cool · True Black",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "Winter Cool · Charcoal",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "Winter Cool · Deep Navy",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "Winter Cool · Royal Blue",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "Winter Cool · Purple",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "Winter Cool · Emerald",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "Winter Cool · True Red",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "Winter Cool · Burgundy",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "Winter Cool · Magenta",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "compare",
+          "width": 94,
+          "height": 44
+        },
+        {
+          "id": "save",
+          "width": 94,
+          "height": 44
+        },
+        {
+          "id": "openSaved",
+          "width": 94,
+          "height": 44
+        },
+        {
+          "id": "menuBtn",
+          "width": 40,
+          "height": 44
+        }
+      ]
+    },
+    {
+      "state": "menu",
+      "issues": [],
+      "targets": [
+        {
+          "id": "wbBtn",
+          "width": 320,
+          "height": 47
+        },
+        {
+          "id": "guideBtn",
+          "width": 320,
+          "height": 47
+        },
+        {
+          "id": "langBtn",
+          "width": 320,
+          "height": 47
+        },
+        {
+          "id": "helpBtn",
+          "width": 320,
+          "height": 47
+        },
+        {
+          "id": "shareBtn",
+          "width": 320,
+          "height": 47
+        },
+        {
+          "id": "feedbackLink",
+          "width": 320,
+          "height": 47
+        },
+        {
+          "id": "privacyLink",
+          "width": 320,
+          "height": 47
+        },
+        {
+          "id": "closeMenu",
+          "width": 320,
+          "height": 40
+        }
+      ]
+    },
+    {
+      "state": "balance",
+      "issues": [],
+      "targets": [
+        {
+          "id": "handle",
+          "width": 104,
+          "height": 40
+        },
+        {
+          "id": "wbCancel",
+          "width": 57.1,
+          "height": 40
+        },
+        {
+          "id": "Spring",
+          "width": 63,
+          "height": 40
+        },
+        {
+          "id": "Summer",
+          "width": 63,
+          "height": 40
+        },
+        {
+          "id": "Autumn",
+          "width": 63,
+          "height": 40
+        },
+        {
+          "id": "Winter",
+          "width": 63,
+          "height": 40
+        },
+        {
+          "id": "heartTab",
+          "width": 56,
+          "height": 40
+        },
+        {
+          "id": "Spring Warm · Ivory",
+          "width": 46.6,
+          "height": 46.6
+        },
+        {
+          "id": "Spring Warm · Warm Beige",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "Spring Warm · Camel",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "Spring Warm · Peach",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "Spring Warm · Coral",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "Spring Warm · Salmon Pink",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "Spring Warm · Tomato Red",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "Spring Warm · Golden Yellow",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "Spring Warm · Apple Green",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "Spring Warm · Aqua",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "Spring Warm · Bright Navy",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "Spring Warm · Light Khaki",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "Summer Cool · Off White",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "Summer Cool · Light Gray",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "Summer Cool · Medium Gray",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "Summer Cool · Powder Blue",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "Summer Cool · Grayish Blue",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "Summer Cool · Soft Navy",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "Summer Cool · Lavender",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "Summer Cool · Rose Pink",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "Summer Cool · Dusty Rose",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "Summer Cool · Raspberry",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "Summer Cool · Soft Mint",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "Summer Cool · Rose Brown",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "Autumn Warm · Cream Beige",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "Autumn Warm · Sand Beige",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "Autumn Warm · Caramel",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "Autumn Warm · Khaki Brown",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "Autumn Warm · Dark Brown",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "Autumn Warm · Olive",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "Autumn Warm · Khaki Green",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "Autumn Warm · Forest",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "Autumn Warm · Mustard",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "Autumn Warm · Pumpkin",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "Autumn Warm · Terracotta",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "Autumn Warm · Brick Wine",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "Winter Cool · Pure White",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "Winter Cool · Icy Blue",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "Winter Cool · Icy Pink",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "Winter Cool · True Black",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "Winter Cool · Charcoal",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "Winter Cool · Deep Navy",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "Winter Cool · Royal Blue",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "Winter Cool · Purple",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "Winter Cool · Emerald",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "Winter Cool · True Red",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "Winter Cool · Burgundy",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "Winter Cool · Magenta",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "compare",
+          "width": 94,
+          "height": 44
+        },
+        {
+          "id": "save",
+          "width": 94,
+          "height": 44
+        },
+        {
+          "id": "openSaved",
+          "width": 94,
+          "height": 44
+        },
+        {
+          "id": "menuBtn",
+          "width": 40,
+          "height": 44
+        }
+      ]
+    },
+    {
+      "state": "saved",
+      "issues": [],
+      "targets": [
+        {
+          "id": "Ivory",
+          "width": 68,
+          "height": 40
+        },
+        {
+          "id": "Warm Beige",
+          "width": 106,
+          "height": 40
+        },
+        {
+          "id": "Camel",
+          "width": 75.1,
+          "height": 40
+        },
+        {
+          "id": "Off White",
+          "width": 93.1,
+          "height": 40
+        },
+        {
+          "id": "Light Gray",
+          "width": 96.1,
+          "height": 40
+        },
+        {
+          "id": "Medium Gray",
+          "width": 113.8,
+          "height": 40
+        },
+        {
+          "id": "compareKept",
+          "width": 156,
+          "height": 40
+        },
+        {
+          "id": "shareResult",
+          "width": 156,
+          "height": 40
+        },
+        {
+          "id": "closeSheet",
+          "width": 156,
+          "height": 40
+        },
+        {
+          "id": "clearSaved",
+          "width": 156,
+          "height": 40
+        }
+      ]
+    },
+    {
+      "state": "base",
+      "issues": [],
+      "targets": [
+        {
+          "id": "handle",
+          "width": 104,
+          "height": 40
+        },
+        {
+          "id": "Muted",
+          "width": 40,
+          "height": 40
+        },
+        {
+          "id": "Base",
+          "width": 40,
+          "height": 40
+        },
+        {
+          "id": "Vivid",
+          "width": 40,
+          "height": 40
+        },
+        {
+          "id": "Spring",
+          "width": 63,
+          "height": 40
+        },
+        {
+          "id": "Summer",
+          "width": 63,
+          "height": 40
+        },
+        {
+          "id": "Autumn",
+          "width": 63,
+          "height": 40
+        },
+        {
+          "id": "Winter",
+          "width": 63,
+          "height": 40
+        },
+        {
+          "id": "heartTab",
+          "width": 56,
+          "height": 40
+        },
+        {
+          "id": "Spring Warm · Ivory",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "Spring Warm · Warm Beige",
+          "width": 46.6,
+          "height": 46.6
+        },
+        {
+          "id": "Spring Warm · Camel",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "Spring Warm · Peach",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "Spring Warm · Coral",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "Spring Warm · Salmon Pink",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "Spring Warm · Tomato Red",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "Spring Warm · Golden Yellow",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "Spring Warm · Apple Green",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "Spring Warm · Aqua",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "Spring Warm · Bright Navy",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "Spring Warm · Light Khaki",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "Summer Cool · Off White",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "Summer Cool · Light Gray",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "Summer Cool · Medium Gray",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "Summer Cool · Powder Blue",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "Summer Cool · Grayish Blue",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "Summer Cool · Soft Navy",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "Summer Cool · Lavender",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "Summer Cool · Rose Pink",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "Summer Cool · Dusty Rose",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "Summer Cool · Raspberry",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "Summer Cool · Soft Mint",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "Summer Cool · Rose Brown",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "Autumn Warm · Cream Beige",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "Autumn Warm · Sand Beige",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "Autumn Warm · Caramel",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "Autumn Warm · Khaki Brown",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "Autumn Warm · Dark Brown",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "Autumn Warm · Olive",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "Autumn Warm · Khaki Green",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "Autumn Warm · Forest",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "Autumn Warm · Mustard",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "Autumn Warm · Pumpkin",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "Autumn Warm · Terracotta",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "Autumn Warm · Brick Wine",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "Winter Cool · Pure White",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "Winter Cool · Icy Blue",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "Winter Cool · Icy Pink",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "Winter Cool · True Black",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "Winter Cool · Charcoal",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "Winter Cool · Deep Navy",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "Winter Cool · Royal Blue",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "Winter Cool · Purple",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "Winter Cool · Emerald",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "Winter Cool · True Red",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "Winter Cool · Burgundy",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "Winter Cool · Magenta",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "compare",
+          "width": 94,
+          "height": 44
+        },
+        {
+          "id": "save",
+          "width": 94,
+          "height": 44
+        },
+        {
+          "id": "openSaved",
+          "width": 94,
+          "height": 44
+        },
+        {
+          "id": "menuBtn",
+          "width": 40,
+          "height": 44
+        }
+      ]
+    },
+    {
+      "state": "simulated-safe-area",
+      "issues": [],
+      "targets": [
+        {
+          "id": "compare",
+          "x": 30,
+          "y": 702,
+          "width": 80.65625,
+          "height": 44
+        },
+        {
+          "id": "save",
+          "x": 116.65625,
+          "y": 702,
+          "width": 80.671875,
+          "height": 44
+        },
+        {
+          "id": "openSaved",
+          "x": 203.328125,
+          "y": 702,
+          "width": 80.671875,
+          "height": 44
+        },
+        {
+          "id": "menuBtn",
+          "x": 290,
+          "y": 702,
+          "width": 40,
+          "height": 44
+        }
+      ]
+    }
+  ],
+  "issues": []
+}

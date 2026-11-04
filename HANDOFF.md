@@ -1,18 +1,18 @@
 # drape (Personal Color Mirror) — 인계
 
-> 갱신: 2026-11-04 — ① codex/e2e-tests 검증, main 미반영
-> 상태: ① 자동 테스트 29통과·5실패(WebKit 실행 문제), 보고서 `tests/e2e/REPORT.md`. 앱 v35 변경 없음. Play 비공개 테스트(Alpha) — 릴리스 2 (1.0.1) Published. 사이트 **v35** 운영 반영: v35 종이 판별 넓힘(노란 조명 종이 거절 버그), v34 흰 종이로 색 맞추기(메뉴, 배경 따라 바뀌는 얼굴색 보정)·좋아요 목록에 '내가 고른 색' 요약(온도·채도·밝기, 결과 공유에도 한 줄). 그 전 v29~v33 공유·의견·막대 색·만든 사람 한 줄. 실제 폰에서는 아직 안 눌러 봄
-> 다음: codex/e2e-tests 검토·② 색 감사·③ 모바일 점검. 기존 일정: ① 폰 링크 확인(아래 3줄) ② **테스터 12명 10-28 까지** → 14일(11-11) → 신청(`store/production-application.md`) → ~11-18 승인 → **~11-20 출시**(순서 `PLAY-STORE.md` §7-5). 명단이 하루 늦으면 출시도 하루 늦다
+> 갱신: 2026-11-04 — Codex ①·②·③ 완료, 검토 브랜치만 푸시
+> 상태: ① 자동 검사 29통과·5실패, ② 색 감사 267통과·0실패(유사색 3쌍), ③ 전체 43통과·7실패(WebKit 시간 초과 6·종료 1). 운영 v35·Play Alpha 릴리스 2 Published 유지. 검토용 CSS v36, 전후 사진 172장, 보충 후 모바일 16조합 배치 문제 0건.
+> 다음: 프로젝트 타워가 codex/e2e-tests·codex/color-audit·codex/mobile-fixes 보고서 검토 후 병합 판단. WebKit 실패 원인·실제 iOS 영상/노치 확인. 기존 일정: ① 폰 링크 확인(아래 3줄) ② **테스터 12명 10-28 까지** → 14일(11-11) → 신청(`store/production-application.md`) → ~11-18 승인 → **~11-20 출시**(순서 `PLAY-STORE.md` §7-5). 명단이 하루 늦으면 출시도 하루 늦다
 > 폰 확인(사용자, 1분): 1. Play 스토어 > 내 앱에서 Color Mirror 업데이트(1.0.1)가 깔렸는지 본다
 >   2. 카톡·메모 등에서 `https://altair-research.github.io/sprout-frame/` 링크를 누른다
 >   3. Color Mirror 가 **안** 뜨고 브라우저(또는 Sprout Frame)로 열리면 성공 — 뜨면 총괄 타워에 한마디
 > 막힘: 테스터 12명(15명 권장) 명단 — 사용자, 현재 `internal` 2명 (보드 `PLAY-TESTERS`, 메시지는 wearcast `docs/TESTER-INVITE.md` §0 두 앱 함께)
-> AI 결정: v29~v30 공유·의견·결과 공유 추가(MARKET §5-3 링크 공유가 유입 경로, 신청서 피드백 칸 대비) — 되돌리려면 index.html shareBtn·feedbackLink·shareResult 삭제 후 버전 올림
+> AI 결정: ③ 문구를 줄이지 않고 안내 내부 스크롤·버튼 줄바꿈, 최소 40px 터치 영역, safe-area 여백, 패널 비침 완화. 기능·색 데이터는 그대로 — 되돌리려면 모바일 CSS 변경을 되돌림. main 병합·배포는 하지 않음.
 > AI 결정: 출시 목표 11-30 → 11-20. 바닥은 Play 개인 계정 테스터 14일 + 승인 ~7일 + 심사 1~2일(§7-5). 조직 계정 우회는 D-U-N-S·비용 때문에 추천 안 함
 > AI 결정: 만든 사람 한 줄 영어판은 AI 가 옮김("A little mirror I made because I wondered which colors suit me. Take an easy look.") — 한국어는 사용자 문장 그대로. 바꾸려면 `index.html` `MAKER.en`
 > AI 결정: 스크린샷 5번째로 결과 화면 시안(`PLAY-STORE.md` §6-3), 짧은 설명에 "영상은 폰 밖으로 안 나가요 / no uploads"(§6-2) — 콘솔 반영은 출시 때 사용자가
 > AI 결정: 매칭 유료판 ① 지금은 무료 '내가 고른 색 요약', 유료판은 출시 뒤 판단(총괄 타워 11-02) — 이유: 출시 전에는 쓰는 사람의 반응을 아직 모름 · 되돌리려면: 유료 정밀 비교를 다시 검토
-> 더 볼 곳: `tests/e2e/REPORT.md`, 산출물 목록 `docs/OUTPUTS.md`, 바뀐 점 보고서 `plans/archive/2026-11-03-report.html`, Codex 지시문 `docs/codex-2026-11-03.md`, `PLAY-STORE.md` §6-2·§6-2c, `store/tester-invite.md`, `store/production-application.md`, `plans/`, 의도서 `C:\dev\_control-tower\intent\drape.md`
+> 더 볼 곳: `tests/e2e/MOBILE-REPORT.md`, `docs/COLOR-AUDIT.md`(codex/color-audit), `tests/e2e/REPORT.md`, 산출물 목록 `docs/OUTPUTS.md`, 바뀐 점 보고서 `plans/archive/2026-11-03-report.html`, Codex 지시문 `docs/codex-2026-11-03.md`, `PLAY-STORE.md` §6-2·§6-2c, `store/tester-invite.md`, `store/production-application.md`, `plans/`, 의도서 `C:\dev\_control-tower\intent\drape.md`
 
 ## 이 문서
 프로젝트 타워(`drape 프로젝트 타워` 세션)가 관리하는 대표 인계 문서. 위 머리말이 정본이고, Play 등록 절차의 상세는 `PLAY-STORE.md` 에 있다.
@@ -33,3 +33,5 @@
 - 2026-11-03 — 사용자 "어떻게 바꿨는지 잘 보여 주는 보고서": `plans/archive/2026-11-03-report.html`(메뉴·안내·전후·요약 스크린샷, 시험 그림만). 찍다가 버그 발견 — v34 의 종이 판별 한도 0.6~1.7 이 노란 조명 속 종이를 거절(파랑 배율 1.71) → v35 에서 0.5~2.0 + 붉은기(Lab a>10) 거절로 얼굴을 가름. 시험: 종이 ○ 얼굴 × 벽 ×. 보고서 두 장의 휴대폰 폭 넘침(표 때문에 578px) 고침. 총괄 타워 요청으로 Codex 지시문 3개(`docs/codex-2026-11-03.md`: e2e 테스트·색 감사·작은 폰 점검, 결과는 codex/ 브랜치로 받아 검토 후 병합). 전역 11-03 규칙대로 CLAUDE.md 맨 위에 '세션을 시작하면 이것부터' 절.
 
 - 2026-11-04 — ① codex/e2e-tests: 합성 canvas 사진 기반 Playwright 34건. Chromium 17/0, WebKit 12/5. WebKit 영어 이미지 준비 시간 초과 1·페이지 생성 실패 4를 그대로 기록. 사진 필터는 Chromium 한/영·WebKit 한국어에서 회색 픽셀 확인. 앱·sw 미수정, main 미병합·미배포. 보고서 tests/e2e/REPORT.md. 실제 iOS 카메라는 확인 필요.
+
+- 2026-11-04 — ③ codex/mobile-fixes(① 8e39e55 위): 320px 안내 상단 잘림, 목록/좋아요 취소 버튼 넘침, 작은 터치 영역, safe-area 침범과 WebKit 패널 비침을 CSS로 수정. APP_VERSION·sw VERSION 모두 36, 기능·문구·색 데이터 변경 없음. 최종 전체 검사 Chromium 25/0, WebKit 18/7 = 43통과·7실패(시간 초과 6·브라우저 종료 1). 누락 촬영 WebKit 360px 한국어 보충 1/0으로 16조합 측정 문제 0건·PNG 172장(각 96,343 bytes 이하) 확보. 이전 실패는 유지, skip 없음. tests/e2e/MOBILE-REPORT.md에 상세·사진 목록. ② 별도 브랜치 감사는 가을 기본색 요약이 선명한 쪽임을 지적. 실제 iOS 카메라 영상·노치는 확인 필요. 세 브랜치만 공유, main 병합/배포 없음.

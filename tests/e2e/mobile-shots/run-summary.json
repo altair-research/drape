@@ -1,0 +1,375 @@
+{
+  "date": "2026-11-04",
+  "appVersion": 36,
+  "counts": {
+    "PASSED": 43,
+    "FAILED": 7,
+    "SKIPPED": 0
+  },
+  "tests": [
+    {
+      "browser": "chromium",
+      "group": "e2e",
+      "name": "language switch updates menu and saved summary in both directions",
+      "status": "expected",
+      "errors": []
+    },
+    {
+      "browser": "chromium",
+      "group": "e2e",
+      "name": "no horizontal scroll 360 ko",
+      "status": "expected",
+      "errors": []
+    },
+    {
+      "browser": "chromium",
+      "group": "e2e",
+      "name": "no horizontal scroll 360 en",
+      "status": "expected",
+      "errors": []
+    },
+    {
+      "browser": "chromium",
+      "group": "e2e",
+      "name": "no horizontal scroll 412 ko",
+      "status": "expected",
+      "errors": []
+    },
+    {
+      "browser": "chromium",
+      "group": "e2e",
+      "name": "no horizontal scroll 412 en",
+      "status": "expected",
+      "errors": []
+    },
+    {
+      "browser": "webkit",
+      "group": "e2e",
+      "name": "language switch updates menu and saved summary in both directions",
+      "status": "unexpected",
+      "errors": [
+        "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m"
+      ]
+    },
+    {
+      "browser": "webkit",
+      "group": "e2e",
+      "name": "no horizontal scroll 360 ko",
+      "status": "unexpected",
+      "errors": [
+        "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m"
+      ]
+    },
+    {
+      "browser": "webkit",
+      "group": "e2e",
+      "name": "no horizontal scroll 360 en",
+      "status": "expected",
+      "errors": []
+    },
+    {
+      "browser": "webkit",
+      "group": "e2e",
+      "name": "no horizontal scroll 412 ko",
+      "status": "expected",
+      "errors": []
+    },
+    {
+      "browser": "webkit",
+      "group": "e2e",
+      "name": "no horizontal scroll 412 en",
+      "status": "expected",
+      "errors": []
+    },
+    {
+      "browser": "chromium",
+      "group": "e2e",
+      "name": "first load: no console errors, current version, intro closes",
+      "status": "expected",
+      "errors": []
+    },
+    {
+      "browser": "chromium",
+      "group": "e2e",
+      "name": "white paper: matrix gains and toggle off",
+      "status": "expected",
+      "errors": []
+    },
+    {
+      "browser": "chromium",
+      "group": "e2e",
+      "name": "white paper: rendered screenshot becomes gray",
+      "status": "expected",
+      "errors": []
+    },
+    {
+      "browser": "chromium",
+      "group": "e2e",
+      "name": "skin-colored patch is rejected",
+      "status": "expected",
+      "errors": []
+    },
+    {
+      "browser": "chromium",
+      "group": "e2e",
+      "name": "five picked colors: three summary rows, matching counts, empty state",
+      "status": "expected",
+      "errors": []
+    },
+    {
+      "browser": "chromium",
+      "group": "e2e",
+      "name": "result share includes season counts and leaning",
+      "status": "expected",
+      "errors": []
+    },
+    {
+      "browser": "webkit",
+      "group": "e2e",
+      "name": "first load: no console errors, current version, intro closes",
+      "status": "expected",
+      "errors": []
+    },
+    {
+      "browser": "webkit",
+      "group": "e2e",
+      "name": "white paper: matrix gains and toggle off",
+      "status": "expected",
+      "errors": []
+    },
+    {
+      "browser": "webkit",
+      "group": "e2e",
+      "name": "white paper: rendered screenshot becomes gray",
+      "status": "expected",
+      "errors": []
+    },
+    {
+      "browser": "webkit",
+      "group": "e2e",
+      "name": "skin-colored patch is rejected",
+      "status": "expected",
+      "errors": []
+    },
+    {
+      "browser": "webkit",
+      "group": "e2e",
+      "name": "five picked colors: three summary rows, matching counts, empty state",
+      "status": "unexpected",
+      "errors": [
+        "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m"
+      ]
+    },
+    {
+      "browser": "webkit",
+      "group": "e2e",
+      "name": "result share includes season counts and leaning",
+      "status": "expected",
+      "errors": []
+    },
+    {
+      "browser": "chromium",
+      "group": "e2e",
+      "name": "first load: no console errors, current version, intro closes",
+      "status": "expected",
+      "errors": []
+    },
+    {
+      "browser": "chromium",
+      "group": "e2e",
+      "name": "white paper: matrix gains and toggle off",
+      "status": "expected",
+      "errors": []
+    },
+    {
+      "browser": "chromium",
+      "group": "e2e",
+      "name": "white paper: rendered screenshot becomes gray",
+      "status": "expected",
+      "errors": []
+    },
+    {
+      "browser": "chromium",
+      "group": "e2e",
+      "name": "skin-colored patch is rejected",
+      "status": "expected",
+      "errors": []
+    },
+    {
+      "browser": "chromium",
+      "group": "e2e",
+      "name": "five picked colors: three summary rows, matching counts, empty state",
+      "status": "expected",
+      "errors": []
+    },
+    {
+      "browser": "chromium",
+      "group": "e2e",
+      "name": "result share includes season counts and leaning",
+      "status": "expected",
+      "errors": []
+    },
+    {
+      "browser": "webkit",
+      "group": "e2e",
+      "name": "first load: no console errors, current version, intro closes",
+      "status": "expected",
+      "errors": []
+    },
+    {
+      "browser": "webkit",
+      "group": "e2e",
+      "name": "white paper: matrix gains and toggle off",
+      "status": "expected",
+      "errors": []
+    },
+    {
+      "browser": "webkit",
+      "group": "e2e",
+      "name": "white paper: rendered screenshot becomes gray",
+      "status": "unexpected",
+      "errors": [
+        "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m"
+      ]
+    },
+    {
+      "browser": "webkit",
+      "group": "e2e",
+      "name": "skin-colored patch is rejected",
+      "status": "unexpected",
+      "errors": [
+        "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m"
+      ]
+    },
+    {
+      "browser": "webkit",
+      "group": "e2e",
+      "name": "five picked colors: three summary rows, matching counts, empty state",
+      "status": "unexpected",
+      "errors": [
+        "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m"
+      ]
+    },
+    {
+      "browser": "webkit",
+      "group": "e2e",
+      "name": "result share includes season counts and leaning",
+      "status": "expected",
+      "errors": []
+    },
+    {
+      "browser": "chromium",
+      "group": "mobile",
+      "name": "mobile matrix 320 ko",
+      "status": "expected",
+      "errors": []
+    },
+    {
+      "browser": "chromium",
+      "group": "mobile",
+      "name": "mobile matrix 320 en",
+      "status": "expected",
+      "errors": []
+    },
+    {
+      "browser": "chromium",
+      "group": "mobile",
+      "name": "mobile matrix 360 ko",
+      "status": "expected",
+      "errors": []
+    },
+    {
+      "browser": "chromium",
+      "group": "mobile",
+      "name": "mobile matrix 360 en",
+      "status": "expected",
+      "errors": []
+    },
+    {
+      "browser": "chromium",
+      "group": "mobile",
+      "name": "mobile matrix 375 ko",
+      "status": "expected",
+      "errors": []
+    },
+    {
+      "browser": "chromium",
+      "group": "mobile",
+      "name": "mobile matrix 375 en",
+      "status": "expected",
+      "errors": []
+    },
+    {
+      "browser": "chromium",
+      "group": "mobile",
+      "name": "mobile matrix 412 ko",
+      "status": "expected",
+      "errors": []
+    },
+    {
+      "browser": "chromium",
+      "group": "mobile",
+      "name": "mobile matrix 412 en",
+      "status": "expected",
+      "errors": []
+    },
+    {
+      "browser": "webkit",
+      "group": "mobile",
+      "name": "mobile matrix 320 ko",
+      "status": "expected",
+      "errors": []
+    },
+    {
+      "browser": "webkit",
+      "group": "mobile",
+      "name": "mobile matrix 320 en",
+      "status": "expected",
+      "errors": []
+    },
+    {
+      "browser": "webkit",
+      "group": "mobile",
+      "name": "mobile matrix 360 ko",
+      "status": "unexpected",
+      "errors": [
+        "Error: locator.click: Target page, context or browser has been closed"
+      ]
+    },
+    {
+      "browser": "webkit",
+      "group": "mobile",
+      "name": "mobile matrix 360 en",
+      "status": "expected",
+      "errors": []
+    },
+    {
+      "browser": "webkit",
+      "group": "mobile",
+      "name": "mobile matrix 375 ko",
+      "status": "expected",
+      "errors": []
+    },
+    {
+      "browser": "webkit",
+      "group": "mobile",
+      "name": "mobile matrix 375 en",
+      "status": "expected",
+      "errors": []
+    },
+    {
+      "browser": "webkit",
+      "group": "mobile",
+      "name": "mobile matrix 412 ko",
+      "status": "expected",
+      "errors": []
+    },
+    {
+      "browser": "webkit",
+      "group": "mobile",
+      "name": "mobile matrix 412 en",
+      "status": "expected",
+      "errors": []
+    }
+  ]
+}
