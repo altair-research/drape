@@ -403,15 +403,17 @@ so try it in daylight near a window, and try again another day to see what overl
 
 ### 6-2c. 출시 날 쓸 것 — 프로덕션 릴리스 노트 (사용자가 붙여 넣기)
 
-프로덕션 트랙의 **Release notes** 칸. 앱 껍데기는 1.0.1 그대로(사이트만 v30 으로 바뀜)라 같은 번들을 `Add from library` 로 붙인다.
+프로덕션 트랙의 **Release notes** 칸. 앱 껍데기는 1.0.1 그대로(사이트만 v39 로 바뀜, 11-05 기준)라 같은 번들을 `Add from library` 로 붙인다.
 
 ```
 <en-US>
 First public release. Hold 48 seasonal colors up to your face on camera, like each one,
-then compare only your favorites. No sign-up, no ads, and the camera never leaves your phone.
+then compare only your favorites. Tap a sheet of white paper to cancel the room light's color cast.
+No sign-up, no ads, and the camera never leaves your phone.
 </en-US>
 <ko-KR>
 첫 정식 출시. 사계절 48색을 카메라 속 얼굴에 대보고 ♥한 색끼리 다시 비교하세요.
+흰 종이를 한 번 누르면 조명 색이 빠져요.
 가입·광고 없음, 카메라 영상은 폰 밖으로 나가지 않아요.
 </ko-KR>
 ```
