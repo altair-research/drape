@@ -1,4 +1,4 @@
-# 프로덕션 액세스 신청서 — 답변 초안 (2026-10-26, 같은 날 v30 반영)
+# 프로덕션 액세스 신청서 — 답변 초안 (2026-10-26, v39 까지 반영 11-05)
 
 > 출시 순서(11-11 테스트 끝 → 신청 → ~11-18 승인 → ~11-20 출시, 근거 `PLAY-STORE.md` §7-5): ① 이 신청서 ② 승인 메일 ③ `PLAY-STORE.md` §6-2c 릴리스 노트로 프로덕션 릴리스.
 > 테스트 동안 할 일: 테스터에게 받은 말을 **아래 '피드백 메모'에 그날그날 한 줄씩** 적어 두면 신청서 1번이 저절로 채워진다.
@@ -29,17 +29,17 @@
 > People curious about personal color analysis (seasonal colors) who want to check colors against their own face themselves, instead of trusting an AI verdict from one photo. Mostly Korean and English speakers, adults.
 
 **앱이 주는 가치 (Describe how your app provides value to users)**
-> It works like a draping mirror: the camera shows your face and a color band sits under it, so you can swipe through 48 seasonal colors in 3 saturation levels and compare them side by side. It does not judge your season; you see it yourself, and you can repeat it when lighting changes. No sign-up, no ads, no payment, and the camera image never leaves the phone.
+> It works like a draping mirror: the camera shows your face and a color band sits under it, so you can swipe through 48 seasonal colors in 3 saturation levels and compare them side by side. It does not judge your season; you see it yourself, and you can repeat it when lighting changes. A one-tap white-balance step (tap a sheet of white paper) removes the color cast of the room light, and the liked-colors list sums up which way your picks lean (warm/cool, soft/vivid, light/deep). No sign-up, no ads, no payment, and the camera image never leaves the phone.
 
 **첫해 예상 설치 수 (How many installs do you expect in your first year?)** — 보기에서: `0~10K` 권장(과장하지 않는다)
 
 ## 3. 출시 준비
 
 **테스트로 무엇을 바꿨나 (What changes did you make to your app based on what you learned during closed testing?)**
-> <테스트 중 실제로 고친 것. 테스트 전 이미 한 것: v1.0.1 link scope fixed so links to other apps on the same domain no longer open in this app; v29–v30 added share, share-result and feedback menu items, and the privacy policy was updated to match.>
+> <테스트 중 실제로 고친 것. 테스트 전 이미 한 것: v1.0.1 link scope fixed so links to other apps on the same domain no longer open in this app; v29–v30 added share, share-result and feedback menu items, and the privacy policy was updated to match; v34–v35 added white-paper white balance and the liked-colors summary; v36 fixed layout on small phones (320px) and enlarged touch targets to 40px+; v37–v39 made the app fully usable by keyboard and screen reader (automated accessibility check: 0 violations).>
 
 **출시 준비가 됐다고 판단한 이유 (How did you decide that your app is ready for production?)**
-> All testers could install and use it without crashes; core flow (camera → swipe colors → like → compare) worked on <기기 수> devices; the remaining feedback was about <…>, which does not block use.
+> All testers could install and use it without crashes; automated end-to-end tests (Chromium and WebKit, phone sizes 320–412px, offline mode, accessibility) pass on every release; core flow (camera → swipe colors → like → compare) worked on <기기 수> devices; the remaining feedback was about <…>, which does not block use.
 
 ## 쓰기 전에 확인
 
