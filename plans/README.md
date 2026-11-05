@@ -1,11 +1,11 @@
-<!-- plans-summary {"name": "Personal Color Mirror (drape)", "track": "public", "header": {"갱신": "2026-11-03 (v35 종이 판별 넓힘, 바뀐 점 보고서, Codex 지시문)", "상태": "Play 비공개 테스트(Alpha) — 릴리스 2 (1.0.1) Published. 사이트 v35 운영 반영: v35 종이 판별 넓힘(노란 조명 종이 거절 버그), v34 흰 종이로 색 맞추기(메뉴, 배경 따라 바뀌는 얼굴색 보정)·좋아요 목록에 '내가 고른 색' 요약(온도·채도·밝기, 결과 공유에도 한 줄). 그 전 v29~v33 공유·의견·막대 색·만든 사람 한 줄. 실제 폰에서는 아직 안 눌러 봄", "다음": "① 폰 링크 확인(아래 3줄) ② 테스터 12명 10-28 까지 → 14일(11-11) → 신청(`store/production-application.md`) → ~11-18 승인 → ~11-20 출시(순서 `PLAY-STORE.md` §7-5). 명단이 하루 늦으면 출시도 하루 늦다", "막힘": "테스터 12명(15명 권장) 명단 — 사용자, 현재 `internal` 2명 (보드 `PLAY-TESTERS`, 메시지는 wearcast `docs/TESTER-INVITE.md` §0 두 앱 함께)"}, "timeline": {"goal": "Play 14일 비공개 테스트를 통과해 프로덕션 출시", "started": "2026-09-04", "target": "2026-11-20", "done": 3, "total": 7, "forecast": "2026-11-19"}, "verdict": "Play 14일 비공개 테스트를 통과해 프로덕션 출시 — 단계 3/7, 목표일 2026-11-20, 지금 속도면 목표 안. 막힘: 테스터 12명(15명 권장) 명단 — 사용자, 현재 `internal` 2명 (보드 `PLAY-TESTERS`, 메시지는 wearcast `docs/TESTER-INVITE.md` §0 두 앱 함께)", "remaining": [{"name": "테스터 12명 이상 등록 (PLAY-TESTERS)", "due": "2026-10-28"}, {"name": "14일 연속 테스트 완료", "due": "2026-11-11"}, {"name": "프로덕션 액세스 신청·승인", "due": "2026-11-18"}, {"name": "프로덕션 출시", "due": "2026-11-20"}], "latest": [{"kind": "handoff", "label": "인계", "date": "2026-11-03 14:54", "file": "2026-11-03-handoff.md"}, {"kind": "report", "label": "report", "date": "2026-11-03 14:52", "file": "2026-11-03-report.html"}, {"kind": "playstore", "label": "Play 등록 절차", "date": "2026-10-28 19:40", "file": "2026-10-28-playstore.md"}, {"kind": "production", "label": "프로덕션 신청 초안", "date": "2026-10-26 21:03", "file": "2026-10-26-production-3.md"}, {"kind": "market", "label": "시장 조사", "date": "2026-10-26 13:47", "file": "2026-10-26-market.md"}, {"kind": "testers", "label": "테스터 모집", "date": "2026-10-26 13:47", "file": "2026-10-26-testers.md"}], "count": 20, "built": "2026-11-03 14:54"} -->
+<!-- plans-summary {"name": "Personal Color Mirror (drape)", "track": "public", "header": {"갱신": "2026-11-05 새벽 (야간 2차: v37~v39 접근성 axe 위반 0, v40 가을 막대 카키 그린, 출시 신청서·릴리스 노트 최신화)", "상태": "야간(11-04) ③ 병합 유지 · A WebKit 실패는 동시 실행 때만(혼자 4회 연속 25/25, 추정) `tests/e2e/WEBKIT-DIAG.md` · B 오프라인·버전 교체 실증, 점검 37통과 `docs/RELEASE-CHECK.md` · C 접근성 critical 2·serious 2종 `docs/A11Y-CHECK.md`. Play 비공개 테스트(Alpha) — 릴리스 2 (1.0.1) Published. 사이트 v40 운영 반영: v40 계절 막대 가을색(봄 노랑과 구분), v39 창 열린 동안 뒤 화면 inert·숨은 h1(axe 위반 0), v38 키보드(색 띠 Tab 한 번·손잡이 슬라이더·비교 키), v37 접근성(Esc 로 창 닫기·초점 되돌리기·♥ 탭 역할·색 이름 낭독·대비, 글꼴 오프라인 저장), v36 작은 폰(320px) 안내·목록 넘침과 버튼 40px 이상·노치 여백(Codex ③), v35 종이 판별 넓힘(노란 조명 종이 거절 버그), v34 흰 종이로 색 맞추기(메뉴, 배경 따라 바뀌는 얼굴색 보정)·좋아요 목록에 '내가 고른 색' 요약(온도·채도·밝기, 결과 공유에도 한 줄). 그 전 v29~v33 공유·의견·막대 색·만든 사람 한 줄. 실제 폰에서는 아직 안 눌러 봄", "다음": "⓪ 실기기 iPhone 흰 종이 보정 확인(사용자 폰) · 감사 제안(가을 요약 '선명한 쪽', 봄·가을 막대색 대안) 검토 ① 폰 링크 확인(아래 3줄) ② 테스터 12명 — 명단 받은 날 + 14일 테스트 + 신청·승인 ~7일 + 심사 1~2일 = 약 23일 뒤 출시(11-07 에 들어오면 14일 11-21 → ~11-28 승인 → ~11-30 출시, 순서 `PLAY-STORE.md` §7-5). 하루 늦으면 하루 늦다", "막힘": "테스터 12명(15명 권장) 명단 — 사용자, 현재 `internal` 2명 (보드 `PLAY-TESTERS`, 메시지는 wearcast `docs/TESTER-INVITE.md` §0 두 앱 함께)"}, "timeline": {"goal": "Play 14일 비공개 테스트를 통과해 프로덕션 출시", "started": "2026-09-04", "target": "2026-11-30", "done": 3, "total": 7, "forecast": "2026-11-21"}, "verdict": "Play 14일 비공개 테스트를 통과해 프로덕션 출시 — 단계 3/7, 목표일 2026-11-30, 지금 속도면 목표 안. 막힘: 테스터 12명(15명 권장) 명단 — 사용자, 현재 `internal` 2명 (보드 `PLAY-TESTERS`, 메시지는 wearcast `docs/TESTER-INVITE.md` §0 두 앱 함께)", "remaining": [{"name": "테스터 12명 이상 등록 (PLAY-TESTERS)", "due": "2026-11-07"}, {"name": "14일 연속 테스트 완료", "due": "2026-11-21"}, {"name": "프로덕션 액세스 신청·승인", "due": "2026-11-28"}, {"name": "프로덕션 출시", "due": "2026-11-30"}], "latest": [{"kind": "handoff", "label": "인계", "date": "2026-11-05 00:50", "file": "2026-11-05-handoff.md"}, {"kind": "playstore", "label": "Play 등록 절차", "date": "2026-11-05 00:50", "file": "2026-11-05-playstore.md"}, {"kind": "production", "label": "프로덕션 신청 초안", "date": "2026-11-05 00:50", "file": "2026-11-05-production.md"}, {"kind": "report", "label": "report", "date": "2026-11-03", "file": "2026-11-03-report.html"}, {"kind": "market", "label": "시장 조사", "date": "2026-10-26", "file": "2026-10-26-market.md"}, {"kind": "testers", "label": "테스터 모집", "date": "2026-10-26", "file": "2026-10-26-testers.md"}], "count": 23, "built": "2026-11-05 00:50"} -->
 # Personal Color Mirror (drape) — 플랜 기록
 
-> 자동 생성 2026-11-03 14:54 · `python C:/dev/_control-tower/tools/plans.py index .` · 손으로 고치지 말 것. 공개 갈래 (공유 링크 가능)
+> 자동 생성 2026-11-05 00:50 · `python C:/dev/_control-tower/tools/plans.py index .` · 손으로 고치지 말 것. 공개 갈래 (공유 링크 가능)
 
 ## 한 줄로
 
-Play 14일 비공개 테스트를 통과해 프로덕션 출시 — 단계 3/7, 목표일 2026-11-20, 지금 속도면 목표 안. 막힘: 테스터 12명(15명 권장) 명단 — 사용자, 현재 `internal` 2명 (보드 `PLAY-TESTERS`, 메시지는 wearcast `docs/TESTER-INVITE.md` §0 두 앱 함께)
+Play 14일 비공개 테스트를 통과해 프로덕션 출시 — 단계 3/7, 목표일 2026-11-30, 지금 속도면 목표 안. 막힘: 테스터 12명(15명 권장) 명단 — 사용자, 현재 `internal` 2명 (보드 `PLAY-TESTERS`, 메시지는 wearcast `docs/TESTER-INVITE.md` §0 두 앱 함께)
 
 ## 어떻게 돌아가나
 
@@ -16,10 +16,10 @@ Play 14일 비공개 테스트를 통과해 프로덕션 출시 — 단계 3/7, 
 
 ## 남은 길
 
-1. 테스터 12명 이상 등록 (PLAY-TESTERS) — 예정 2026-10-28
-2. 14일 연속 테스트 완료 — 예정 2026-11-11
-3. 프로덕션 액세스 신청·승인 — 예정 2026-11-18
-4. 프로덕션 출시 — 예정 2026-11-20
+1. 테스터 12명 이상 등록 (PLAY-TESTERS) — 예정 2026-11-07
+2. 14일 연속 테스트 완료 — 예정 2026-11-21
+3. 프로덕션 액세스 신청·승인 — 예정 2026-11-28
+4. 프로덕션 출시 — 예정 2026-11-30
 
 ## 정해진 것
 
@@ -31,31 +31,31 @@ Play 14일 비공개 테스트를 통과해 프로덕션 출시 — 단계 3/7, 
 
 ## 지금 상태
 
-- **갱신** 2026-11-03 (v35 종이 판별 넓힘, 바뀐 점 보고서, Codex 지시문)
-- **상태** Play 비공개 테스트(Alpha) — 릴리스 2 (1.0.1) Published. 사이트 v35 운영 반영: v35 종이 판별 넓힘(노란 조명 종이 거절 버그), v34 흰 종이로 색 맞추기(메뉴, 배경 따라 바뀌는 얼굴색 보정)·좋아요 목록에 '내가 고른 색' 요약(온도·채도·밝기, 결과 공유에도 한 줄). 그 전 v29~v33 공유·의견·막대 색·만든 사람 한 줄. 실제 폰에서는 아직 안 눌러 봄
-- **다음** ① 폰 링크 확인(아래 3줄) ② 테스터 12명 10-28 까지 → 14일(11-11) → 신청(`store/production-application.md`) → ~11-18 승인 → ~11-20 출시(순서 `PLAY-STORE.md` §7-5). 명단이 하루 늦으면 출시도 하루 늦다
+- **갱신** 2026-11-05 새벽 (야간 2차: v37~v39 접근성 axe 위반 0, v40 가을 막대 카키 그린, 출시 신청서·릴리스 노트 최신화)
+- **상태** 야간(11-04) ③ 병합 유지 · A WebKit 실패는 동시 실행 때만(혼자 4회 연속 25/25, 추정) `tests/e2e/WEBKIT-DIAG.md` · B 오프라인·버전 교체 실증, 점검 37통과 `docs/RELEASE-CHECK.md` · C 접근성 critical 2·serious 2종 `docs/A11Y-CHECK.md`. Play 비공개 테스트(Alpha) — 릴리스 2 (1.0.1) Published. 사이트 v40 운영 반영: v40 계절 막대 가을색(봄 노랑과 구분), v39 창 열린 동안 뒤 화면 inert·숨은 h1(axe 위반 0), v38 키보드(색 띠 Tab 한 번·손잡이 슬라이더·비교 키), v37 접근성(Esc 로 창 닫기·초점 되돌리기·♥ 탭 역할·색 이름 낭독·대비, 글꼴 오프라인 저장), v36 작은 폰(320px) 안내·목록 넘침과 버튼 40px 이상·노치 여백(Codex ③), v35 종이 판별 넓힘(노란 조명 종이 거절 버그), v34 흰 종이로 색 맞추기(메뉴, 배경 따라 바뀌는 얼굴색 보정)·좋아요 목록에 '내가 고른 색' 요약(온도·채도·밝기, 결과 공유에도 한 줄). 그 전 v29~v33 공유·의견·막대 색·만든 사람 한 줄. 실제 폰에서는 아직 안 눌러 봄
+- **다음** ⓪ 실기기 iPhone 흰 종이 보정 확인(사용자 폰) · 감사 제안(가을 요약 '선명한 쪽', 봄·가을 막대색 대안) 검토 ① 폰 링크 확인(아래 3줄) ② 테스터 12명 — 명단 받은 날 + 14일 테스트 + 신청·승인 ~7일 + 심사 1~2일 = 약 23일 뒤 출시(11-07 에 들어오면 14일 11-21 → ~11-28 승인 → ~11-30 출시, 순서 `PLAY-STORE.md` §7-5). 하루 늦으면 하루 늦다
 - **막힘** 테스터 12명(15명 권장) 명단 — 사용자, 현재 `internal` 2명 (보드 `PLAY-TESTERS`, 메시지는 wearcast `docs/TESTER-INVITE.md` §0 두 앱 함께)
 
 ## 목표와 일정
 
 - **목표** Play 14일 비공개 테스트를 통과해 프로덕션 출시
-- 시작 2026-09-04 · 목표일 2026-11-20 · 예상 2026-11-19 · 단계 3/7
+- 시작 2026-09-04 · 목표일 2026-11-30 · 예상 2026-11-21 · 단계 3/7
   - [x] 웹앱 완성 (48색 × 3단계, 한/영, PWA) — 예정 2026-09-17 · 끝 2026-09-17
   - [x] 스토어 등록정보·앱 콘텐츠·비공개 테스트 심사 통과 — 예정 2026-09-22 · 끝 2026-09-22
   - [x] 릴리스 2 (1.0.1, 링크 범위 /drape/) 게시 — 예정 2026-09-30 · 끝 2026-09-25
-  - [ ] 테스터 12명 이상 등록 (PLAY-TESTERS) — 예정 2026-10-28
-  - [ ] 14일 연속 테스트 완료 — 예정 2026-11-11
-  - [ ] 프로덕션 액세스 신청·승인 — 예정 2026-11-18
-  - [ ] 프로덕션 출시 — 예정 2026-11-20
+  - [ ] 테스터 12명 이상 등록 (PLAY-TESTERS) — 예정 2026-11-07
+  - [ ] 14일 연속 테스트 완료 — 예정 2026-11-21
+  - [ ] 프로덕션 액세스 신청·승인 — 예정 2026-11-28
+  - [ ] 프로덕션 출시 — 예정 2026-11-30
 
 ## 최신
 
-- **인계** — [2026-11-03-handoff.md](archive/2026-11-03-handoff.md) · 2026-11-03 14:54
-- **report** — [2026-11-03-report.html](archive/2026-11-03-report.html) · 2026-11-03 14:52
-- **Play 등록 절차** — [2026-10-28-playstore.md](archive/2026-10-28-playstore.md) · 2026-10-28 19:40
-- **프로덕션 신청 초안** — [2026-10-26-production-3.md](archive/2026-10-26-production-3.md) · 2026-10-26 21:03
-- **시장 조사** — [2026-10-26-market.md](archive/2026-10-26-market.md) · 2026-10-26 13:47
-- **테스터 모집** — [2026-10-26-testers.md](archive/2026-10-26-testers.md) · 2026-10-26 13:47
+- **인계** — [2026-11-05-handoff.md](archive/2026-11-05-handoff.md) · 2026-11-05 00:50
+- **Play 등록 절차** — [2026-11-05-playstore.md](archive/2026-11-05-playstore.md) · 2026-11-05 00:50
+- **프로덕션 신청 초안** — [2026-11-05-production.md](archive/2026-11-05-production.md) · 2026-11-05 00:50
+- **report** — [2026-11-03-report.html](archive/2026-11-03-report.html) · 2026-11-03
+- **시장 조사** — [2026-10-26-market.md](archive/2026-10-26-market.md) · 2026-10-26
+- **테스터 모집** — [2026-10-26-testers.md](archive/2026-10-26-testers.md) · 2026-10-26
 
 ## 링크
 
@@ -66,23 +66,26 @@ Play 14일 비공개 테스트를 통과해 프로덕션 출시 — 단계 3/7, 
 
 | 날짜 | 문서 | 파일 |
 |---|---|---|
-| 2026-11-03 14:54 | 인계 | [2026-11-03-handoff.md](archive/2026-11-03-handoff.md) |
-| 2026-11-03 14:52 | report | [2026-11-03-report.html](archive/2026-11-03-report.html) |
-| 2026-11-02 21:20 | 인계 | [2026-11-02-handoff-2.md](archive/2026-11-02-handoff-2.md) |
-| 2026-11-02 21:04 | 인계 | [2026-11-02-handoff.md](archive/2026-11-02-handoff.md) |
+| 2026-11-05 00:50 | 인계 | [2026-11-05-handoff.md](archive/2026-11-05-handoff.md) |
+| 2026-11-05 00:50 | Play 등록 절차 | [2026-11-05-playstore.md](archive/2026-11-05-playstore.md) |
+| 2026-11-05 00:50 | 프로덕션 신청 초안 | [2026-11-05-production.md](archive/2026-11-05-production.md) |
+| 2026-11-03 | 인계 | [2026-11-03-handoff.md](archive/2026-11-03-handoff.md) |
+| 2026-11-03 | report | [2026-11-03-report.html](archive/2026-11-03-report.html) |
+| 2026-11-02 | 인계 | [2026-11-02-handoff-2.md](archive/2026-11-02-handoff-2.md) |
+| 2026-11-02 | 인계 | [2026-11-02-handoff.md](archive/2026-11-02-handoff.md) |
 | 2026-11-02 | report | [2026-11-02-report.html](archive/2026-11-02-report.html) |
-| 2026-10-28 21:06 | 인계 | [2026-10-28-handoff-3.md](archive/2026-10-28-handoff-3.md) |
-| 2026-10-28 19:44 | 인계 | [2026-10-28-handoff-2.md](archive/2026-10-28-handoff-2.md) |
-| 2026-10-28 19:40 | 인계 | [2026-10-28-handoff.md](archive/2026-10-28-handoff.md) |
-| 2026-10-28 19:40 | Play 등록 절차 | [2026-10-28-playstore.md](archive/2026-10-28-playstore.md) |
-| 2026-10-26 21:03 | 인계 | [2026-10-26-handoff-3.md](archive/2026-10-26-handoff-3.md) |
-| 2026-10-26 21:03 | Play 등록 절차 | [2026-10-26-playstore-3.md](archive/2026-10-26-playstore-3.md) |
-| 2026-10-26 21:03 | 프로덕션 신청 초안 | [2026-10-26-production-3.md](archive/2026-10-26-production-3.md) |
-| 2026-10-26 19:51 | 인계 | [2026-10-26-handoff-2.md](archive/2026-10-26-handoff-2.md) |
-| 2026-10-26 19:51 | Play 등록 절차 | [2026-10-26-playstore-2.md](archive/2026-10-26-playstore-2.md) |
-| 2026-10-26 19:51 | 프로덕션 신청 초안 | [2026-10-26-production-2.md](archive/2026-10-26-production-2.md) |
-| 2026-10-26 13:47 | 인계 | [2026-10-26-handoff.md](archive/2026-10-26-handoff.md) |
-| 2026-10-26 13:47 | 시장 조사 | [2026-10-26-market.md](archive/2026-10-26-market.md) |
-| 2026-10-26 13:47 | Play 등록 절차 | [2026-10-26-playstore.md](archive/2026-10-26-playstore.md) |
-| 2026-10-26 13:47 | 프로덕션 신청 초안 | [2026-10-26-production.md](archive/2026-10-26-production.md) |
-| 2026-10-26 13:47 | 테스터 모집 | [2026-10-26-testers.md](archive/2026-10-26-testers.md) |
+| 2026-10-28 | 인계 | [2026-10-28-handoff-3.md](archive/2026-10-28-handoff-3.md) |
+| 2026-10-28 | 인계 | [2026-10-28-handoff-2.md](archive/2026-10-28-handoff-2.md) |
+| 2026-10-28 | 인계 | [2026-10-28-handoff.md](archive/2026-10-28-handoff.md) |
+| 2026-10-28 | Play 등록 절차 | [2026-10-28-playstore.md](archive/2026-10-28-playstore.md) |
+| 2026-10-26 | 인계 | [2026-10-26-handoff-3.md](archive/2026-10-26-handoff-3.md) |
+| 2026-10-26 | Play 등록 절차 | [2026-10-26-playstore-3.md](archive/2026-10-26-playstore-3.md) |
+| 2026-10-26 | 프로덕션 신청 초안 | [2026-10-26-production-3.md](archive/2026-10-26-production-3.md) |
+| 2026-10-26 | 인계 | [2026-10-26-handoff-2.md](archive/2026-10-26-handoff-2.md) |
+| 2026-10-26 | Play 등록 절차 | [2026-10-26-playstore-2.md](archive/2026-10-26-playstore-2.md) |
+| 2026-10-26 | 프로덕션 신청 초안 | [2026-10-26-production-2.md](archive/2026-10-26-production-2.md) |
+| 2026-10-26 | 인계 | [2026-10-26-handoff.md](archive/2026-10-26-handoff.md) |
+| 2026-10-26 | 시장 조사 | [2026-10-26-market.md](archive/2026-10-26-market.md) |
+| 2026-10-26 | Play 등록 절차 | [2026-10-26-playstore.md](archive/2026-10-26-playstore.md) |
+| 2026-10-26 | 프로덕션 신청 초안 | [2026-10-26-production.md](archive/2026-10-26-production.md) |
+| 2026-10-26 | 테스터 모집 | [2026-10-26-testers.md](archive/2026-10-26-testers.md) |
