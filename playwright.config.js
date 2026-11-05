@@ -19,7 +19,8 @@ module.exports = defineConfig({
   },
   projects: [
     { name: 'chromium', use: { browserName: 'chromium', channel: 'chromium' } },
-    { name: 'webkit', use: { browserName: 'webkit' } },
+    // release.spec.js needs service workers and is Chromium-only by design.
+    { name: 'webkit', use: { browserName: 'webkit' }, testIgnore: /release[.]spec[.]js/ },
   ],
   webServer: {
     command: 'python -m http.server 8765 --bind 127.0.0.1',
