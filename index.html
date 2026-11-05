@@ -402,7 +402,7 @@
       </svg>
       <div class="body"></div>
     </div>
-    <button class="handle" id="handle" aria-label="드레이프 높이 조절"><span></span></button>
+    <button class="handle" id="handle" aria-label="드레이프 높이 조절" role="slider" aria-orientation="vertical" aria-valuemin="18" aria-valuemax="76"><span></span></button>
 
     <div class="readout">
       <div aria-live="polite" aria-atomic="true">
@@ -503,7 +503,7 @@
 <script>
 (function(){
   "use strict";
-  var APP_VERSION = "37";
+  var APP_VERSION = "38";
 
   /* ---- 언어 ---- 기기 언어가 한국어면 ko, 아니면 en. 화면의 EN/한국어 버튼으로 바꾸면 기억한다. */
   var T = {
@@ -689,6 +689,7 @@
     idx = i;
     render();
     chips[idx].scrollIntoView({block:"nearest", inline:"center", behavior: reduceMotion() ? "auto" : "smooth"});
+    if(document.activeElement && document.activeElement.classList.contains("chip")) chips[idx].focus({preventScroll:true});
     hideHint();
   }
 
@@ -786,6 +787,7 @@
     saved.forEach(function(k){ savedBase[parseKey(k).h] = true; });
     for(var i=0;i<chips.length;i++){
       chips[i].setAttribute("aria-pressed", i===idx ? "true" : "false");
+      chips[i].tabIndex = i===idx ? 0 : -1;   // 색 띠는 Tab 한 번, 안에서는 화살표로
       chips[i].classList.toggle("saved", !!savedBase[FLAT[i].h]);
     }
     $("levels").classList.toggle("na", isNeutral(c.h));
@@ -819,6 +821,7 @@
   function setTop(pct){
     drapeTop = Math.max(24, Math.min(82, pct));
     root.style.setProperty("--drape-top", drapeTop + "%");
+    $("handle").setAttribute("aria-valuenow", String(Math.round(100 - drapeTop)));
   }
   setTop(drapeTop);
 
@@ -835,6 +838,12 @@
   });
   ["pointerup","pointercancel"].forEach(function(ev){
     handle.addEventListener(ev, function(){ dragging=false; });
+  });
+  /* 키보드: 손잡이에 초점이 있으면 위/아래 화살표로 5%씩 (색 넘기기 화살표보다 먼저) */
+  handle.addEventListener("keydown", function(e){
+    var d = {ArrowUp:-5, ArrowDown:5, ArrowRight:-5, ArrowLeft:5}[e.key];
+    if(!d) return;
+    setTop(drapeTop + d); hideHint(); e.preventDefault(); e.stopPropagation();
   });
 
   /* ---- swipe on stage ---- */
@@ -916,6 +925,9 @@
   var cmp=$("compare");
   ["pointerdown"].forEach(function(ev){ cmp.addEventListener(ev, function(e){ e.preventDefault(); flash(true); }); });
   ["pointerup","pointerleave","pointercancel"].forEach(function(ev){ cmp.addEventListener(ev, function(){ flash(false); }); });
+  cmp.addEventListener("keydown", function(e){ if((e.key===" " || e.key==="Enter") && !e.repeat){ flash(true); e.preventDefault(); } });
+  cmp.addEventListener("keyup", function(e){ if(e.key===" " || e.key==="Enter") flash(false); });
+  cmp.addEventListener("blur", function(){ flash(false); });
 
   /* ---- guide + hint ---- */
   var guideOn=true;

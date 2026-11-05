@@ -14,7 +14,7 @@ axe 기준 **치명(critical) 2건·심각(serious) 2종(3개 요소)** — 두 
 
 적용: S1~S9, M1(창 열고 닫기·Esc·Tab 가두기), M2(버튼 위 스페이스), M3(창 열린 동안 뒤 화면 키 무시), M7(움직임 줄이기), 흰 종이 안내 취소 뒤 초점을 ⋯ 로. 덤: 글꼴 CSS 에 crossorigin 을 붙여 서비스워커가 오프라인용으로 저장할 수 있게 함.
 결과(같은 a11y.spec, 두 브라우저 × 한/영): axe critical·serious **0** (남은 것 moderate `page-has-heading-one` 1). Esc 로 안내·메뉴·목록·흰 종이 안내 닫힘, 열면 제목으로 초점, 닫으면 연 버튼으로, 창 안 Tab 순환, 스페이스로 ♥. 전체 테스트 Chromium 34/34, WebKit 31/31.
-남김: M4(색 칩 Tab 57번), M5(직전 색 비교 키보드), M6(손잡이 슬라이더), M8, L1~L3(실기기 낭독기 시험 포함).
+v38 에서 M4(Tab 57→10)·M5(Enter/Space 누르는 동안 비교)·M6(손잡이 slider, 화살표 5%) 적용. 남김: M8, L1~L3(실기기 낭독기 시험 포함).
 
 ## 1. axe 위반 (WCAG 2.0/2.1/2.2 A·AA + best-practice 태그)
 
