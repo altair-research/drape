@@ -5,6 +5,7 @@
 
 | 날짜 | 제목 | 경로 / 주소 | 한 줄 설명 |
 |---|---|---|---|
+| 2026-11-05 | 접근성 점검 (axe·키보드·낭독기) | `docs/A11Y-CHECK.md` · `tests/e2e/a11y.spec.js` | critical 2·serious 2종, Esc·초점 이동 없음·Space ♥ 막힘·aria-live 없음, 고칠 제안 작은/중간/큰(미적용). 브랜치 claude/a11y-check |
 | 2026-11-04 | 출시 전 점검 (SW·manifest·assetlinks) | `docs/RELEASE-CHECK.md` · `node tools/check-release.mjs` · `tests/e2e/release.spec.js` | 오프라인·버전 올림 캐시 교체 실증, 점검 37통과·0실패·1경고. 브랜치 claude/release-checks |
 | 2026-11-04 | Codex 오늘 밤 지시문 A·B·C | `docs/codex-2026-11-04.md` | WebKit 실패 원인·출시 전 점검(오프라인·캐시·manifest)·접근성. 붙여넣기용, 동시 가능 |
 | 2026-11-04 | 앱 v36 (운영) | https://altair-research.github.io/drape/ | v36 작은 폰 넘침·버튼 크기·노치 여백. v35 종이 판별, v34 흰 종이 보정·내가 고른 색 요약 |
