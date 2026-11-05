@@ -1,9 +1,9 @@
 # drape (Personal Color Mirror) — 인계
 
-> 갱신: 2026-11-04 저녁 (Codex ③ 작은 폰 수정 병합 → 사이트 v36, 오늘 밤 Codex 지시문)
-> 상태: Play 비공개 테스트(Alpha) — 릴리스 2 (1.0.1) Published. 사이트 **v36** 운영 반영: v36 작은 폰(320px) 안내·목록 넘침과 버튼 40px 이상·노치 여백(Codex ③), v35 종이 판별 넓힘(노란 조명 종이 거절 버그), v34 흰 종이로 색 맞추기(메뉴, 배경 따라 바뀌는 얼굴색 보정)·좋아요 목록에 '내가 고른 색' 요약(온도·채도·밝기, 결과 공유에도 한 줄). 그 전 v29~v33 공유·의견·막대 색·만든 사람 한 줄. 실제 폰에서는 아직 안 눌러 봄
-> 오늘 밤(Codex 마지막 밤, 11-05 아침 종료): `docs/codex-2026-11-04.md` 의 A(WebKit 실패 원인)·B(출시 전 점검: 오프라인·캐시·manifest)·C(접근성 보고서) — 각자 worktree 라 동시 가능, 결과는 codex/ 브랜치 → 프로젝트 타워가 검토·병합
-> 다음: ⓪ 감사 제안(가을 요약 '선명한 쪽', 봄·가을 막대색 대안) 검토 · 실기기 iPhone 에서 흰 종이 보정 확인 ① 폰 링크 확인(아래 3줄) ② **테스터 12명 10-28 까지** → 14일(11-11) → 신청(`store/production-application.md`) → ~11-18 승인 → **~11-20 출시**(순서 `PLAY-STORE.md` §7-5). 명단이 하루 늦으면 출시도 하루 늦다
+> 갱신: 2026-11-05 새벽 (야간: Codex ③ 병합 확정·WebKit 원인 메모·출시 전 점검 B·접근성 점검 C 병합 — 앱 코드 변경 없음, 사이트 v36 그대로)
+> 상태: 야간(11-04) ③ 병합 유지 · A WebKit 실패는 동시 실행 때만(혼자 4회 연속 25/25, 추정) `tests/e2e/WEBKIT-DIAG.md` · B 오프라인·버전 교체 실증, 점검 37통과 `docs/RELEASE-CHECK.md` · C 접근성 critical 2·serious 2종 `docs/A11Y-CHECK.md`. Play 비공개 테스트(Alpha) — 릴리스 2 (1.0.1) Published. 사이트 **v36** 운영 반영: v36 작은 폰(320px) 안내·목록 넘침과 버튼 40px 이상·노치 여백(Codex ③), v35 종이 판별 넓힘(노란 조명 종이 거절 버그), v34 흰 종이로 색 맞추기(메뉴, 배경 따라 바뀌는 얼굴색 보정)·좋아요 목록에 '내가 고른 색' 요약(온도·채도·밝기, 결과 공유에도 한 줄). 그 전 v29~v33 공유·의견·막대 색·만든 사람 한 줄. 실제 폰에서는 아직 안 눌러 봄
+> 오늘 밤: (Codex 종료) 접근성 작은 수정 묶음 v37 — ♥ 탭 role="tab"(critical 2 해결), Esc 로 팝업 닫기·닫은 뒤 포커스 되돌리기, 색 이름 aria-live, 글꼴 오프라인 캐시(sw.js res.type opaque) — 검증 후 배포
+> 다음: ⓪ 실기기 iPhone 흰 종이 보정 확인(사용자 폰) · 감사 제안(가을 요약 '선명한 쪽', 봄·가을 막대색 대안) 검토 ① 폰 링크 확인(아래 3줄) ② **테스터 12명 10-28 까지** → 14일(11-11) → 신청(`store/production-application.md`) → ~11-18 승인 → **~11-20 출시**(순서 `PLAY-STORE.md` §7-5). 명단이 하루 늦으면 출시도 하루 늦다
 > 폰 확인(사용자, 1분): 1. Play 스토어 > 내 앱에서 Color Mirror 업데이트(1.0.1)가 깔렸는지 본다 2. 카톡·메모 등에서 `https://altair-research.github.io/sprout-frame/` 링크를 누른다 3. Color Mirror 가 **안** 뜨고 브라우저(또는 Sprout Frame)로 열리면 성공 — 뜨면 총괄 타워에 한마디
 > 막힘: 테스터 12명(15명 권장) 명단 — 사용자, 현재 `internal` 2명 (보드 `PLAY-TESTERS`, 메시지는 wearcast `docs/TESTER-INVITE.md` §0 두 앱 함께)
 > AI 결정: v29~v30 공유·의견·결과 공유 추가(MARKET §5-3 링크 공유가 유입 경로, 신청서 피드백 칸 대비) — 되돌리려면 index.html shareBtn·feedbackLink·shareResult 삭제 후 버전 올림
@@ -11,7 +11,8 @@
 > AI 결정: 만든 사람 한 줄 영어판은 AI 가 옮김("A little mirror I made because I wondered which colors suit me. Take an easy look.") — 한국어는 사용자 문장 그대로. 바꾸려면 `index.html` `MAKER.en`
 > AI 결정: 스크린샷 5번째로 결과 화면 시안(`PLAY-STORE.md` §6-3), 짧은 설명에 "영상은 폰 밖으로 안 나가요 / no uploads"(§6-2) — 콘솔 반영은 출시 때 사용자가
 > AI 결정: 매칭 유료판 ① 지금은 무료 '내가 고른 색 요약', 유료판은 출시 뒤 판단(총괄 타워 11-02) — 이유: 출시 전에는 쓰는 사람의 반응을 아직 모름 · 되돌리려면: 유료 정밀 비교를 다시 검토
-> 더 볼 곳: 오늘 밤 지시문 `docs/codex-2026-11-04.md`, 작은 폰 점검 `tests/e2e/MOBILE-REPORT.md`, 자동 테스트 `tests/e2e/REPORT.md`, 색 감사 `docs/COLOR-AUDIT.md`, 산출물 목록 `docs/OUTPUTS.md`, 바뀐 점 보고서 `plans/archive/2026-11-03-report.html`, Codex 지시문 `docs/codex-2026-11-03.md`, `PLAY-STORE.md` §6-2·§6-2c, `store/tester-invite.md`, `store/production-application.md`, `plans/`, 의도서 `C:\dev\_control-tower\intent\drape.md`
+> AI 결정: Codex ③ 작은 폰 수정(v36) 병합 유지 — 이유: CSS 만, 320px·데스크톱 직접 확인, 되돌리기 쉬움 · 되돌리려면 059f491 의 index.html 스타일 변경을 되돌리고 버전 올림
+> 더 볼 곳: 접근성 `docs/A11Y-CHECK.md`, 출시 점검 `docs/RELEASE-CHECK.md`, WebKit 메모 `tests/e2e/WEBKIT-DIAG.md`, 오늘 밤 지시문 `docs/codex-2026-11-04.md`, 작은 폰 점검 `tests/e2e/MOBILE-REPORT.md`, 자동 테스트 `tests/e2e/REPORT.md`, 색 감사 `docs/COLOR-AUDIT.md`, 산출물 목록 `docs/OUTPUTS.md`, 바뀐 점 보고서 `plans/archive/2026-11-03-report.html`, Codex 지시문 `docs/codex-2026-11-03.md`, `PLAY-STORE.md` §6-2·§6-2c, `store/tester-invite.md`, `store/production-application.md`, `plans/`, 의도서 `C:\dev\_control-tower\intent\drape.md`
 
 ## 이 문서
 프로젝트 타워(`drape 프로젝트 타워` 세션)가 관리하는 대표 인계 문서. 위 머리말이 정본이고, Play 등록 절차의 상세는 `PLAY-STORE.md` 에 있다.
@@ -32,3 +33,5 @@
 - 2026-11-03 — 사용자 "어떻게 바꿨는지 잘 보여 주는 보고서": `plans/archive/2026-11-03-report.html`(메뉴·안내·전후·요약 스크린샷, 시험 그림만). 찍다가 버그 발견 — v34 의 종이 판별 한도 0.6~1.7 이 노란 조명 속 종이를 거절(파랑 배율 1.71) → v35 에서 0.5~2.0 + 붉은기(Lab a>10) 거절로 얼굴을 가름. 시험: 종이 ○ 얼굴 × 벽 ×. 보고서 두 장의 휴대폰 폭 넘침(표 때문에 578px) 고침. 총괄 타워 요청으로 Codex 지시문 3개(`docs/codex-2026-11-03.md`: e2e 테스트·색 감사·작은 폰 점검, 결과는 codex/ 브랜치로 받아 검토 후 병합). 전역 11-03 규칙대로 CLAUDE.md 맨 위에 '세션을 시작하면 이것부터' 절.
 - 2026-11-04 — Codex ①·② 검토 후 main 병합(작업 사본 C:\dev\drape-tower 에서, ③이 도는 C:\dev\drape 는 안 건드림). ① Playwright 34건(합성 canvas 사진만): Chromium 17/0, WebKit 12/5 — WebKit 영어에서 이미지 준비 시간 초과 1·페이지 생성 실패 4, 행렬 오류 아님(Codex 판단, 추정). 흰 종이 보정 후 화면 픽셀 [214,214,214] 회색 확인(Chromium 한/영·WebKit 한). 실기기 iOS 카메라는 여전히 미확인. ② 색 감사 267통과·0실패, 유사색 3쌍(골든 옐로 기본·선명 ΔE 0.75 등). 가을 기본색을 다 ♥하면 '따뜻한 · 선명한 · 깊은 쪽'(기대는 부드러움) — 요약 경계를 계절에 억지로 맞추지 않는다는 Codex 제안에 동의, 판단 보류. 봄·가을 막대 대표색 ΔE 12.84 → 대안 45.53 제안(미적용). 감사 스크립트 다시 돌려 exit 0 확인. 머리말·OUTPUTS 는 Codex 브랜치 것 대신 프로젝트 타워가 씀.
 - 2026-11-04 저녁 — Codex ③ codex/mobile-fixes 검토 후 병합 → v36. CSS 만: 320px 첫 안내 위가 화면 밖(-180~-260px) → 카드 안 세로 스크롤, 좋아요 목록 버튼 줄바꿈, 하단 4버튼 3열+40px 격자, 버튼 최소 40px(하단 44px), 노치 여백 env(), 패널 불투명 86→96%. 320px·데스크톱에서 직접 확인(가로 넘침 없음, 하단 4버튼 화면 안). 스크린샷 172장(8.5MB)은 테스트 때마다 다시 써지는 파일이라 고친 문제 증거 24장만 `tests/e2e/mobile-evidence/` 에 두고 `mobile-shots/` 는 .gitignore — 전체는 원격 브랜치에 남음(AI 결정, 되돌리려면 브랜치에서 가져옴). WebKit 은 여전히 시간 초과 6·종료 1(앱 로직 변경 없음, 실행 환경 추정). 브라우저 창에서 로컬 서비스워커 등록 실패는 v35 도 똑같아 창 제한으로 판단. 총괄 타워 요청으로 오늘 밤 Codex 지시문 A·B·C(`docs/codex-2026-11-04.md`).
+
+- 2026-11-05 새벽 — 야간 작업(총괄 타워: Codex 토큰 바닥이라 A·B·C 를 Claude 로). ③ 병합 유지를 AI 결정으로. A: WebKit 9회 실행 — 실패는 다른 브라우저 테스트가 동시에 돌 때만(9실패·1실패), 혼자는 4회 연속 25/25. trace·배경 블러는 원인 아님(바꿔도 차이 없음). 앱·테스트 수정 안 함, `tests/e2e/WEBKIT-DIAG.md`. B(Claude 하위 작업, PC 재부팅 뒤 이어서): 서비스워커 오프라인·버전 올림 시 새 파일·옛 캐시 정리 실증, check-release 37통과·1경고, 루트 assetlinks 와 저장소 사본 일치 직접 확인. 작은 문제: 글꼴 CSS 가 오프라인 캐시 안 됨(sw.js res.ok 만 저장). C: axe critical 2(♥ 탭 role 없음)·serious 2, Esc 로 아무것도 안 닫힘·포커스 관리 없음·색 바뀜을 낭독기가 모름. 둘 다 병합(테스트·문서만, 사이트 v36 그대로 — 오늘 밤은 운영 배포 없음).
