@@ -505,7 +505,7 @@
 <script>
 (function(){
   "use strict";
-  var APP_VERSION = "39";
+  var APP_VERSION = "40";
 
   /* ---- 언어 ---- 기기 언어가 한국어면 ko, 아니면 en. 화면의 EN/한국어 버튼으로 바꾸면 기억한다. */
   var T = {
@@ -960,7 +960,10 @@
   $("clearSaved").addEventListener("click", function(){ saved=[]; persist(); render(); renderSheet(); });
 
   /* 계절 대표색: 그 계절에서 가장 채도 높은 색(rgb 최대−최소가 큰 것) */
+  /* 가을은 가장 선명한 색이 봄과 같은 노랑이라 막대가 구분되지 않는다(색 감사 ΔE00 12.8) → 카키 그린으로 고정(다른 계절과 최소 40.9) */
   function seasonSwatch(s){
+    var fixed = {autumn:"#5E6B3C"}[s.key];
+    if(fixed) return fixed;
     var best = s.colors[0].h, bc = -1;
     s.colors.forEach(function(c){
       var n = parseInt(c.h.slice(1),16), r = n>>16, g = (n>>8)&255, b = n&255;

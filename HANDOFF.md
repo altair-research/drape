@@ -1,17 +1,17 @@
 # drape (Personal Color Mirror) — 인계
 
-> 갱신: 2026-11-05 새벽 (야간 2차: v37~v39 접근성 — axe 위반 0, 키보드만으로 전부 쓸 수 있음. 실기기 낭독기는 미확인)
-> 상태: 야간(11-04) ③ 병합 유지 · A WebKit 실패는 동시 실행 때만(혼자 4회 연속 25/25, 추정) `tests/e2e/WEBKIT-DIAG.md` · B 오프라인·버전 교체 실증, 점검 37통과 `docs/RELEASE-CHECK.md` · C 접근성 critical 2·serious 2종 `docs/A11Y-CHECK.md`. Play 비공개 테스트(Alpha) — 릴리스 2 (1.0.1) Published. 사이트 **v39** 운영 반영: v39 창 열린 동안 뒤 화면 inert·숨은 h1(axe 위반 0), v38 v38 키보드(색 띠 Tab 한 번·손잡이 슬라이더·비교 키), v37 접근성(Esc 로 창 닫기·초점 되돌리기·♥ 탭 역할·색 이름 낭독·대비, 글꼴 오프라인 저장), v36 작은 폰(320px) 안내·목록 넘침과 버튼 40px 이상·노치 여백(Codex ③), v35 종이 판별 넓힘(노란 조명 종이 거절 버그), v34 흰 종이로 색 맞추기(메뉴, 배경 따라 바뀌는 얼굴색 보정)·좋아요 목록에 '내가 고른 색' 요약(온도·채도·밝기, 결과 공유에도 한 줄). 그 전 v29~v33 공유·의견·막대 색·만든 사람 한 줄. 실제 폰에서는 아직 안 눌러 봄
-> 오늘 밤: 감사 제안 검토(가을 요약 '선명한 쪽'·봄가을 막대색 대안, `docs/COLOR-AUDIT.md`) · 출시 신청서 초안 최신화(v34~v39 바뀐 점) — 실기기 TalkBack/VoiceOver 시험은 사용자 폰
+> 갱신: 2026-11-05 새벽 (야간 2차: v37~v39 접근성 axe 위반 0, v40 가을 막대 카키 그린, 출시 신청서·릴리스 노트 최신화)
+> 상태: 야간(11-04) ③ 병합 유지 · A WebKit 실패는 동시 실행 때만(혼자 4회 연속 25/25, 추정) `tests/e2e/WEBKIT-DIAG.md` · B 오프라인·버전 교체 실증, 점검 37통과 `docs/RELEASE-CHECK.md` · C 접근성 critical 2·serious 2종 `docs/A11Y-CHECK.md`. Play 비공개 테스트(Alpha) — 릴리스 2 (1.0.1) Published. 사이트 **v40** 운영 반영: v40 계절 막대 가을색(봄 노랑과 구분), v39 v39 창 열린 동안 뒤 화면 inert·숨은 h1(axe 위반 0), v38 v38 키보드(색 띠 Tab 한 번·손잡이 슬라이더·비교 키), v37 접근성(Esc 로 창 닫기·초점 되돌리기·♥ 탭 역할·색 이름 낭독·대비, 글꼴 오프라인 저장), v36 작은 폰(320px) 안내·목록 넘침과 버튼 40px 이상·노치 여백(Codex ③), v35 종이 판별 넓힘(노란 조명 종이 거절 버그), v34 흰 종이로 색 맞추기(메뉴, 배경 따라 바뀌는 얼굴색 보정)·좋아요 목록에 '내가 고른 색' 요약(온도·채도·밝기, 결과 공유에도 한 줄). 그 전 v29~v33 공유·의견·막대 색·만든 사람 한 줄. 실제 폰에서는 아직 안 눌러 봄
+> 오늘 밤: 가을 요약 '선명한 쪽' 검토(경계값은 그대로 두는 쪽, `docs/COLOR-AUDIT.md` §5) · 실기기 TalkBack/VoiceOver 시험은 사용자 폰
 > 다음: ⓪ 실기기 iPhone 흰 종이 보정 확인(사용자 폰) · 감사 제안(가을 요약 '선명한 쪽', 봄·가을 막대색 대안) 검토 ① 폰 링크 확인(아래 3줄) ② **테스터 12명 10-28 까지** → 14일(11-11) → 신청(`store/production-application.md`) → ~11-18 승인 → **~11-20 출시**(순서 `PLAY-STORE.md` §7-5). 명단이 하루 늦으면 출시도 하루 늦다
 > 폰 확인(사용자, 1분): 1. Play 스토어 > 내 앱에서 Color Mirror 업데이트(1.0.1)가 깔렸는지 본다 2. 카톡·메모 등에서 `https://altair-research.github.io/sprout-frame/` 링크를 누른다 3. Color Mirror 가 **안** 뜨고 브라우저(또는 Sprout Frame)로 열리면 성공 — 뜨면 총괄 타워에 한마디
 > 막힘: 테스터 12명(15명 권장) 명단 — 사용자, 현재 `internal` 2명 (보드 `PLAY-TESTERS`, 메시지는 wearcast `docs/TESTER-INVITE.md` §0 두 앱 함께)
 > AI 결정: v29~v30 공유·의견·결과 공유 추가(MARKET §5-3 링크 공유가 유입 경로, 신청서 피드백 칸 대비) — 되돌리려면 index.html shareBtn·feedbackLink·shareResult 삭제 후 버전 올림
 > AI 결정: 출시 목표 11-30 → 11-20. 바닥은 Play 개인 계정 테스터 14일 + 승인 ~7일 + 심사 1~2일(§7-5). 조직 계정 우회는 D-U-N-S·비용 때문에 추천 안 함
-> AI 결정: 만든 사람 한 줄 영어판은 AI 가 옮김("A little mirror I made because I wondered which colors suit me. Take an easy look.") — 한국어는 사용자 문장 그대로. 바꾸려면 `index.html` `MAKER.en`
-> AI 결정: 스크린샷 5번째로 결과 화면 시안(`PLAY-STORE.md` §6-3), 짧은 설명에 "영상은 폰 밖으로 안 나가요 / no uploads"(§6-2) — 콘솔 반영은 출시 때 사용자가
+> AI 결정: 만든 사람 한 줄 영어판은 AI 가 옮김("A little mirror I made because I wondered which colors suit me. Take an easy look.") — 한국어는 사용자 문장 그대로. 바꾸려면 `index.html` `MAKER.en` · 스크린샷 5번째로 결과 화면 시안(`PLAY-STORE.md` §6-3), 짧은 설명에 "영상은 폰 밖으로 안 나가요 / no uploads"(§6-2) — 콘솔 반영은 출시 때 사용자가
 > AI 결정: 매칭 유료판 ① 지금은 무료 '내가 고른 색 요약', 유료판은 출시 뒤 판단(총괄 타워 11-02) — 이유: 출시 전에는 쓰는 사람의 반응을 아직 모름 · 되돌리려면: 유료 정밀 비교를 다시 검토
 > AI 결정: Codex ③ 작은 폰 수정(v36) 병합 유지 — 이유: CSS 만, 320px·데스크톱 직접 확인, 되돌리기 쉬움 · 되돌리려면 059f491 의 index.html 스타일 변경을 되돌리고 버전 올림
+> AI 결정: 가을 막대색 노랑→카키 그린(#5E6B3C) — 이유: 봄과 ΔE00 12.8 로 구분 안 됨, 가을 12색 중 다른 계절과 최소 거리 2위(40.9)·흙빛 가을다움(1위 포레스트 46.2 는 여름·겨울 느낌) · 되돌리려면 index.html seasonSwatch 의 fixed 한 줄 삭제 후 버전 올림
 > 더 볼 곳: 접근성 `docs/A11Y-CHECK.md`, 출시 점검 `docs/RELEASE-CHECK.md`, WebKit 메모 `tests/e2e/WEBKIT-DIAG.md`, 오늘 밤 지시문 `docs/codex-2026-11-04.md`, 작은 폰 점검 `tests/e2e/MOBILE-REPORT.md`, 자동 테스트 `tests/e2e/REPORT.md`, 색 감사 `docs/COLOR-AUDIT.md`, 산출물 목록 `docs/OUTPUTS.md`, 바뀐 점 보고서 `plans/archive/2026-11-03-report.html`, Codex 지시문 `docs/codex-2026-11-03.md`, `PLAY-STORE.md` §6-2·§6-2c, `store/tester-invite.md`, `store/production-application.md`, `plans/`, 의도서 `C:\dev\_control-tower\intent\drape.md`
 
 ## 이 문서
@@ -41,3 +41,5 @@
 - 2026-11-05 새벽 2차 — v38: 접근성 M4(색 칩 roving tabindex: 선택된 칩만 Tab, 칩에 초점 있을 때 화살표로 넘기면 초점도 따라감) → ⋯ 까지 Tab 57→10번. M5 직전 색 비교를 Enter/Space 누르는 동안(떼면 돌아옴, 초점 잃으면 해제). M6 손잡이 role=slider(값 = 드레이프가 덮는 %, 18~76), 위/아래 화살표 5%씩, 색 넘기기보다 먼저 처리. Chromium 34/34·WebKit 31/31, 비교 키·슬라이더는 스크립트로 확인.
 
 - 2026-11-05 새벽 2차 — v39: 접근성 L1(창이 열리면 .stage·.console 에 inert — 초점·낭독기 차단, 기존 MutationObserver 에서 함께) + L2(숨은 h1 'Personal Color Mirror', .sr-only). axe 두 브라우저 × 한/영 위반 0. Chromium 34/34·WebKit 31/31.
+
+- 2026-11-05 새벽 2차 — 출시 신청서 초안(`store/production-application.md`)에 v34~v39 바뀐 점과 자동 테스트 근거, 릴리스 노트(PLAY-STORE §6-2c)에 흰 종이 보정 한 줄·사이트 v39, 그래픽 이미지 경로의 깨진 글자() 고침. v40: 색 감사 §4 제안 중 가을만 바꿈 — Codex 안(4계절 모두 교체)은 봄이 초록이 돼 계절 느낌을 깸. 가을 12색을 ΔE00 로 다 따져 카키 그린(최소 40.9, 전체 최소 쌍은 기존 여름·겨울 21.1). 감사 다시 돌려 docs/COLOR-AUDIT.md 갱신, Chromium 34/34·WebKit 31/31.
