@@ -151,6 +151,7 @@
     text-decoration:none;
   }
   .mrow[hidden]{display:none}
+  .sr-only{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
   .mrow:focus-visible{outline:2px solid var(--fg);outline-offset:2px}
   .mrow .state{font-size:12px;color:var(--fg-dim)}
   .mrow[aria-pressed="true"]{border-color:var(--fg)}
@@ -390,6 +391,7 @@
 <body>
 
 <main class="app">
+  <h1 class="sr-only">Personal Color Mirror</h1>
   <div class="stage" id="stage">
     <video id="cam" autoplay playsinline muted></video>
     <img id="shot" alt="업로드한 사진">
@@ -503,7 +505,7 @@
 <script>
 (function(){
   "use strict";
-  var APP_VERSION = "38";
+  var APP_VERSION = "39";
 
   /* ---- 언어 ---- 기기 언어가 한국어면 ko, 아니면 en. 화면의 EN/한국어 버튼으로 바꾸면 기억한다. */
   var T = {
@@ -867,6 +869,8 @@
   PANELS.forEach(function(id){
     var el = $(id);
     new MutationObserver(function(){
+      var open = !!openPanel();   // 창이 열린 동안 뒤 화면은 inert — 초점도 낭독기도 들어가지 않는다
+      $("stage").inert = open; document.querySelector(".console").inert = open;
       if(!el.hidden){
         if(!el.contains(document.activeElement)){
           panelOpener[id] = document.activeElement;

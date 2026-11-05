@@ -1,8 +1,8 @@
 # drape (Personal Color Mirror) — 인계
 
-> 갱신: 2026-11-05 새벽 (야간 2차: v37 접근성 수정 → v38 키보드 마무리 — 색 띠 Tab 57→10번, 손잡이 화살표, 직전 색 비교 키)
-> 상태: 야간(11-04) ③ 병합 유지 · A WebKit 실패는 동시 실행 때만(혼자 4회 연속 25/25, 추정) `tests/e2e/WEBKIT-DIAG.md` · B 오프라인·버전 교체 실증, 점검 37통과 `docs/RELEASE-CHECK.md` · C 접근성 critical 2·serious 2종 `docs/A11Y-CHECK.md`. Play 비공개 테스트(Alpha) — 릴리스 2 (1.0.1) Published. 사이트 **v38** 운영 반영: v38 키보드(색 띠 Tab 한 번·손잡이 슬라이더·비교 키), v37 접근성(Esc 로 창 닫기·초점 되돌리기·♥ 탭 역할·색 이름 낭독·대비, 글꼴 오프라인 저장), v36 작은 폰(320px) 안내·목록 넘침과 버튼 40px 이상·노치 여백(Codex ③), v35 종이 판별 넓힘(노란 조명 종이 거절 버그), v34 흰 종이로 색 맞추기(메뉴, 배경 따라 바뀌는 얼굴색 보정)·좋아요 목록에 '내가 고른 색' 요약(온도·채도·밝기, 결과 공유에도 한 줄). 그 전 v29~v33 공유·의견·막대 색·만든 사람 한 줄. 실제 폰에서는 아직 안 눌러 봄
-> 오늘 밤: 접근성 큰 것(뒤 화면 inert·제목 구조 h1, `docs/A11Y-CHECK.md` L1·L2) 또는 감사 제안 검토(가을 요약·봄가을 막대색) — 실기기 낭독기 시험(L3)은 사용자 폰
+> 갱신: 2026-11-05 새벽 (야간 2차: v37~v39 접근성 — axe 위반 0, 키보드만으로 전부 쓸 수 있음. 실기기 낭독기는 미확인)
+> 상태: 야간(11-04) ③ 병합 유지 · A WebKit 실패는 동시 실행 때만(혼자 4회 연속 25/25, 추정) `tests/e2e/WEBKIT-DIAG.md` · B 오프라인·버전 교체 실증, 점검 37통과 `docs/RELEASE-CHECK.md` · C 접근성 critical 2·serious 2종 `docs/A11Y-CHECK.md`. Play 비공개 테스트(Alpha) — 릴리스 2 (1.0.1) Published. 사이트 **v39** 운영 반영: v39 창 열린 동안 뒤 화면 inert·숨은 h1(axe 위반 0), v38 v38 키보드(색 띠 Tab 한 번·손잡이 슬라이더·비교 키), v37 접근성(Esc 로 창 닫기·초점 되돌리기·♥ 탭 역할·색 이름 낭독·대비, 글꼴 오프라인 저장), v36 작은 폰(320px) 안내·목록 넘침과 버튼 40px 이상·노치 여백(Codex ③), v35 종이 판별 넓힘(노란 조명 종이 거절 버그), v34 흰 종이로 색 맞추기(메뉴, 배경 따라 바뀌는 얼굴색 보정)·좋아요 목록에 '내가 고른 색' 요약(온도·채도·밝기, 결과 공유에도 한 줄). 그 전 v29~v33 공유·의견·막대 색·만든 사람 한 줄. 실제 폰에서는 아직 안 눌러 봄
+> 오늘 밤: 감사 제안 검토(가을 요약 '선명한 쪽'·봄가을 막대색 대안, `docs/COLOR-AUDIT.md`) · 출시 신청서 초안 최신화(v34~v39 바뀐 점) — 실기기 TalkBack/VoiceOver 시험은 사용자 폰
 > 다음: ⓪ 실기기 iPhone 흰 종이 보정 확인(사용자 폰) · 감사 제안(가을 요약 '선명한 쪽', 봄·가을 막대색 대안) 검토 ① 폰 링크 확인(아래 3줄) ② **테스터 12명 10-28 까지** → 14일(11-11) → 신청(`store/production-application.md`) → ~11-18 승인 → **~11-20 출시**(순서 `PLAY-STORE.md` §7-5). 명단이 하루 늦으면 출시도 하루 늦다
 > 폰 확인(사용자, 1분): 1. Play 스토어 > 내 앱에서 Color Mirror 업데이트(1.0.1)가 깔렸는지 본다 2. 카톡·메모 등에서 `https://altair-research.github.io/sprout-frame/` 링크를 누른다 3. Color Mirror 가 **안** 뜨고 브라우저(또는 Sprout Frame)로 열리면 성공 — 뜨면 총괄 타워에 한마디
 > 막힘: 테스터 12명(15명 권장) 명단 — 사용자, 현재 `internal` 2명 (보드 `PLAY-TESTERS`, 메시지는 wearcast `docs/TESTER-INVITE.md` §0 두 앱 함께)
@@ -39,3 +39,5 @@
 - 2026-11-05 새벽 2차 — v37: 접근성 점검 C 의 작은 것 S1~S9 + 중간 M1·M2·M3·M7. 창 열고 닫기는 MutationObserver 하나로(어디서 hidden 을 바꾸든 초점 처리), Esc 는 위에 열린 창부터 닫음, 창 열린 동안 뒤 화면 키 무시. 글꼴은 sw.js 대신 link 에 crossorigin(불투명 응답을 캐시하면 저장 용량을 크게 잡아먹어서). 결과: axe critical·serious 0(moderate 1), Chromium 34/34·WebKit 31/31. 실기기 TalkBack·VoiceOver 는 안 해 봄.
 
 - 2026-11-05 새벽 2차 — v38: 접근성 M4(색 칩 roving tabindex: 선택된 칩만 Tab, 칩에 초점 있을 때 화살표로 넘기면 초점도 따라감) → ⋯ 까지 Tab 57→10번. M5 직전 색 비교를 Enter/Space 누르는 동안(떼면 돌아옴, 초점 잃으면 해제). M6 손잡이 role=slider(값 = 드레이프가 덮는 %, 18~76), 위/아래 화살표 5%씩, 색 넘기기보다 먼저 처리. Chromium 34/34·WebKit 31/31, 비교 키·슬라이더는 스크립트로 확인.
+
+- 2026-11-05 새벽 2차 — v39: 접근성 L1(창이 열리면 .stage·.console 에 inert — 초점·낭독기 차단, 기존 MutationObserver 에서 함께) + L2(숨은 h1 'Personal Color Mirror', .sr-only). axe 두 브라우저 × 한/영 위반 0. Chromium 34/34·WebKit 31/31.
