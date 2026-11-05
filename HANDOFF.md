@@ -2,7 +2,7 @@
 
 > 갱신: 2026-11-05 새벽 (야간 2차: v37~v41 접근성 마무리 axe 위반 0, v40 가을 막대 카키 그린, 출시 일정 ~11-30 으로 정정, 신청서·릴리스 노트 최신화)
 > 상태: 야간(11-04) ③ 병합 유지 · A WebKit 실패는 동시 실행 때만(혼자 4회 연속 25/25, 추정) `tests/e2e/WEBKIT-DIAG.md` · B 오프라인·버전 교체 실증, 점검 37통과 `docs/RELEASE-CHECK.md` · C 접근성 critical 2·serious 2종 `docs/A11Y-CHECK.md`. Play 비공개 테스트(Alpha) — 릴리스 2 (1.0.1) Published. 사이트 **v41** 운영 반영: v41 카메라 전환 버튼 이름 짧게, v40 계절 막대 가을색(봄 노랑과 구분), v39 창 열린 동안 뒤 화면 inert·숨은 h1(axe 위반 0), v38 키보드(색 띠 Tab 한 번·손잡이 슬라이더·비교 키), v37 접근성(Esc 로 창 닫기·초점 되돌리기·♥ 탭 역할·색 이름 낭독·대비, 글꼴 오프라인 저장), v36 작은 폰(320px) 안내·목록 넘침과 버튼 40px 이상·노치 여백(Codex ③), v35 종이 판별 넓힘(노란 조명 종이 거절 버그), v34 흰 종이로 색 맞추기(메뉴, 배경 따라 바뀌는 얼굴색 보정)·좋아요 목록에 '내가 고른 색' 요약(온도·채도·밝기, 결과 공유에도 한 줄). 그 전 v29~v33 공유·의견·막대 색·만든 사람 한 줄. 실제 폰에서는 아직 안 눌러 봄
-> 오늘 밤: (AI 몫 비어 감) 실기기 낭독기 시험 안내문 초안(테스터용 2분 체크리스트) · 사용자 폰: iPhone 흰 종이 보정·TalkBack/VoiceOver
+> 오늘 밤: (AI 몫 거의 비었음) 테스터 답이 오면 `store/tester-checklist.md` 표대로 처리 · 사용자 폰: iPhone 흰 종이 보정·TalkBack/VoiceOver
 > 다음: ⓪ 실기기 iPhone 흰 종이 보정 확인(사용자 폰) · 감사 제안(가을 요약 '선명한 쪽', 봄·가을 막대색 대안) 검토 ① 폰 링크 확인(아래 3줄) ② **테스터 12명** — 명단 받은 날 + 14일 테스트 + 신청·승인 ~7일 + 심사 1~2일 = **약 23일 뒤 출시**(11-07 에 들어오면 14일 11-21 → ~11-28 승인 → **~11-30 출시**, 순서 `PLAY-STORE.md` §7-5). 하루 늦으면 하루 늦다
 > 폰 확인(사용자, 1분): 1. Play 스토어 > 내 앱에서 Color Mirror 업데이트(1.0.1)가 깔렸는지 본다 2. 카톡·메모 등에서 `https://altair-research.github.io/sprout-frame/` 링크를 누른다 3. Color Mirror 가 **안** 뜨고 브라우저(또는 Sprout Frame)로 열리면 성공 — 뜨면 총괄 타워에 한마디
 > 막힘: 테스터 12명(15명 권장) 명단 — 사용자, 현재 `internal` 2명 (보드 `PLAY-TESTERS`, 메시지는 wearcast `docs/TESTER-INVITE.md` §0 두 앱 함께)
@@ -12,7 +12,7 @@
 > AI 결정: 매칭 유료판 ① 지금은 무료 '내가 고른 색 요약', 유료판은 출시 뒤 판단(총괄 타워 11-02) — 이유: 출시 전에는 쓰는 사람의 반응을 아직 모름 · 되돌리려면: 유료 정밀 비교를 다시 검토
 > AI 결정: Codex ③ 작은 폰 수정(v36) 병합 유지 — 이유: CSS 만, 320px·데스크톱 직접 확인, 되돌리기 쉬움 · 되돌리려면 059f491 의 index.html 스타일 변경을 되돌리고 버전 올림
 > AI 결정: 가을 막대색 노랑→카키 그린(#5E6B3C) — 이유: 봄과 ΔE00 12.8 로 구분 안 됨, 가을 12색 중 다른 계절과 최소 거리 2위(40.9)·흙빛 가을다움(1위 포레스트 46.2 는 여름·겨울 느낌) · 되돌리려면 index.html seasonSwatch 의 fixed 한 줄 삭제 후 버전 올림
-> 더 볼 곳: 접근성 `docs/A11Y-CHECK.md`, 출시 점검 `docs/RELEASE-CHECK.md`, WebKit 메모 `tests/e2e/WEBKIT-DIAG.md`, 오늘 밤 지시문 `docs/codex-2026-11-04.md`, 작은 폰 점검 `tests/e2e/MOBILE-REPORT.md`, 자동 테스트 `tests/e2e/REPORT.md`, 색 감사 `docs/COLOR-AUDIT.md`, 산출물 목록 `docs/OUTPUTS.md`, 바뀐 점 보고서 `plans/archive/2026-11-03-report.html`, Codex 지시문 `docs/codex-2026-11-03.md`, `PLAY-STORE.md` §6-2·§6-2c, `store/tester-invite.md`, `store/production-application.md`, `plans/`, 의도서 `C:\dev\_control-tower\intent\drape.md`
+> 더 볼 곳: 테스터 체크리스트 `store/tester-checklist.md`, 접근성 `docs/A11Y-CHECK.md`, 출시 점검 `docs/RELEASE-CHECK.md`, WebKit 메모 `tests/e2e/WEBKIT-DIAG.md`, 오늘 밤 지시문 `docs/codex-2026-11-04.md`, 작은 폰 점검 `tests/e2e/MOBILE-REPORT.md`, 자동 테스트 `tests/e2e/REPORT.md`, 색 감사 `docs/COLOR-AUDIT.md`, 산출물 목록 `docs/OUTPUTS.md`, 바뀐 점 보고서 `plans/archive/2026-11-03-report.html`, Codex 지시문 `docs/codex-2026-11-03.md`, `PLAY-STORE.md` §6-2·§6-2c, `store/tester-invite.md`, `store/production-application.md`, `plans/`, 의도서 `C:\dev\_control-tower\intent\drape.md`
 
 ## 이 문서
 프로젝트 타워(`drape 프로젝트 타워` 세션)가 관리하는 대표 인계 문서. 위 머리말이 정본이고, Play 등록 절차의 상세는 `PLAY-STORE.md` 에 있다.
@@ -47,3 +47,5 @@
 - 2026-11-05 새벽 2차 — 일정 정정: 테스터 명단 목표일(10-28)이 지나 14일 테스트가 아직 시작 안 됨 → 출시 목표를 ~11-30 으로(명단 11-07 가정). plans.json 마일스톤도 같이. 가을 요약 '선명한 쪽'은 고치지 않기로 — 요약은 계절 판정이 아니라 고른 색의 공통점이고 화면에 그렇게 적혀 있음(Codex 감사도 경계를 계절에 맞추지 말라고 제안).
 
 - 2026-11-05 새벽 2차 — v41: 접근성 M8(카메라 전환 버튼 낭독 이름을 '카메라 전환'/'Switch camera' 로 짧게, 긴 설명은 title). 두 브라우저 통과. 실수: 플랜 기록을 작업 사본(C:\dev\drape-tower)에서 publish 했더니 도구가 폴더 이름으로 열쇠·웹 폴더를 만들어 웹 허브에 p/drape-tower 사본이 생김(내용은 같음, 열쇠는 drape 것으로 맞춰 둠). 이후 publish 는 폴더 이름이 drape 인 C:\dev\_wt\drape 에서 했다(46244f4). 웹 저장소의 p/drape-tower 삭제는 총괄 타워에 요청.
+
+- 2026-11-05 새벽 2차 — 테스터 2분 체크리스트(`store/tester-checklist.md`, 한/영 복사용): 자동 테스트로 못 보는 진짜 카메라·흰 종이·TalkBack 다섯 가지와, 답별로 프로젝트 타워가 할 일. 메시지 보내기는 사용자(명단과 함께).
