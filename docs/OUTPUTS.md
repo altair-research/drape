@@ -5,7 +5,7 @@
 
 | 날짜 | 제목 | 경로 / 주소 | 한 줄 설명 |
 |---|---|---|---|
-| 2026-11-05 | 앱 v40 (운영) | https://altair-research.github.io/drape/ | v40 가을 막대 카키 그린, v39 axe 위반 0(inert·h1), v38 키보드(색 띠 Tab 57→10·손잡이·비교 키), v37 접근성(키보드·낭독기·대비, axe critical·serious 0), v36 작은 폰, v35 종이 판별, v34 흰 종이 보정·내가 고른 색 요약 |
+| 2026-11-05 | 앱 v41 (운영) | https://altair-research.github.io/drape/ | v41 카메라 전환 이름, v40 가을 막대 카키 그린, v39 axe 위반 0(inert·h1), v38 키보드(색 띠 Tab 57→10·손잡이·비교 키), v37 접근성(키보드·낭독기·대비, axe critical·serious 0), v36 작은 폰, v35 종이 판별, v34 흰 종이 보정·내가 고른 색 요약 |
 | 2026-11-05 | WebKit 실패 원인 메모 | `tests/e2e/WEBKIT-DIAG.md` | 9회 실행: 동시 실행 때만 실패, 혼자 4회 연속 통과(추정). 앱 버그 아님 |
 | 2026-11-05 | 접근성 점검 (axe·키보드·낭독기) | `docs/A11Y-CHECK.md` · `tests/e2e/a11y.spec.js` | critical 2·serious 2종, Esc·초점 이동 없음·Space ♥ 막힘·aria-live 없음, 고칠 제안 작은/중간/큰(미적용). 브랜치 claude/a11y-check |
 | 2026-11-04 | 출시 전 점검 (SW·manifest·assetlinks) | `docs/RELEASE-CHECK.md` · `node tools/check-release.mjs` · `tests/e2e/release.spec.js` | 오프라인·버전 올림 캐시 교체 실증, 점검 37통과·0실패·1경고. |
