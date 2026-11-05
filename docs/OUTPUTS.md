@@ -5,11 +5,11 @@
 
 | 날짜 | 제목 | 경로 / 주소 | 한 줄 설명 |
 |---|---|---|---|
+| 2026-11-05 | 앱 v37 (운영) | https://altair-research.github.io/drape/ | v37 접근성(키보드·낭독기·대비, axe critical·serious 0), v36 작은 폰, v35 종이 판별, v34 흰 종이 보정·내가 고른 색 요약 |
 | 2026-11-05 | WebKit 실패 원인 메모 | `tests/e2e/WEBKIT-DIAG.md` | 9회 실행: 동시 실행 때만 실패, 혼자 4회 연속 통과(추정). 앱 버그 아님 |
 | 2026-11-05 | 접근성 점검 (axe·키보드·낭독기) | `docs/A11Y-CHECK.md` · `tests/e2e/a11y.spec.js` | critical 2·serious 2종, Esc·초점 이동 없음·Space ♥ 막힘·aria-live 없음, 고칠 제안 작은/중간/큰(미적용). 브랜치 claude/a11y-check |
 | 2026-11-04 | 출시 전 점검 (SW·manifest·assetlinks) | `docs/RELEASE-CHECK.md` · `node tools/check-release.mjs` · `tests/e2e/release.spec.js` | 오프라인·버전 올림 캐시 교체 실증, 점검 37통과·0실패·1경고. |
 | 2026-11-04 | Codex 오늘 밤 지시문 A·B·C | `docs/codex-2026-11-04.md` | WebKit 실패 원인·출시 전 점검(오프라인·캐시·manifest)·접근성. 붙여넣기용, 동시 가능 |
-| 2026-11-04 | 앱 v36 (운영) | https://altair-research.github.io/drape/ | v36 작은 폰 넘침·버튼 크기·노치 여백. v35 종이 판별, v34 흰 종이 보정·내가 고른 색 요약 |
 | 2026-11-04 | ③ 작은 폰·WebKit 점검 보고서 | `tests/e2e/MOBILE-REPORT.md` | 320~412px × 한/영 × 두 엔진, 고친 문제 전후 24장(`tests/e2e/mobile-evidence/`) |
 | 2026-11-04 | ② 색 데이터 감사 | `docs/COLOR-AUDIT.md` · `node tools/audit-colors.mjs` | 267통과·0실패, 유사색 3쌍, 가을 요약 '선명한 쪽', 봄·가을 막대색 대안 제안(미적용) |
 | 2026-11-04 | ① 자동 테스트 보고서 | `tests/e2e/REPORT.md` | Chromium 17통과, WebKit 12통과·5실패. 합성 사진·화면 픽셀 검사, 앱 변경 없음 |

@@ -1,8 +1,8 @@
 # drape (Personal Color Mirror) — 인계
 
-> 갱신: 2026-11-05 새벽 (야간: Codex ③ 병합 확정·WebKit 원인 메모·출시 전 점검 B·접근성 점검 C 병합 — 앱 코드 변경 없음, 사이트 v36 그대로)
-> 상태: 야간(11-04) ③ 병합 유지 · A WebKit 실패는 동시 실행 때만(혼자 4회 연속 25/25, 추정) `tests/e2e/WEBKIT-DIAG.md` · B 오프라인·버전 교체 실증, 점검 37통과 `docs/RELEASE-CHECK.md` · C 접근성 critical 2·serious 2종 `docs/A11Y-CHECK.md`. Play 비공개 테스트(Alpha) — 릴리스 2 (1.0.1) Published. 사이트 **v36** 운영 반영: v36 작은 폰(320px) 안내·목록 넘침과 버튼 40px 이상·노치 여백(Codex ③), v35 종이 판별 넓힘(노란 조명 종이 거절 버그), v34 흰 종이로 색 맞추기(메뉴, 배경 따라 바뀌는 얼굴색 보정)·좋아요 목록에 '내가 고른 색' 요약(온도·채도·밝기, 결과 공유에도 한 줄). 그 전 v29~v33 공유·의견·막대 색·만든 사람 한 줄. 실제 폰에서는 아직 안 눌러 봄
-> 오늘 밤: (Codex 종료) 접근성 작은 수정 묶음 v37 — ♥ 탭 role="tab"(critical 2 해결), Esc 로 팝업 닫기·닫은 뒤 포커스 되돌리기, 색 이름 aria-live, 글꼴 오프라인 캐시(sw.js res.type opaque) — 검증 후 배포
+> 갱신: 2026-11-05 새벽 (야간 2차: v37 접근성 수정 배포 — 키보드·낭독기, axe critical·serious 0)
+> 상태: 야간(11-04) ③ 병합 유지 · A WebKit 실패는 동시 실행 때만(혼자 4회 연속 25/25, 추정) `tests/e2e/WEBKIT-DIAG.md` · B 오프라인·버전 교체 실증, 점검 37통과 `docs/RELEASE-CHECK.md` · C 접근성 critical 2·serious 2종 `docs/A11Y-CHECK.md`. Play 비공개 테스트(Alpha) — 릴리스 2 (1.0.1) Published. 사이트 **v37** 운영 반영: v37 접근성(Esc 로 창 닫기·초점 되돌리기·♥ 탭 역할·색 이름 낭독·대비, 글꼴 오프라인 저장), v36 작은 폰(320px) 안내·목록 넘침과 버튼 40px 이상·노치 여백(Codex ③), v35 종이 판별 넓힘(노란 조명 종이 거절 버그), v34 흰 종이로 색 맞추기(메뉴, 배경 따라 바뀌는 얼굴색 보정)·좋아요 목록에 '내가 고른 색' 요약(온도·채도·밝기, 결과 공유에도 한 줄). 그 전 v29~v33 공유·의견·막대 색·만든 사람 한 줄. 실제 폰에서는 아직 안 눌러 봄
+> 오늘 밤: 접근성 남은 것(색 칩 Tab 57번 줄이기·직전 색 비교 키보드·손잡이 슬라이더, `docs/A11Y-CHECK.md` M4~M6) — 검증 후 배포
 > 다음: ⓪ 실기기 iPhone 흰 종이 보정 확인(사용자 폰) · 감사 제안(가을 요약 '선명한 쪽', 봄·가을 막대색 대안) 검토 ① 폰 링크 확인(아래 3줄) ② **테스터 12명 10-28 까지** → 14일(11-11) → 신청(`store/production-application.md`) → ~11-18 승인 → **~11-20 출시**(순서 `PLAY-STORE.md` §7-5). 명단이 하루 늦으면 출시도 하루 늦다
 > 폰 확인(사용자, 1분): 1. Play 스토어 > 내 앱에서 Color Mirror 업데이트(1.0.1)가 깔렸는지 본다 2. 카톡·메모 등에서 `https://altair-research.github.io/sprout-frame/` 링크를 누른다 3. Color Mirror 가 **안** 뜨고 브라우저(또는 Sprout Frame)로 열리면 성공 — 뜨면 총괄 타워에 한마디
 > 막힘: 테스터 12명(15명 권장) 명단 — 사용자, 현재 `internal` 2명 (보드 `PLAY-TESTERS`, 메시지는 wearcast `docs/TESTER-INVITE.md` §0 두 앱 함께)
@@ -35,3 +35,5 @@
 - 2026-11-04 저녁 — Codex ③ codex/mobile-fixes 검토 후 병합 → v36. CSS 만: 320px 첫 안내 위가 화면 밖(-180~-260px) → 카드 안 세로 스크롤, 좋아요 목록 버튼 줄바꿈, 하단 4버튼 3열+40px 격자, 버튼 최소 40px(하단 44px), 노치 여백 env(), 패널 불투명 86→96%. 320px·데스크톱에서 직접 확인(가로 넘침 없음, 하단 4버튼 화면 안). 스크린샷 172장(8.5MB)은 테스트 때마다 다시 써지는 파일이라 고친 문제 증거 24장만 `tests/e2e/mobile-evidence/` 에 두고 `mobile-shots/` 는 .gitignore — 전체는 원격 브랜치에 남음(AI 결정, 되돌리려면 브랜치에서 가져옴). WebKit 은 여전히 시간 초과 6·종료 1(앱 로직 변경 없음, 실행 환경 추정). 브라우저 창에서 로컬 서비스워커 등록 실패는 v35 도 똑같아 창 제한으로 판단. 총괄 타워 요청으로 오늘 밤 Codex 지시문 A·B·C(`docs/codex-2026-11-04.md`).
 
 - 2026-11-05 새벽 — 야간 작업(총괄 타워: Codex 토큰 바닥이라 A·B·C 를 Claude 로). ③ 병합 유지를 AI 결정으로. A: WebKit 9회 실행 — 실패는 다른 브라우저 테스트가 동시에 돌 때만(9실패·1실패), 혼자는 4회 연속 25/25. trace·배경 블러는 원인 아님(바꿔도 차이 없음). 앱·테스트 수정 안 함, `tests/e2e/WEBKIT-DIAG.md`. B(Claude 하위 작업, PC 재부팅 뒤 이어서): 서비스워커 오프라인·버전 올림 시 새 파일·옛 캐시 정리 실증, check-release 37통과·1경고, 루트 assetlinks 와 저장소 사본 일치 직접 확인. 작은 문제: 글꼴 CSS 가 오프라인 캐시 안 됨(sw.js res.ok 만 저장). C: axe critical 2(♥ 탭 role 없음)·serious 2, Esc 로 아무것도 안 닫힘·포커스 관리 없음·색 바뀜을 낭독기가 모름. 둘 다 병합(테스트·문서만, 사이트 v36 그대로 — 오늘 밤은 운영 배포 없음).
+
+- 2026-11-05 새벽 2차 — v37: 접근성 점검 C 의 작은 것 S1~S9 + 중간 M1·M2·M3·M7. 창 열고 닫기는 MutationObserver 하나로(어디서 hidden 을 바꾸든 초점 처리), Esc 는 위에 열린 창부터 닫음, 창 열린 동안 뒤 화면 키 무시. 글꼴은 sw.js 대신 link 에 crossorigin(불투명 응답을 캐시하면 저장 용량을 크게 잡아먹어서). 결과: axe critical·serious 0(moderate 1), Chromium 34/34·WebKit 31/31. 실기기 TalkBack·VoiceOver 는 안 해 봄.
