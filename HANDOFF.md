@@ -11,7 +11,7 @@
 > AI 결정: 매칭 유료판 ① 지금은 무료 '내가 고른 색 요약', 유료판은 출시 뒤 판단(총괄 타워 11-02) — 이유: 출시 전에는 쓰는 사람의 반응을 아직 모름 · 되돌리려면: 유료 정밀 비교를 다시 검토
 > AI 결정: Codex ③ 작은 폰 수정(v36) 병합 유지 — 이유: CSS 만, 320px·데스크톱 직접 확인, 되돌리기 쉬움 · 되돌리려면 059f491 의 index.html 스타일 변경을 되돌리고 버전 올림
 > AI 결정: 가을 막대색 노랑→카키 그린(#5E6B3C) — 이유: 봄과 ΔE00 12.8 로 구분 안 됨, 가을 12색 중 다른 계절과 최소 거리 2위(40.9)·흙빛 가을다움(1위 포레스트 46.2 는 여름·겨울 느낌) · 되돌리려면 index.html seasonSwatch 의 fixed 한 줄 삭제 후 버전 올림
-> 더 볼 곳: 밤 작업 보고서 `plans/archive/2026-11-05-report.html`, 테스터 체크리스트 `store/tester-checklist.md`, 접근성 `docs/A11Y-CHECK.md`, 출시 점검 `docs/RELEASE-CHECK.md`, WebKit 메모 `tests/e2e/WEBKIT-DIAG.md`, 오늘 밤 지시문 `docs/codex-2026-11-04.md`, 작은 폰 점검 `tests/e2e/MOBILE-REPORT.md`, 자동 테스트 `tests/e2e/REPORT.md`, 색 감사 `docs/COLOR-AUDIT.md`, 산출물 목록 `docs/OUTPUTS.md`, 바뀐 점 보고서 `plans/archive/2026-11-03-report.html`, Codex 지시문 `docs/codex-2026-11-03.md`, `PLAY-STORE.md` §6-2·§6-2c, `store/tester-invite.md`, `store/production-application.md`, `plans/`, 의도서 `C:\dev\_control-tower\intent\drape.md`
+> 더 볼 곳: 내가 할 일 `plans/archive/2026-11-06-todo.html`, 밤 작업 보고서 `plans/archive/2026-11-05-report.html`, 테스터 체크리스트 `store/tester-checklist.md`, 접근성 `docs/A11Y-CHECK.md`, 출시 점검 `docs/RELEASE-CHECK.md`, WebKit 메모 `tests/e2e/WEBKIT-DIAG.md`, 오늘 밤 지시문 `docs/codex-2026-11-04.md`, 작은 폰 점검 `tests/e2e/MOBILE-REPORT.md`, 자동 테스트 `tests/e2e/REPORT.md`, 색 감사 `docs/COLOR-AUDIT.md`, 산출물 목록 `docs/OUTPUTS.md`, 바뀐 점 보고서 `plans/archive/2026-11-03-report.html`, Codex 지시문 `docs/codex-2026-11-03.md`, `PLAY-STORE.md` §6-2·§6-2c, `store/tester-invite.md`, `store/production-application.md`, `plans/`, 의도서 `C:\dev\_control-tower\intent\drape.md`
 
 ## 이 문서
 프로젝트 타워(`drape 프로젝트 타워` 세션)가 관리하는 대표 인계 문서. 위 머리말이 정본이고, Play 등록 절차의 상세는 `PLAY-STORE.md` 에 있다.
