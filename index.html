@@ -197,6 +197,12 @@
     width:max-content;max-width:calc(100% - 28px);
   }
   .wbtip[hidden]{display:none}
+  /* v42: 맞춤이 켜져 있으면 화면 테두리 링 + 오른쪽 위 표시(사용자 11-05: 메뉴에 들어가야만 켜졌는지 알 수 있었다) */
+  .stage.wbon::after{content:"";position:absolute;inset:0;border-radius:inherit;box-shadow:inset 0 0 0 2px rgba(255,255,255,.7);pointer-events:none;z-index:6}
+  .readout .wbbadge{pointer-events:auto;appearance:none;cursor:pointer;margin-top:8px;min-height:32px;padding:4px 11px;
+    font:inherit;font-size:11.5px;color:#fff;background:rgba(0,0,0,.42);border:1px solid rgba(255,255,255,.7);border-radius:999px;backdrop-filter:blur(6px)}
+  .readout .wbbadge[hidden]{display:none}
+  #wbCmp{touch-action:none;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
   .wbtip button{flex:none;min-width:40px;min-height:40px;font:inherit;color:#fff;background:rgba(255,255,255,.16);border:0;border-radius:999px;padding:5px 11px;cursor:pointer}
 
   /* ---------- console ---------- */
@@ -414,6 +420,7 @@
       <div class="meta">
         <button class="flip" id="flipTop" type="button" hidden aria-label="카메라 전환"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 11a8 8 0 0 0-14.5-4.5"/><path d="M4 4v4h4"/><path d="M4 13a8 8 0 0 0 14.5 4.5"/><path d="M20 20v-4h-4"/></svg><span id="flipTopText" hidden></span></button>
         <div id="cHex">#FF7F6E</div>
+        <button class="wbbadge" id="wbBadge" type="button" hidden>흰 종이 맞춤 ✓</button>
         <div class="match na" id="cMatchWrap" hidden title="같은 조명에서 다른 색과 견준 상대값입니다"><b id="cMatch">—</b><span>어울림</span></div>
       </div>
     </div>
@@ -422,7 +429,7 @@
       <button type="button" data-lv="0"></button><button type="button" data-lv="1"></button><button type="button" data-lv="2"></button>
     </div>
 
-    <div class="wbtip" id="wbTip" hidden><span id="wbTipText"></span><button type="button" id="wbCancel">취소</button></div>
+    <div class="wbtip" id="wbTip" hidden><span id="wbTipText" role="status"></span><button type="button" id="wbCmp" hidden>전·후</button><button type="button" id="wbOff" hidden>끄기</button><button type="button" id="wbCancel">취소</button></div>
     <div class="hint" id="hint">좌우로 밀어 색을 넘기세요 · 손잡이를 끌면 드레이프 높이</div>
 
     <div class="fallback">
@@ -505,7 +512,7 @@
 <script>
 (function(){
   "use strict";
-  var APP_VERSION = "41";
+  var APP_VERSION = "42";
 
   /* ---- 언어 ---- 기기 언어가 한국어면 ko, 아니면 en. 화면의 EN/한국어 버튼으로 바꾸면 기억한다. */
   var T = {
@@ -535,8 +542,8 @@
          camLabel:"카메라", lockLabel:"빛 고정", guideLabel:"얼굴 가이드", langLabel:"언어", on:"켜짐", off:"꺼짐",
          camFront:"셀프", camRear:"상대방", camSwitch:"카메라 전환", camHint:"전면/후면 카메라 전환. 후면으로 하면 다른 사람이 폰을 들고 대볼 수 있어요",
          lockOff:"빛 자동", lockOn:"빛 고정됨", lockHint:"카메라가 색을 계속 다시 맞추지 않도록 화이트밸런스·노출을 지금 값에 고정합니다",
-         wbLabel:"흰 종이로 색 맞추기", wbHint:"배경 색 때문에 얼굴색이 틀어질 때, 흰 종이를 기준으로 화면 색을 바로잡아요. 다시 누르면 꺼져요",
-         wbTip:"얼굴 옆에 흰 종이를 들고, 화면 속 종이를 눌러 주세요", wbFail:"흰 종이를 찾지 못했어요. 종이를 더 크게 비추고 다시 눌러 주세요", cancel:"취소",
+         wbLabel:"흰 종이로 색 맞추기", wbHint:"배경 색 때문에 얼굴색이 틀어질 때, 흰 종이를 기준으로 화면 색을 바로잡아요. 다시 누르면 다시 맞추거나 끌 수 있어요",
+         wbTip:"얼굴 옆(화면 위쪽)에 흰 종이를 들고, 화면 속 종이를 눌러 주세요", wbDone:"맞췄어요 ✓ 화면 속 종이가 하얗게 보이면 된 거예요. '전·후'를 누르고 있으면 맞추기 전 색", wbCmp:"전·후", wbOk:"확인", wbOff:"끄기", wbSet:"맞춤 ✓", wbBadge:"흰 종이 맞춤 ✓", wbFail:"흰 종이를 찾지 못했어요. 종이를 더 크게 비추고 다시 눌러 주세요", cancel:"취소",
          myLean:"내가 고른 색", leanNote:"판정이 아니라 ♥한 색들의 공통점이에요.", leanFew:"5개 넘게 모이면 더 또렷해져요.",
          leanTemp:"온도", leanChroma:"채도", leanLight:"밝기", leanOf:function(w){ return w.join(" · ") + " 쪽"; },
          lw:{warm:"따뜻한",cool:"차가운",soft:"부드러운",vivid:"선명한",light:"밝은",deep:"깊은"} },
@@ -566,8 +573,8 @@
          camLabel:"Camera", lockLabel:"Lock light", guideLabel:"Face guide", langLabel:"Language", on:"On", off:"Off",
          camFront:"Selfie", camRear:"Someone else", camSwitch:"Switch camera", camHint:"Switch front/rear camera. Rear lets another person hold the phone and drape you",
          lockOff:"Auto light", lockOn:"Light locked", lockHint:"Locks white balance and exposure at their current values so the camera stops re-adjusting colors",
-         wbLabel:"White paper balance", wbHint:"When the background throws off your skin color, this corrects the screen using a sheet of white paper. Tap again to turn it off",
-         wbTip:"Hold white paper next to your face and tap it on screen", wbFail:"Couldn’t read white paper. Show more of it and tap again", cancel:"Cancel",
+         wbLabel:"White paper balance", wbHint:"When the background throws off your skin color, this corrects the screen using a sheet of white paper. Tap again to redo or turn it off",
+         wbTip:"Hold white paper next to your face (upper screen) and tap it", wbDone:"Done ✓ If the paper looks white on screen, it worked. Hold 'Before/after' to see the original", wbCmp:"Before/after", wbOk:"OK", wbOff:"Turn off", wbSet:"Set ✓", wbBadge:"White balanced ✓", wbFail:"Couldn’t read white paper. Show more of it and tap again", cancel:"Cancel",
          myLean:"Colors I picked", leanNote:"Not a verdict, just what your liked colors have in common.", leanFew:"It gets clearer after 5 or more.",
          leanTemp:"Temperature", leanChroma:"Saturation", leanLight:"Brightness", leanOf:function(w){ return "Leaning " + w.join(" · "); },
          lw:{warm:"warm",cool:"cool",soft:"soft",vivid:"vivid",light:"light",deep:"deep"} }
@@ -1262,12 +1269,23 @@
     if(on) $("wbm").setAttribute("values", g[0].toFixed(3)+" 0 0 0 0 0 "+g[1].toFixed(3)+" 0 0 0 0 0 "+g[2].toFixed(3)+" 0 0 0 0 0 1 0");
     $("cam").classList.toggle("wb", on); $("shot").classList.toggle("wb", on);
     $("wbBtn").setAttribute("aria-pressed", on ? "true" : "false");
-    $("wbState").textContent = on ? t("on") : t("off");
+    $("wbState").textContent = on ? t("wbSet") : t("off");
+    stage.classList.toggle("wbon", on); $("wbBadge").hidden = !on;
   }
+  /* v42: 끝났다는 확인이 없고 메뉴의 '켜짐'을 다시 누르면 꺼져서 헷갈렸다(사용자 11-05).
+     맞춘 뒤 확인 문구 + '전·후'(누르는 동안 보정 전)를 보이고, 켜진 상태에서 메뉴를 누르면 다시 맞추기(끄기 버튼 함께). */
+  var wbMode="";
   function wbPick(on){
     wbPicking=on; stage.classList.toggle("wbpick", on);
-    $("wbTip").hidden=!on; if(on) $("wbTipText").textContent=t("wbTip");
+    wbMode = on ? "pick" : ""; $("wbTip").hidden=!on;
+    if(on){ $("wbTipText").textContent=t("wbTip"); $("wbCancel").textContent=t("cancel"); $("wbOff").hidden=!wbOn; $("wbCmp").hidden=true; }
   }
+  function wbDone(){
+    wbPicking=false; stage.classList.remove("wbpick"); wbMode="done";
+    $("wbTip").hidden=false; $("wbTipText").textContent=t("wbDone");
+    $("wbCmp").hidden=false; $("wbOff").hidden=true; $("wbCancel").textContent=t("wbOk");
+  }
+  function wbPeek(on){ if(!wbOn) return; $("cam").classList.toggle("wb", !on); $("shot").classList.toggle("wb", !on); }
   function wbSample(clientX, clientY){
     var photo=stage.classList.contains("photo"), src, sw, sh;
     if(photo){ src=$("shot"); sw=src.naturalWidth; sh=src.naturalHeight; }
@@ -1287,19 +1305,26 @@
   }
   $("wbBtn").addEventListener("click", function(){
     $("menu").hidden=true;
-    if(wbOn){ setWb(false); return; }
     if(!lightLocked && camTrack && !$("lockBtn").hidden && !stage.classList.contains("photo")) setLightLock(true).then(function(){ wbPick(true); });
     else wbPick(true);
   });
-  $("wbCancel").addEventListener("click", function(){ wbPick(false); $("menuBtn").focus(); });
+  $("wbCancel").addEventListener("click", function(){ wbPeek(false); wbPick(false); $("menuBtn").focus(); });
+  $("wbBadge").addEventListener("click", function(){ $("wbBtn").click(); });
+  $("wbOff").addEventListener("click", function(){ setWb(false); wbPick(false); $("menuBtn").focus(); });
+  ["pointerdown"].forEach(function(ev){ $("wbCmp").addEventListener(ev, function(e){ e.preventDefault(); wbPeek(true); }); });
+  ["pointerup","pointerleave","pointercancel","blur"].forEach(function(ev){ $("wbCmp").addEventListener(ev, function(){ wbPeek(false); }); });
+  $("wbCmp").addEventListener("keydown", function(e){ if(e.key===" "||e.key==="Enter"){ e.preventDefault(); wbPeek(true); } });
+  $("wbCmp").addEventListener("keyup", function(e){ if(e.key===" "||e.key==="Enter") wbPeek(false); });
+  $("wbCmp").addEventListener("contextmenu", function(e){ e.preventDefault(); });
   stage.addEventListener("pointerdown", function(e){
     if(!wbPicking || e.target.closest("#wbTip")) return;
     e.stopImmediatePropagation(); e.preventDefault();
     var c=wbSample(e.clientX, e.clientY), m=c ? (c[0]+c[1]+c[2])/3 : 0;
-    var g=c && m>0.12 ? [m/c[0], m/c[1], m/c[2]] : null;
+    var y=c ? 0.2126*c[0]+0.7152*c[1]+0.0722*c[2] : 0;                        // v42: 평균 대신 밝기(Y)를 지켜 화면이 어두워지지 않게
+    var g=c && m>0.12 ? [y/c[0], y/c[1], y/c[2]] : null;
     var lab=c ? srgbToLab.apply(null, c.map(function(v){ return 255*(v<=0.0031308 ? 12.92*v : 1.055*Math.pow(v,1/2.4)-0.055); })) : null;
     if(!g || lab.a>10 || g.some(function(v){ return v<0.5 || v>2.0; })){ $("wbTipText").textContent=t("wbFail"); return; }
-    wbPick(false); setWb(true, g);
+    setWb(true, g); wbDone();
   }, true);
 
   var lastFail = null;
@@ -1373,9 +1398,11 @@
     $("makerText").textContent = mk; $("maker").hidden = !mk;
     $("lockBtn").title = t("lockHint");
     $("wbLabel").textContent = t("wbLabel"); $("wbBtn").title = t("wbHint");
-    $("wbState").textContent = wbOn ? t("on") : t("off");
-    $("wbCancel").textContent = t("cancel");
+    $("wbState").textContent = wbOn ? t("wbSet") : t("off");
+    $("wbBadge").textContent = t("wbBadge");
+    $("wbCancel").textContent = t(wbMode==="done" ? "wbOk" : "cancel"); $("wbCmp").textContent = t("wbCmp"); $("wbOff").textContent = t("wbOff");
     if(wbPicking) $("wbTipText").textContent = t("wbTip");
+    if(wbMode==="done") $("wbTipText").textContent = t("wbDone");
     render();
     if(!$("sheet").hidden) renderSheet();
   }

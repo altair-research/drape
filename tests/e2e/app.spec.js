@@ -22,14 +22,33 @@ for (const lang of ['ko', 'en']) {
       await openPhoto(page, lang);
       await startBalance(page);
       await tapStage(page, 0.20);
-      await expect(page.locator('#wbTip')).toBeHidden();
+      // v42: 맞춘 뒤 확인 문구와 전·후 버튼이 보인다
+      await expect(page.locator('#wbTip')).toBeVisible();
+      await expect(page.locator('#wbTipText')).toContainText(lang === 'ko' ? '맞췄어요' : 'Done');
       await expect(page.locator('#shot')).toHaveClass(/wb/);
       const values = (await page.locator('#wbm').getAttribute('values')).trim().split(/\s+/).map(Number);
-      for (const [index, expected] of [[0, 0.78], [6, 0.90], [12, 1.68]])
-        expect(Math.abs(values[index] - expected)).toBeLessThanOrEqual(0.05);
+      // v42: 밝기(Y) 보존으로 배율 크기가 바뀌었으니 채널 사이 비율로 본다(합성 사진 기준 0.78 : 0.90 : 1.68)
+      expect(Math.abs(values[0] / values[6] - 0.78 / 0.90)).toBeLessThanOrEqual(0.06);
+      expect(Math.abs(values[12] / values[6] - 1.68 / 0.90)).toBeLessThanOrEqual(0.08);
+      await expect(page.locator('#wbBadge')).toBeVisible();
+      await expect(page.locator('#stage')).toHaveClass(/wbon/);
+      const cmp = await page.locator('#wbCmp').boundingBox();
+      await page.mouse.move(cmp.x + cmp.width / 2, cmp.y + cmp.height / 2);
+      await page.mouse.down();
+      await expect(page.locator('#shot')).not.toHaveClass(/wb/);
+      await page.mouse.up();
+      await expect(page.locator('#shot')).toHaveClass(/wb/);
+      await page.locator('#wbCancel').click();
+      await expect(page.locator('#wbTip')).toBeHidden();
+      await expect(page.locator('#wbState')).toHaveText(lang === 'ko' ? '맞춤 ✓' : 'Set ✓');
+      // 켜진 상태에서 메뉴를 누르면 다시 맞추기 + 끄기
       await page.locator('#menuBtn').click();
       await page.locator('#wbBtn').click();
+      await expect(page.locator('#wbTip')).toBeVisible();
+      await expect(page.locator('#shot')).toHaveClass(/wb/);
+      await page.locator('#wbOff').click();
       await expect(page.locator('#shot')).not.toHaveClass(/wb/);
+      await expect(page.locator('#wbBadge')).toBeHidden();
       await expect(page.locator('#wbTip')).toBeHidden();
     });
 
