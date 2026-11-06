@@ -1,6 +1,6 @@
 const { expect } = require('@playwright/test');
 
-async function prepare(page, lang = 'ko') {
+async function prepare(page, lang = 'ko', query = '') {
   // Keep tests offline and deterministic; the optional CDN font is outside this audit.
   await page.route('https://cdn.jsdelivr.net/**', route => route.fulfill({
     status: 200, contentType: 'text/css', body: '',
@@ -19,7 +19,7 @@ async function prepare(page, lang = 'ko') {
       value: async data => { window.__shares.push(data); },
     });
   }, lang);
-  await page.goto('/index.html');
+  await page.goto('/index.html' + query);
   await expect(page.locator('#intro')).toBeVisible();
   await expect(page.locator('#stage')).toHaveClass(/blocked/);
 }
@@ -41,8 +41,8 @@ async function uploadSynthetic(page) {
   await expect.poll(() => page.locator('#shot').evaluate(img => img.complete && img.naturalWidth)).toBe(800);
 }
 
-async function openPhoto(page, lang = 'ko') {
-  await prepare(page, lang);
+async function openPhoto(page, lang = 'ko', query = '') {
+  await prepare(page, lang, query);
   await page.locator('#introGo').click();
   await expect(page.locator('#intro')).toBeHidden();
   await uploadSynthetic(page);

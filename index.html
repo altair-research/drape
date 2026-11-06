@@ -202,6 +202,18 @@
   .readout .wbbadge{pointer-events:auto;appearance:none;cursor:pointer;margin-top:8px;min-height:32px;padding:4px 11px;
     font:inherit;font-size:11.5px;color:#fff;background:rgba(0,0,0,.42);border:1px solid rgba(255,255,255,.7);border-radius:999px;backdrop-filter:blur(6px)}
   .readout .wbbadge[hidden]{display:none}
+  /* v43: 흰 종이를 댈 자리(사용자 11-06: 종이를 두고 화면을 누르는 게 번거롭다). 이 칸을 자동으로 읽어 맞춘다 */
+  .wbzone{position:absolute;left:4%;top:24%;width:25%;height:20%;z-index:6;border:2px dashed rgba(255,255,255,.85);border-radius:12px;
+    display:grid;place-items:center;text-align:center;pointer-events:none;background:rgba(255,255,255,.06);transition:border-color .2s,background .2s}
+  .wbzone span{font-size:11.5px;line-height:1.3;color:#fff;background:rgba(0,0,0,.5);padding:3px 7px;border-radius:8px}
+  .wbzone.seen{border-style:solid;border-color:#7ee2a8;background:rgba(126,226,168,.12)}
+  .wbzone[hidden]{display:none}
+  /* 점수 실험 모드(?score=1, v43): 주소에 붙여야만 나오는 시험용. docs/scoring-discussion.md */
+  .scorelab{position:absolute;left:10px;right:10px;bottom:10px;z-index:9;color:#fff;background:rgba(0,0,0,.86);border-radius:14px;padding:8px;font-size:12px;line-height:1.45;max-height:46%;overflow:auto}
+  .scorelab[hidden]{display:none}
+  .scorelab .slrow{display:flex;gap:6px;flex-wrap:wrap}
+  .scorelab button{min-height:36px;font:inherit;color:#fff;background:rgba(255,255,255,.16);border:0;border-radius:999px;padding:4px 12px;cursor:pointer}
+  .scorelab #slOut{margin-top:6px;white-space:pre-wrap}
   #wbCmp{touch-action:none;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
   .wbtip button{flex:none;min-width:40px;min-height:40px;font:inherit;color:#fff;background:rgba(255,255,255,.16);border:0;border-radius:999px;padding:5px 11px;cursor:pointer}
 
@@ -429,6 +441,8 @@
       <button type="button" data-lv="0"></button><button type="button" data-lv="1"></button><button type="button" data-lv="2"></button>
     </div>
 
+    <div class="wbzone" id="wbZone" hidden aria-hidden="true"><span id="wbZoneText">여기에 흰 종이</span></div>
+    <div class="scorelab" id="scoreLab" hidden><div class="slrow"><button type="button" id="slMeasure">측정</button><button type="button" id="slPlace">장소 A</button><button type="button" id="slCopy">복사</button><button type="button" id="slClear">지우기</button></div><div id="slOut" role="status"></div></div>
     <div class="wbtip" id="wbTip" hidden><span id="wbTipText" role="status"></span><button type="button" id="wbCmp" hidden>전·후</button><button type="button" id="wbOff" hidden>끄기</button><button type="button" id="wbCancel">취소</button></div>
     <div class="hint" id="hint">좌우로 밀어 색을 넘기세요 · 손잡이를 끌면 드레이프 높이</div>
 
@@ -512,7 +526,7 @@
 <script>
 (function(){
   "use strict";
-  var APP_VERSION = "42";
+  var APP_VERSION = "43";
 
   /* ---- 언어 ---- 기기 언어가 한국어면 ko, 아니면 en. 화면의 EN/한국어 버튼으로 바꾸면 기억한다. */
   var T = {
@@ -543,7 +557,7 @@
          camFront:"셀프", camRear:"상대방", camSwitch:"카메라 전환", camHint:"전면/후면 카메라 전환. 후면으로 하면 다른 사람이 폰을 들고 대볼 수 있어요",
          lockOff:"빛 자동", lockOn:"빛 고정됨", lockHint:"카메라가 색을 계속 다시 맞추지 않도록 화이트밸런스·노출을 지금 값에 고정합니다",
          wbLabel:"흰 종이로 색 맞추기", wbHint:"배경 색 때문에 얼굴색이 틀어질 때, 흰 종이를 기준으로 화면 색을 바로잡아요. 다시 누르면 다시 맞추거나 끌 수 있어요",
-         wbTip:"얼굴 옆(화면 위쪽)에 흰 종이를 들고, 화면 속 종이를 눌러 주세요", wbDone:"맞췄어요 ✓ 화면 속 종이가 하얗게 보이면 된 거예요. '전·후'를 누르고 있으면 맞추기 전 색", wbCmp:"전·후", wbOk:"확인", wbOff:"끄기", wbSet:"맞춤 ✓", wbBadge:"흰 종이 맞춤 ✓", wbFail:"흰 종이를 찾지 못했어요. 종이를 더 크게 비추고 다시 눌러 주세요", cancel:"취소",
+         wbTip:"얼굴 옆(화면 위쪽)에 흰 종이를 들고, 화면 속 종이를 눌러 주세요", wbDone:"맞췄어요 ✓ 화면 속 종이가 하얗게 보이면 된 거예요. '전·후'를 누르고 있으면 맞추기 전 색", wbCmp:"전·후", wbOk:"확인", wbOff:"끄기", wbSet:"맞춤 ✓", wbBadge:"흰 종이 맞춤 ✓", wbTipZone:"왼쪽 위 점선 칸에 흰 종이를 대 주세요. 자동으로 맞춰요 (화면 속 종이를 눌러도 돼요)", wbZone:"여기에 흰 종이", camResume:"카메라를 다시 켰어요", wbFail:"흰 종이를 찾지 못했어요. 종이를 더 크게 비추고 다시 눌러 주세요", cancel:"취소",
          myLean:"내가 고른 색", leanNote:"판정이 아니라 ♥한 색들의 공통점이에요.", leanFew:"5개 넘게 모이면 더 또렷해져요.",
          leanTemp:"온도", leanChroma:"채도", leanLight:"밝기", leanOf:function(w){ return w.join(" · ") + " 쪽"; },
          lw:{warm:"따뜻한",cool:"차가운",soft:"부드러운",vivid:"선명한",light:"밝은",deep:"깊은"} },
@@ -574,7 +588,7 @@
          camFront:"Selfie", camRear:"Someone else", camSwitch:"Switch camera", camHint:"Switch front/rear camera. Rear lets another person hold the phone and drape you",
          lockOff:"Auto light", lockOn:"Light locked", lockHint:"Locks white balance and exposure at their current values so the camera stops re-adjusting colors",
          wbLabel:"White paper balance", wbHint:"When the background throws off your skin color, this corrects the screen using a sheet of white paper. Tap again to redo or turn it off",
-         wbTip:"Hold white paper next to your face (upper screen) and tap it", wbDone:"Done ✓ If the paper looks white on screen, it worked. Hold 'Before/after' to see the original", wbCmp:"Before/after", wbOk:"OK", wbOff:"Turn off", wbSet:"Set ✓", wbBadge:"White balanced ✓", wbFail:"Couldn’t read white paper. Show more of it and tap again", cancel:"Cancel",
+         wbTip:"Hold white paper next to your face (upper screen) and tap it", wbDone:"Done ✓ If the paper looks white on screen, it worked. Hold 'Before/after' to see the original", wbCmp:"Before/after", wbOk:"OK", wbOff:"Turn off", wbSet:"Set ✓", wbBadge:"White balanced ✓", wbTipZone:"Hold white paper in the dashed box at top left. It balances automatically (or tap the paper)", wbZone:"White paper here", camResume:"Camera restarted", wbFail:"Couldn’t read white paper. Show more of it and tap again", cancel:"Cancel",
          myLean:"Colors I picked", leanNote:"Not a verdict, just what your liked colors have in common.", leanFew:"It gets clearer after 5 or more.",
          leanTemp:"Temperature", leanChroma:"Saturation", leanLight:"Brightness", leanOf:function(w){ return "Leaning " + w.join(" · "); },
          lw:{warm:"warm",cool:"cool",soft:"soft",vivid:"vivid",light:"light",deep:"deep"} }
@@ -1117,6 +1131,15 @@
     var w = Math.cos((l.h-60)*Math.PI/180);
     return w * Math.min(1, l.C/30);
   }
+  function scoreRaw(sk){
+    var skinWarm = Math.max(-1, Math.min(1, (sk.h-52)/12));
+    var skinClear = Math.max(0, Math.min(1, (sk.C-12)/23));
+    return LABS.map(function(l){
+      var temp = 1 - Math.abs(skinWarm - colorWarmth(l))/2;
+      var clear = 1 - Math.abs(skinClear - l.C/CMAX);
+      return 0.6*temp + 0.4*clear;
+    });
+  }
   function computeScores(){
     if(!skin) { matchScores=null; return; }
     // 피부 언더톤: Lab 색상각이 클수록 노란기(웜). 52°를 중립으로, ±12°를 ±1로 본다 — 관행적 범위에서 정한 값.
@@ -1172,6 +1195,68 @@
     }, 700);
   }
 
+  /* ---- 점수 실험 모드 (?score=1, v43) ----
+     사용자 11-06 결정: 점수는 실험 모드로 먼저. 주소에 ?score=1 을 붙여야만 나오는 시험용.
+     '측정'을 누르면 3초 동안 0.15초마다 볼·코 피부색을 읽어 중앙값 하나로 정하고(9월 판처럼 계속 바뀌지 않게),
+     32색을 원점수 순으로 줄 세운다(10~100 으로 늘리지 않음). 기록은 이 폰에만(localStorage) 남고 '복사'로 보낼 수 있다.
+     통과 기준(제안): 같은 사람 6번(장소 2곳×3번) 측정에서 가장 덜 겹친 두 번도 상위 5색 중 3색 이상 공통. */
+  var SCORE_LAB = /[?&]score=1/.test(location.search), slPlace="A", slBusy=false;
+  function slLog(){ try{ return JSON.parse(localStorage.getItem("drape.scoreLog")||"[]"); }catch(e){ return []; } }
+  function slSave(a){ try{ localStorage.setItem("drape.scoreLog", JSON.stringify(a)); }catch(e){} }
+  function slK(ko, en){ return LANG==="ko" ? ko : en; }
+  function slRender(){
+    var log=slLog(), out=[];
+    $("slPlace").textContent=slK("장소 ","Place ")+slPlace;
+    $("slMeasure").textContent=slK("측정","Measure"); $("slCopy").textContent=slK("복사","Copy"); $("slClear").textContent=slK("지우기","Clear");
+    if(log.length){
+      var last=log[log.length-1];
+      out.push(slK("측정 ","Run ")+"#"+log.length+" · "+slK("장소 ","Place ")+last.place+" · "+(last.wb?slK("흰 종이 맞춤 ✓","balanced ✓"):slK("흰 종이 맞춤 안 함 ⚠","not balanced ⚠")));
+      out.push(slK("피부 ","Skin ")+"L "+last.skin.L+" · C "+last.skin.C+" · h "+last.skin.h+"°");
+      out.push(slK("상위 5: ","Top 5: ")+last.top.map(function(i){ return cName(FLAT[i]); }).join(", "));
+      out.push(slK("하위 5: ","Bottom 5: ")+last.bottom.map(function(i){ return cName(FLAT[i]); }).join(", "));
+      out.push(slK("1위·5위 원점수 차: ","Gap #1–#5: ")+last.gap);
+      if(log.length>=2){
+        var min=5;
+        for(var a=0;a<log.length;a++) for(var b=a+1;b<log.length;b++){
+          var k=log[a].top.filter(function(i){ return log[b].top.indexOf(i)>-1; }).length; if(k<min) min=k;
+        }
+        out.push(slK(log.length+"번 중 가장 덜 겹친 두 번: 상위 5색 중 "+min+"색 공통 → ", log.length+" runs, worst pair shares "+min+" of top 5 → ")+(min>=3?slK("기준 안(3색 이상)","within target (3+)"):slK("기준 미달(3색)","below target (3)")));
+      }
+    } else out.push(slK("흰 종이 맞춤 → 얼굴을 점선 안에 → '측정'. 장소 2곳 × 3번이 목표","Balance with white paper → face in the guide → Measure. Goal: 2 places × 3 runs"));
+    $("slOut").textContent=out.join("\n");
+  }
+  function slMeasure(){
+    if(slBusy) return; slBusy=true;
+    var Ls=[],As=[],Bs=[], n=0, keep=skin;
+    $("slOut").textContent=slK("측정 중… 3초 가만히","Measuring… hold still 3s");
+    var tm=setInterval(function(){
+      skin=null; if(sampleSkin()){ Ls.push(skin.L); As.push(skin.a); Bs.push(skin.b); }
+      if(++n>=20){
+        clearInterval(tm); skin=keep; slBusy=false;
+        if(Ls.length<8){ $("slOut").textContent=slK("얼굴을 못 읽었어요. 점선 안에 얼굴을 두고 다시","Couldn’t read your face. Keep it in the guide and retry"); return; }
+        var med=function(a){ a=a.slice().sort(function(p,q){return p-q;}); return a[a.length>>1]; };
+        var sk=polar({L:med(Ls),a:med(As),b:med(Bs)}), raw=scoreRaw(sk);
+        var order=raw.map(function(v,i){ return i; }).sort(function(p,q){ return raw[q]-raw[p]; });
+        var log=slLog();
+        log.push({ t:Date.now(), place:slPlace, wb:wbOn, skin:{L:+sk.L.toFixed(1),C:+sk.C.toFixed(1),h:+sk.h.toFixed(1)},
+                   top:order.slice(0,5), bottom:order.slice(-5), gap:+(raw[order[0]]-raw[order[4]]).toFixed(3) });
+        slSave(log); slRender();
+      }
+    }, 150);
+  }
+  if(SCORE_LAB){
+    $("scoreLab").hidden=false;
+    $("slMeasure").addEventListener("click", slMeasure);
+    $("slPlace").addEventListener("click", function(){ slPlace = slPlace==="A" ? "B" : "A"; slRender(); });
+    $("slClear").addEventListener("click", function(){ slSave([]); slRender(); });
+    $("slCopy").addEventListener("click", function(){
+      var txt=JSON.stringify(slLog().map(function(r){ return { place:r.place, wb:r.wb, skin:r.skin, gap:r.gap,
+        top:r.top.map(function(i){ return FLAT[i].e; }), bottom:r.bottom.map(function(i){ return FLAT[i].e; }) }; }));
+      try{ navigator.clipboard.writeText(txt).then(function(){ $("slOut").textContent=slK("복사했어요. 채팅에 붙여 넣어 주세요","Copied. Paste it in chat"); }); }catch(e){}
+    });
+    slRender();
+  }
+
   /* ---- camera ---- */
   var video=$("cam");
   /* ---- 전면/후면 ---- 후면 카메라로 바꾸면 다른 사람이 폰을 들고 상대에게 대볼 수 있다. 후면은 거울 반전을 하지 않는다. */
@@ -1211,6 +1296,28 @@
         fail(t(lastFail));
       });
   }
+  /* ---- 카메라 멈춤 되살리기 (v43) ----
+     사용자 11-06: "처음부터 멈춰 있었다". 앱을 잠깐 나갔다 오거나(스크린샷·다른 앱) 화면이 꺼졌다 켜지면
+     안드로이드가 카메라를 끊거나 영상을 멈춘 채로 둘 수 있다(추정). 화면으로 돌아오면 확인하고,
+     켜져 있는 동안에도 1.5초마다 영상 시간이 흐르는지 보고, 멈췄으면 play() → 다음에도 멈춰 있으면 카메라를 다시 켠다. */
+  var camLastT=-1, camStall=0;
+  function camRevive(){
+    if(!curStream || stage.classList.contains("photo") || document.hidden) return;
+    var tr=curStream.getVideoTracks()[0];
+    if(!tr || tr.readyState!=="live"){ startCam(); showCamNote(); return; }
+    if(video.paused){ var p=video.play(); if(p && p.catch) p.catch(function(){}); }
+  }
+  function showCamNote(){ var h=$("hint"); if(!h) return; h.textContent=t("camResume"); h.classList.remove("off"); setTimeout(function(){ h.classList.add("off"); }, 2500); }
+  document.addEventListener("visibilitychange", function(){ if(!document.hidden){ camStall=0; camLastT=-1; setTimeout(camRevive, 300); } });
+  setInterval(function(){
+    if(!curStream || stage.classList.contains("photo") || document.hidden){ camStall=0; camLastT=-1; return; }
+    var now=video.currentTime;
+    if(camLastT>=0 && now===camLastT) camStall++; else camStall=0;
+    camLastT=now;
+    if(camStall===1) camRevive();
+    else if(camStall>=2){ camStall=0; camLastT=-1; startCam(); showCamNote(); }
+  }, 1500);
+
   /* ---- 빛 고정 (화이트밸런스·노출 잠금) ----
      폰 카메라는 장면에 맞춰 색온도와 밝기를 계속 다시 맞춘다. 드레이프 색이 바뀌거나 고개를 돌리면
      얼굴색도 따라 흔들려 비교가 어렵다. 기기가 허용하면(안드로이드 Chrome 대부분) 현재 값에 고정한다.
@@ -1277,16 +1384,16 @@
   var wbMode="";
   function wbPick(on){
     wbPicking=on; stage.classList.toggle("wbpick", on);
-    wbMode = on ? "pick" : ""; $("wbTip").hidden=!on;
-    if(on){ $("wbTipText").textContent=t("wbTip"); $("wbCancel").textContent=t("cancel"); $("wbOff").hidden=!wbOn; $("wbCmp").hidden=true; }
+    wbMode = on ? "pick" : ""; $("wbTip").hidden=!on; wbAuto(on);
+    if(on){ $("wbTipText").textContent=t(!$("wbZone").hidden ? "wbTipZone" : "wbTip"); $("wbCancel").textContent=t("cancel"); $("wbOff").hidden=!wbOn; $("wbCmp").hidden=true; }
   }
   function wbDone(){
-    wbPicking=false; stage.classList.remove("wbpick"); wbMode="done";
+    wbPicking=false; stage.classList.remove("wbpick"); wbMode="done"; wbAuto(false);
     $("wbTip").hidden=false; $("wbTipText").textContent=t("wbDone");
     $("wbCmp").hidden=false; $("wbOff").hidden=true; $("wbCancel").textContent=t("wbOk");
   }
   function wbPeek(on){ if(!wbOn) return; $("cam").classList.toggle("wb", !on); $("shot").classList.toggle("wb", !on); }
-  function wbSample(clientX, clientY){
+  function wbSample(clientX, clientY, halfPx){
     var photo=stage.classList.contains("photo"), src, sw, sh;
     if(photo){ src=$("shot"); sw=src.naturalWidth; sh=src.naturalHeight; }
     else { src=$("cam"); sw=src.videoWidth; sh=src.videoHeight; }
@@ -1294,7 +1401,7 @@
     var r=stage.getBoundingClientRect(), W=r.width, H=r.height, px=clientX-r.left, py=clientY-r.top;
     if(!photo && !src.classList.contains("rear")) px=W-px;                     // 전면은 거울로 뒤집어 보인다
     var scale=Math.max(W/sw, H/sh), ox=(W-sw*scale)/2, oy=(H-sh*scale)/2;      // object-fit:cover 역산
-    var half=18/scale;                                                          // 화면에서 36px 네모
+    var half=(halfPx||18)/scale;                                                          // 화면에서 36px 네모
     try{ sampCx.drawImage(src, (px-ox)/scale-half, (py-oy)/scale-half, half*2, half*2, 0, 0, 24, 24); }catch(e){ return null; }
     var d=sampCx.getImageData(0,0,24,24).data, all=[];
     for(var i=0;i<d.length;i+=4){ var R=toLin(d[i]),G=toLin(d[i+1]),B=toLin(d[i+2]); all.push([R,G,B,R+G+B]); }
@@ -1302,6 +1409,39 @@
     var mid=all.slice(all.length>>2, all.length-(all.length>>2)), s=[0,0,0];   // 그늘·반사광 빼고 가운데 절반
     mid.forEach(function(q){ s[0]+=q[0]; s[1]+=q[1]; s[2]+=q[2]; });
     return s.map(function(v){ return v/mid.length; });
+  }
+  /* 종이 판별: 배율 0.5~2.0 안, 너무 어둡지 않음, 붉은기(Lab a) 10 이하. v42: 평균 대신 밝기(Y)를 지켜 화면이 어두워지지 않게 */
+  function wbJudge(c){
+    if(!c) return null;
+    var m=(c[0]+c[1]+c[2])/3, y=0.2126*c[0]+0.7152*c[1]+0.0722*c[2];
+    if(m<=0.12) return null;
+    var g=[y/c[0], y/c[1], y/c[2]];
+    var lab=srgbToLab.apply(null, c.map(function(v){ return 255*(v<=0.0031308 ? 12.92*v : 1.055*Math.pow(v,1/2.4)-0.055); }));
+    if(lab.a>10 || g.some(function(v){ return v<0.5 || v>2.0; })) return null;
+    return g;
+  }
+  /* v43 자동 맞춤: 고르는 동안 점선 칸 가운데를 0.25초마다 읽어, 종이로 보이는 값이 연속 4번(약 1초) 비슷하게(채널별 6% 안) 나오면 그 평균으로 맞춘다.
+     실제 카메라일 때만(올린 사진에는 종이를 댈 수 없으니 누르기). ?wbauto=1 은 시험용으로 사진에서도 켠다. */
+  var wbAutoTimer=null, wbSeen=[];
+  var WB_AUTO_ANY = /[?&]wbauto=1/.test(location.search);
+  function wbAuto(on){
+    clearInterval(wbAutoTimer); wbAutoTimer=null; wbSeen=[];
+    var live = !stage.classList.contains("photo") || WB_AUTO_ANY;
+    $("wbZone").hidden = !(on && live); $("wbZone").classList.remove("seen");
+    if(!(on && live)) return;
+    $("wbZoneText").textContent=t("wbZone");
+    wbAutoTimer=setInterval(function(){
+      var z=$("wbZone").getBoundingClientRect(), half=Math.max(10, Math.min(z.width, z.height)*0.3);
+      var g=wbJudge(wbSample(z.left+z.width/2, z.top+z.height/2, half));
+      if(!g){ wbSeen=[]; $("wbZone").classList.remove("seen"); return; }
+      $("wbZone").classList.add("seen");
+      if(wbSeen.length && g.some(function(v,i){ return Math.abs(v/wbSeen[wbSeen.length-1][i]-1)>0.06; })) wbSeen=[];
+      wbSeen.push(g);
+      if(wbSeen.length>=4){
+        var avg=[0,1,2].map(function(i){ return wbSeen.reduce(function(a,q){ return a+q[i]; },0)/wbSeen.length; });
+        setWb(true, avg); wbDone();
+      }
+    }, 250);
   }
   $("wbBtn").addEventListener("click", function(){
     $("menu").hidden=true;
@@ -1319,11 +1459,8 @@
   stage.addEventListener("pointerdown", function(e){
     if(!wbPicking || e.target.closest("#wbTip")) return;
     e.stopImmediatePropagation(); e.preventDefault();
-    var c=wbSample(e.clientX, e.clientY), m=c ? (c[0]+c[1]+c[2])/3 : 0;
-    var y=c ? 0.2126*c[0]+0.7152*c[1]+0.0722*c[2] : 0;                        // v42: 평균 대신 밝기(Y)를 지켜 화면이 어두워지지 않게
-    var g=c && m>0.12 ? [y/c[0], y/c[1], y/c[2]] : null;
-    var lab=c ? srgbToLab.apply(null, c.map(function(v){ return 255*(v<=0.0031308 ? 12.92*v : 1.055*Math.pow(v,1/2.4)-0.055); })) : null;
-    if(!g || lab.a>10 || g.some(function(v){ return v<0.5 || v>2.0; })){ $("wbTipText").textContent=t("wbFail"); return; }
+    var g=wbJudge(wbSample(e.clientX, e.clientY));
+    if(!g){ $("wbTipText").textContent=t("wbFail"); return; }
     setWb(true, g); wbDone();
   }, true);
 
@@ -1401,7 +1538,8 @@
     $("wbState").textContent = wbOn ? t("wbSet") : t("off");
     $("wbBadge").textContent = t("wbBadge");
     $("wbCancel").textContent = t(wbMode==="done" ? "wbOk" : "cancel"); $("wbCmp").textContent = t("wbCmp"); $("wbOff").textContent = t("wbOff");
-    if(wbPicking) $("wbTipText").textContent = t("wbTip");
+    if(wbPicking) $("wbTipText").textContent = t(!$("wbZone").hidden ? "wbTipZone" : "wbTip");
+    $("wbZoneText").textContent = t("wbZone");
     if(wbMode==="done") $("wbTipText").textContent = t("wbDone");
     render();
     if(!$("sheet").hidden) renderSheet();

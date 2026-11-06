@@ -66,6 +66,38 @@ for (const lang of ['ko', 'en']) {
       expect(Math.max(...after.rgb) - Math.min(...after.rgb)).toBeLessThanOrEqual(12);
     });
 
+    test('white paper: zone balances automatically (v43)', async ({ page }) => {
+      await openPhoto(page, lang, '?wbauto=1');
+      await startBalance(page);
+      await expect(page.locator('#wbZone')).toBeVisible();
+      await expect(page.locator('#wbTipText')).toContainText(lang === 'ko' ? '점선 칸' : 'dashed box');
+      await expect(page.locator('#shot')).toHaveClass(/wb/, { timeout: 5000 });
+      await expect(page.locator('#wbZone')).toBeHidden();
+      await expect(page.locator('#wbTipText')).toContainText(lang === 'ko' ? '맞췄어요' : 'Done');
+    });
+
+    test('white paper: no zone on an uploaded photo (tap instead)', async ({ page }) => {
+      await openPhoto(page, lang);
+      await startBalance(page);
+      await expect(page.locator('#wbZone')).toBeHidden();
+      await expect(page.locator('#scoreLab')).toBeHidden();   // 점수 실험 모드는 ?score=1 일 때만
+    });
+
+    test('score lab: ?score=1 measures and compares runs', async ({ page }) => {
+      await openPhoto(page, lang, '?score=1');
+      await expect(page.locator('#scoreLab')).toBeVisible();
+      await page.locator('#slClear').click();
+      await page.locator('#slMeasure').click();
+      await expect(page.locator('#slOut')).toContainText(lang === 'ko' ? '상위 5' : 'Top 5', { timeout: 8000 });
+      await page.locator('#slPlace').click();
+      await page.locator('#slMeasure').click();
+      await expect(page.locator('#slOut')).toContainText(lang === 'ko' ? '2번 중' : '2 runs', { timeout: 8000 });
+      const log = await page.evaluate(() => JSON.parse(localStorage.getItem('drape.scoreLog')));
+      expect(log).toHaveLength(2);
+      expect(log[1].place).toBe('B');
+      expect(log[0].top).toEqual(log[1].top);   // same photo → same ranking
+    });
+
     test('skin-colored patch is rejected', async ({ page }) => {
       await openPhoto(page, lang);
       await startBalance(page);
