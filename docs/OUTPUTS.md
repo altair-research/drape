@@ -8,7 +8,7 @@
 | 2026-11-05 | 점수 기능 논의 메모 | `docs/scoring-discussion.md` | 9월 점수가 흔들린 이유, 방식 3가지, 실험 모드와 통과 기준(상위 5색 중 3색 겹침), 결정 |
 | 2026-11-05 | 밤 작업 보고서 (v36~v41) | `plans/archive/2026-11-05-report.html` | 자동 테스트·출시 점검·접근성 통과, v41 운영, 출시 ~11-30, 남은 일 |
 | 2026-11-05 | 테스터 2분 체크리스트 (한/영) | `store/tester-checklist.md` | 진짜 폰에서만 되는 확인 5개(색 띠·요약·흰 종이·기종·TalkBack), 답 받으면 할 일. 보내는 건 사용자 |
-| 2026-11-05 | 앱 v41 (운영) | https://altair-research.github.io/drape/ | v41 카메라 전환 이름, v40 가을 막대 카키 그린, v39 axe 위반 0(inert·h1), v38 키보드(색 띠 Tab 57→10·손잡이·비교 키), v37 접근성(키보드·낭독기·대비, axe critical·serious 0), v36 작은 폰, v35 종이 판별, v34 흰 종이 보정·내가 고른 색 요약 |
+| 2026-11-05 | 앱 v42 (운영) | https://altair-research.github.io/drape/ | v42 흰 종이 맞춤 확인·화면 표시·밝기 보존, v41 카메라 전환 이름, v40 가을 막대 카키 그린, v39 axe 위반 0(inert·h1), v38 키보드(색 띠 Tab 57→10·손잡이·비교 키), v37 접근성(키보드·낭독기·대비, axe critical·serious 0), v36 작은 폰, v35 종이 판별, v34 흰 종이 보정·내가 고른 색 요약 |
 | 2026-11-05 | WebKit 실패 원인 메모 | `tests/e2e/WEBKIT-DIAG.md` | 9회 실행: 동시 실행 때만 실패, 혼자 4회 연속 통과(추정). 앱 버그 아님 |
 | 2026-11-05 | 접근성 점검 (axe·키보드·낭독기) | `docs/A11Y-CHECK.md` · `tests/e2e/a11y.spec.js` | critical 2·serious 2종, Esc·초점 이동 없음·Space ♥ 막힘·aria-live 없음, 고칠 제안 작은/중간/큰(미적용). 브랜치 claude/a11y-check |
 | 2026-11-04 | 출시 전 점검 (SW·manifest·assetlinks) | `docs/RELEASE-CHECK.md` · `node tools/check-release.mjs` · `tests/e2e/release.spec.js` | 오프라인·버전 올림 캐시 교체 실증, 점검 37통과·0실패·1경고. |
