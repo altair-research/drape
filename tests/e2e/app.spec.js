@@ -161,7 +161,7 @@ for (const lang of ['ko', 'en']) {
         // vertically, so scan down the first column instead of using a fixed y.
         let first = null;
         for (let y = 300; y < cv.height - 300 && !first; y += 4) { const p = px(180, y); if (p.join() === '255,243,214') first = p; }
-        return { w: cv.width, h: cv.height, first, bg: px(20, 20) };
+        return { w: cv.width, h: cv.height, first, bg: px(20, 600) }; // v48: story has accent bands at top/bottom
       }));
       expect(card.map(c => [c.w, c.h])).toEqual([[1080, 1350], [1080, 1920]]);
       for (const c of card) { expect(c.bg).toEqual([247, 243, 236]); expect(c.first).toEqual([255, 243, 214]); }

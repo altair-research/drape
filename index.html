@@ -531,7 +531,7 @@
 <script>
 (function(){
   "use strict";
-  var APP_VERSION = "47";
+  var APP_VERSION = "48";
 
   /* ---- 언어 ---- 기기 언어가 한국어면 ko, 아니면 en. 화면의 EN/한국어 버튼으로 바꾸면 기억한다. */
   var T = {
@@ -1601,6 +1601,14 @@
     var keys=keptKeys(), counts=SEASONS.map(function(){ return 0; });
     keys.forEach(function(k){ counts[FLAT[findFlat(parseKey(k).h)].si]++; });
     x.fillStyle="#F7F3EC"; x.fillRect(0,0,W,H);
+    // v48 서연 11-16: 스토리 판은 고른 색 중 가장 진한 색을 위·아래 띠로 한 번 더 — 넘기다 멈추게, '내 색'답게.
+    // 띠는 스토리 화면 글자·버튼이 덮는 자리(T·B)라 내용은 가리지 않는다.
+    if(story && keys.length){
+      var deep=null, dl=2;
+      keys.forEach(function(k){ var pk=parseKey(k), hx=variantHex(FLAT[findFlat(pk.h)].h, pk.lv), n=parseInt(hx.slice(1),16);
+        var l=(0.2126*(n>>16&255)+0.7152*(n>>8&255)+0.0722*(n&255))/255; if(l<dl){ dl=l; deep=hx; } });
+      x.fillStyle=deep; x.fillRect(0,0,W,T-60); x.fillRect(0,H-B+60,W,B-60);
+    }
     x.fillStyle="#8A8178"; x.font="500 30px "+F; x.textBaseline="alphabetic"; x.fillText("Personal Color Mirror", 80, T+118);
     x.fillStyle="#2B2622"; x.font="700 76px "+F; x.fillText(t("cardTitle"), 80, T+210);
     function wrap(txt, yy, font, color, lh){
@@ -1618,7 +1626,9 @@
     var divY=H-250-B, blockH=rows*rowH+(keys.length>12?20:0)+40;
     top+=Math.max(0, Math.round((divY-40-top-blockH)/2));
     shown.forEach(function(k,i){
-      var pk=parseKey(k), f=FLAT[findFlat(pk.h)], cx=80+(i%cols)*(sw+gap), cy=top+Math.floor(i/cols)*rowH;
+      // v48: 스토리 판은 마지막 줄이 덜 차면 가운데로(빈 칸이 눈에 띈다 — 서연 11-16)
+      var r=Math.floor(i/cols), inRow=(story && r===rows-1) ? shown.length-r*cols : cols, off=(cols-inRow)*(sw+gap)/2;
+      var pk=parseKey(k), f=FLAT[findFlat(pk.h)], cx=80+off+(i%cols)*(sw+gap), cy=top+r*rowH;
       x.fillStyle=variantHex(f.h, pk.lv);
       x.beginPath(); if(x.roundRect) x.roundRect(cx,cy,sw,sh,22); else x.rect(cx,cy,sw,sh); x.fill();
       x.strokeStyle="rgba(0,0,0,.08)"; x.lineWidth=2; x.stroke();
