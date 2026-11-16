@@ -9,6 +9,7 @@ import os, re, shutil, subprocess, threading, http.server, socketserver, functoo
 SRC = r"C:\dev\drape"
 TMP = r"C:\Users\altai\AppData\Local\Temp\cm-shots"
 OUT = r"C:\dev\drape\store\screenshots"
+LANG = "en"   # --lang=ko 면 store/screenshots/ko/ 에 한국어판 (11-17 서연: 한국 사용자에게 영어 한 벌은 "한국어 돼?"를 남김)
 CHROME = r"C:\Program Files (x86)\Google\Chrome\Application\chrome.exe"
 PORT = 8791
 
@@ -21,12 +22,12 @@ SHOTS = [
     ("03-liked",   "1", LIKED,   "q('heartTab').click(); hideHint();"),      # 좋아요한 색끼리 비교
     ("04-intro",   "",  "[]",    "chips[4].click();"),                       # 처음 안내 팝업
     # 10-28 시안: 결과 화면(좋아요 목록의 계절 분포 + 결과 공유 버튼). MARKET §5-4 "비교가 우리의 결과 화면"
-    ("05-result",  "1", LIKED[:-1] + ',"#A8C8E8","#FF7F6E@2"]', "q('openSaved').click(); hideHint();"),
+    ("05-result",  "1", LIKED[:-1] + ',"#A8C8E8","#FF7F6E@2"]', "q('openSaved').click(); hideHint(); setTimeout(function(){ if(document.activeElement) document.activeElement.blur(); }, 200);"),
 ]
 
 HEAD = """<script>
 try{
-  localStorage.setItem('drape.lang','en');
+  localStorage.setItem('drape.lang','%s');
   %s
   localStorage.setItem('drape.saved','%s');
 }catch(e){}
@@ -54,7 +55,7 @@ def build():
     for f in ("index.html", "manifest.json", "icon-192.png", "icon-512.png",
               "icon-maskable-512.png", "apple-touch-icon.png"):
         shutil.copy(os.path.join(SRC, f), TMP)
-    shutil.copy(os.path.join(OUT, "model.png"), TMP)
+    shutil.copy(os.path.join(r"C:\dev\drape\store\screenshots", "model.png"), TMP)
 
     base = open(os.path.join(TMP, "index.html"), encoding="utf-8").read()
     # 서비스워커는 캡처에 방해만 되므로 뺀다
@@ -62,7 +63,7 @@ def build():
 
     for name, intro, saved, extra in SHOTS:
         intro_line = "localStorage.setItem('drape.intro','1');" if intro else "localStorage.removeItem('drape.intro');"
-        html = base.replace("</head>", HEAD % (intro_line, saved) + "</head>", 1)
+        html = base.replace("</head>", HEAD % (LANG, intro_line, saved) + "</head>", 1)
         html = html.replace("</body>", TAIL % extra + "</body>", 1)
         open(os.path.join(TMP, name + ".html"), "w", encoding="utf-8", newline="\n").write(html)
     print("built", len(SHOTS), "pages in", TMP)
@@ -90,6 +91,9 @@ def shoot():
 
 if __name__ == "__main__":
     import sys
+    for a in [a for a in sys.argv[1:] if a.startswith("--lang=")]:
+        LANG = a.split("=", 1)[1]; sys.argv.remove(a)
+        if LANG != "en": OUT = os.path.join(OUT, LANG)
     if len(sys.argv) > 1:   # 이름을 주면 그 장만 (예: python make-screenshots.py 05-result)
         SHOTS[:] = [s for s in SHOTS if s[0] in sys.argv[1:]]
     build()

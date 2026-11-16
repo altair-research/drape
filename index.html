@@ -187,6 +187,9 @@
     transition:opacity .4s ease;
   }
   .hint.off{opacity:0}
+  /* v49 서연 11-17: ♥ 5개째에 목록으로 가는 한 줄(결과를 직접 찾아 열어야 했다) */
+  .hint.nudge{pointer-events:auto;cursor:pointer;appearance:none;border:1px solid rgba(255,255,255,.35);font:inherit;font-size:13px;padding:9px 16px;bottom:96px;min-height:40px}
+  .hint.nudge[hidden]{display:none}
   /* 흰 종이 맞추기(v34): 누를 곳을 고르는 동안 위에 안내, 맞춘 뒤엔 영상에 색 행렬 */
   #cam.wb,#shot.wb{filter:url(#wbf)}
   .stage.wbpick{cursor:crosshair}
@@ -446,6 +449,7 @@
     <div class="wbzone" id="wbZone" hidden aria-hidden="true"><span id="wbZoneText">여기에 흰 종이</span></div>
     <div class="scorelab" id="scoreLab" hidden><div class="slrow"><button type="button" id="slMeasure">측정</button><button type="button" id="slPlace">장소 A</button><button type="button" id="slCopy">복사</button><button type="button" id="slClear">지우기</button></div><div id="slOut" role="status"></div></div>
     <div class="wbtip" id="wbTip" hidden><span id="wbTipText" role="status"></span><button type="button" id="wbCmp" hidden>전·후</button><button type="button" id="wbOff" hidden>끄기</button><button type="button" id="wbCancel">취소</button></div>
+    <button class="hint nudge" id="readyNudge" type="button" hidden></button>
     <div class="hint" id="hint">좌우로 밀어 색을 넘기세요 · 손잡이를 끌면 드레이프 높이</div>
 
     <div class="fallback">
@@ -531,7 +535,7 @@
 <script>
 (function(){
   "use strict";
-  var APP_VERSION = "48";
+  var APP_VERSION = "49";
 
   /* ---- 언어 ---- 기기 언어가 한국어면 ko, 아니면 en. 화면의 EN/한국어 버튼으로 바꾸면 기억한다. */
   var T = {
@@ -565,7 +569,7 @@
          wbTip:"얼굴 옆(화면 위쪽)에 흰 종이를 들고, 화면 속 종이를 눌러 주세요", wbDone:"맞췄어요 ✓ 화면 속 종이가 하얗게 보이면 된 거예요. '전·후'를 누르고 있으면 맞추기 전 색", wbCmp:"전·후", wbOk:"확인", wbOff:"끄기", wbSet:"맞춤 ✓", wbBadge:"흰 종이 맞춤 ✓", wbTipZone:"왼쪽 위 점선 칸에 흰 종이를 대 주세요. 자동으로 맞춰요 (화면 속 종이를 눌러도 돼요)", wbZone:"여기에 흰 종이", camResume:"카메라를 다시 켰어요", wbFail:"흰 종이를 찾지 못했어요. 종이를 더 크게 비추고 다시 눌러 주세요", cancel:"취소",
          myLean:"내가 고른 색", leanNote:"판정이 아니라 ♥한 색들의 공통점이에요.", leanFew:"5개 넘게 모이면 더 또렷해져요.",
          leanTemp:"온도", leanChroma:"채도", leanLight:"밝기", leanOf:function(w){ return w.join(" · ") + " 쪽"; },
-         lw:{warm:"따뜻한",cool:"차가운",soft:"부드러운",vivid:"선명한",light:"밝은",deep:"깊은"} },
+         lw:{warm:"따뜻한",cool:"차가운",soft:"부드러운",vivid:"선명한",light:"밝은",deep:"깊은",neutral:"중립"}, readyNudge:"♥ 5개 모였어요 — 목록에서 보기 ›" },
     en:{ title:"Personal Color Mirror", compare:"Previous", guide:"Guide", keep:"Like", unkeep:"Unlike", kept:"List",
          hint:"Tap ♥ on colors that make your face look clearer · swipe to change",
          sheetTitle:"Liked colors", lede:"Like only the colors that made your face look clearer. If they cluster in one season, that season is likely yours. It’s a suggestion, not a verdict. Lighting changes the result, so try again another day in daylight and see what overlaps.",
@@ -596,7 +600,7 @@
          wbTip:"Hold white paper next to your face (upper screen) and tap it", wbDone:"Done ✓ If the paper looks white on screen, it worked. Hold 'Before/after' to see the original", wbCmp:"Before/after", wbOk:"OK", wbOff:"Turn off", wbSet:"Set ✓", wbBadge:"White balanced ✓", wbTipZone:"Hold white paper in the dashed box at top left. It balances automatically (or tap the paper)", wbZone:"White paper here", camResume:"Camera restarted", wbFail:"Couldn’t read white paper. Show more of it and tap again", cancel:"Cancel",
          myLean:"Colors I picked", leanNote:"Not a verdict, just what your liked colors have in common.", leanFew:"It gets clearer after 5 or more.",
          leanTemp:"Temperature", leanChroma:"Saturation", leanLight:"Brightness", leanOf:function(w){ return "Leaning " + w.join(" · "); },
-         lw:{warm:"warm",cool:"cool",soft:"soft",vivid:"vivid",light:"light",deep:"deep"} }
+         lw:{warm:"warm",cool:"cool",soft:"soft",vivid:"vivid",light:"light",deep:"deep",neutral:"neutral"}, readyNudge:"5 colors liked — see your list ›" }
   };
   /* 만든 사람 한 줄 (전역 §6-c 사람 손길). 문장은 사용자가 직접 쓴다 — AI 가 채우지 않는다. 비어 있으면 줄 전체가 숨는다.
      한 언어만 있으면 그 문장을 두 언어 모두에 보인다. */
@@ -981,7 +985,12 @@
     var k = keyOf(idx, lv), at = saved.indexOf(k);
     if(at > -1) saved.splice(at,1); else { saved.push(k); hintOff(); }
     persist(); render();
+    if(at < 0 && saved.length === 5) showNudge(); else hideNudge();
   });
+  var nudgeTimer=null;
+  function showNudge(){ var b=$("readyNudge"); b.textContent=t("readyNudge"); b.hidden=false; clearTimeout(nudgeTimer); nudgeTimer=setTimeout(hideNudge, 7000); }
+  function hideNudge(){ clearTimeout(nudgeTimer); $("readyNudge").hidden=true; }
+  $("readyNudge").addEventListener("click", function(){ hideNudge(); $("openSaved").click(); });
 
   $("openSaved").addEventListener("click", function(){ renderSheet(); $("sheet").hidden=false; });
   $("closeSheet").addEventListener("click", function(){ $("sheet").hidden=true; });
@@ -1014,17 +1023,21 @@
     return (leanCut = { c1:q(cs,1/3), c2:q(cs,2/3), l1:q(ls,1/3), l2:q(ls,2/3) });
   }
   function leanOf(keys){
-    var n={warm:0,cool:0,soft:0,vivid:0,light:0,deep:0}, words=[], cut=leanCuts();
+    /* v49 서연 11-17: 흰·회색처럼 따뜻하지도 차갑지도 않은 색이 온도 셈에서 조용히 빠져서, 여름 3·봄 2 인데 "따뜻한 2 · 차가운 0"
+       "따뜻한 쪽"이 나와 "틀렸네"가 됐다. → 온도는 그런 색을 '중립 n'으로 따로 세어 보여 주고, 이긴 쪽이 중립 수보다도 많을 때만 말로 낸다.
+       무채색은 채도로는 '부드러운'(채도가 낮다), 밝기는 그대로 센다. */
+    var n={warm:0,cool:0,soft:0,vivid:0,light:0,deep:0,neutral:0}, words=[], cut=leanCuts();
     keys.forEach(function(k){
       var pk=parseKey(k);
-      if(findFlat(pk.h)<0 || isNeutral(pk.h)) return;
-      var b=hexLab(variantHex(pk.h, pk.lv)), w=colorWarmth(b);
-      if(w>0.25) n.warm++; else if(w<-0.25) n.cool++;
-      if(b.C<cut.c1) n.soft++; else if(b.C>cut.c2) n.vivid++;
+      if(findFlat(pk.h)<0) return;
+      var b=hexLab(variantHex(pk.h, pk.lv)), w=isNeutral(pk.h) ? 0 : colorWarmth(b);
+      if(w>0.25) n.warm++; else if(w<-0.25) n.cool++; else n.neutral++;
+      if(isNeutral(pk.h) || b.C<cut.c1) n.soft++; else if(b.C>cut.c2) n.vivid++;
       if(b.L>cut.l2) n.light++; else if(b.L<cut.l1) n.deep++;
     });
-    [["warm","cool"],["soft","vivid"],["light","deep"]].forEach(function(pr){
-      if(n[pr[0]]>n[pr[1]]) words.push(pr[0]); else if(n[pr[1]]>n[pr[0]]) words.push(pr[1]);
+    [["warm","cool",1],["soft","vivid",0],["light","deep",0]].forEach(function(pr){
+      var nz=pr[2]?n.neutral:0;
+      if(n[pr[0]]>n[pr[1]] && n[pr[0]]>nz) words.push(pr[0]); else if(n[pr[1]]>n[pr[0]] && n[pr[1]]>nz) words.push(pr[1]);
     });
     return { n:n, words:words };
   }
@@ -1038,11 +1051,12 @@
     g.appendChild(pal);
     if(r.words.length){ var line=document.createElement("div"); line.className="leanline"; line.textContent=t("leanOf")(leanWords(r)); g.appendChild(line); }
     var tb=document.createElement("div"); tb.className="lean";
-    [["leanTemp","warm","cool"],["leanChroma","soft","vivid"],["leanLight","light","deep"]].forEach(function(row){
-      var a=r.n[row[1]], b=r.n[row[2]];
+    [["leanTemp","warm","cool",1],["leanChroma","soft","vivid",0],["leanLight","light","deep",0]].forEach(function(row){
+      var a=r.n[row[1]], b=r.n[row[2]], nz=row[3]?r.n.neutral:0;
       var sp=document.createElement("span"); sp.textContent=t(row[0]); tb.appendChild(sp);
       var v=document.createElement("span");
-      v.innerHTML=(a>b?"<b>":"")+lw[row[1]]+" "+a+(a>b?"</b>":"")+" · "+(b>a?"<b>":"")+lw[row[2]]+" "+b+(b>a?"</b>":"");
+      var wa=a>b && a>nz, wb=b>a && b>nz;
+      v.innerHTML=(wa?"<b>":"")+lw[row[1]]+" "+a+(wa?"</b>":"")+" · "+(wb?"<b>":"")+lw[row[2]]+" "+b+(wb?"</b>":"")+(nz?" · "+lw.neutral+" "+nz:"");
       tb.appendChild(v);
     });
     g.appendChild(tb);

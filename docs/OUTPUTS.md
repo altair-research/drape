@@ -5,6 +5,7 @@
 
 | 날짜 | 제목 | 경로 / 주소 | 한 줄 설명 |
 |---|---|---|---|
+| 2026-11-17 | 앱 v49 + 스토어 스크린샷 캡션판 | https://altair-research.github.io/drape/ · `store/screenshots/captioned/ko`·`en` (로컬, git 제외) | 요약 온도 '중립 n', ♥ 5개째 목록 바로가기 · 스크린샷 한/영 5장 캡션·순서(서연 검토). 만드는 법 `tools/caption-screenshots.py` |
 | 2026-11-16 | 스토리용 카드 v47·v48 | https://altair-research.github.io/drape/ (담은 색 → 스토리용 그림 저장) | 인스타 스토리 9:16 판, 카드 빈칸 정리, v48 가장 진한 고른 색 띠 |
 | 2026-11-16 | 공유 카드 v46 (서연 재검토 반영) | https://altair-research.github.io/drape/ | 만든 사람 따옴표 뺌, "따뜻한·부드러운·밝은 쪽" 줄 크게, 색 대보기 설명 글씨 잘 보이게 |
 | 2026-11-15 | 결과 공유 그림 카드 v45 | https://altair-research.github.io/drape/ (담은 색 → 결과 공유 / 그림 저장) | 판정 없는 '내가 고른 색' 팔레트 한 장. 서연 검토 지적 2 반영 |

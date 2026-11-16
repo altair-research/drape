@@ -175,6 +175,18 @@ for (const lang of ['ko', 'en']) {
   });
 }
 
+test('fifth heart shows a nudge that opens the list; neutral colors are counted, not hidden', async ({ page }) => {
+  await openPhoto(page, 'ko');
+  await pickColors(page);
+  await expect(page.locator('#readyNudge')).toBeVisible();
+  await page.locator('#readyNudge').click();
+  await expect(page.locator('#sheet')).toBeVisible();
+  await expect(page.locator('#readyNudge')).toBeHidden();
+  // v49: temperature row must add up to the number of picks (warm + cool + neutral)
+  const nums = (await page.locator('#sheet .lean span').nth(1).textContent()).match(/\d+/g).map(Number);
+  expect(nums.reduce((a, b) => a + b, 0)).toBe(5);
+});
+
 test('language switch updates menu and saved summary in both directions', async ({ page }) => {
   await openPhoto(page, 'ko');
   await pickColors(page);

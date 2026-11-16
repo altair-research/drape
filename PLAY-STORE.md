@@ -423,6 +423,8 @@ No sign-up, no ads, and the camera never leaves your phone.
 
 ### 6-3. 스토어 등록정보에 필요한 이미지
 
+**11-17 새 판(서연 '스토어 3초' 검토):** 출시 날 휴대전화 스크린샷을 `store/screenshots/captioned/en/1~5` (기본 English)와 `captioned/ko/1~5` (번역 관리 ko-KR)로 바꿔 올린다. 순서 메인 → 결과 → ♥끼리 비교 → 3단계 → 안내 창, 장마다 위에 캡션 한 줄. 만드는 법: `python tools/make-screenshots.py` · `python tools/make-screenshots.py --lang=ko` · `python tools/caption-screenshots.py`. 지금 콘솔에 올라간 9월 판은 `store/screenshots/uploaded-2026-09/`.
+
 | 이미지 | 크기 | 상태 / 파일 |
 |---|---|---|
 | 앱 아이콘 | 512×512 PNG | ✅ `C:\dev\drape\icon-512.png` |
