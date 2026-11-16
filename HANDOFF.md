@@ -6,6 +6,7 @@
 > 폰 확인(사용자, 1분): 1. Play 스토어 > 내 앱에서 Color Mirror 업데이트(1.0.1)가 깔렸는지 본다 2. 카톡·메모 등에서 `https://altair-research.github.io/sprout-frame/` 링크를 누른다 3. Color Mirror 가 **안** 뜨고 브라우저(또는 Sprout Frame)로 열리면 성공 — 뜨면 총괄 타워에 한마디
 > 긴 일: 없음 — 11-15 밤 공유 그림 카드 끝냄(v45). (후보: 스토어 스크린샷 v43 한/영 5장씩 다시 찍기 + 검수 페이지 — 사용자가 하자고 하면 여기로. 점수 실험 판정은 사용자 측정 기록이 와야 함)
 > 막힘: 테스터 12명(15명 권장) 명단 — 사용자, 현재 `internal` 2명 (보드 `PLAY-TESTERS`, 메시지는 wearcast `docs/TESTER-INVITE.md` §0 두 앱 함께) · 저장소 설명 한 줄 넣기(GitHub 설정이라 사용자, 문안 `docs/PUBLIC-CHECK.md`)
+> 결정: 흰 종이 맞추기를 첫 화면에 꺼낼지(서연 11-16) — ① 지금대로, 출시 뒤 테스터 반응 보고(추천) ② 첫 화면 한 줄 + 바로가기 · 지안에게 올림 · 풀리면 ②면 v47 로
 > AI 결정: v29~v30 공유·의견·결과 공유 추가(MARKET §5-3 링크 공유가 유입 경로, 신청서 피드백 칸 대비) — 되돌리려면 index.html shareBtn·feedbackLink·shareResult 삭제 후 버전 올림
 > AI 결정: 출시 목표 11-20 → ~11-30(11-05) — 이유: 테스터 명단(10-28 목표)이 아직 2명이라 14일 테스트가 시작 안 됨. 바닥은 테스터 14일 + 승인 ~7일 + 심사 1~2일(§7-5), 조직 계정 우회는 D-U-N-S·비용 때문에 추천 안 함 · 되돌리려면: 명단이 들어온 날 기준으로 다시 계산
 > AI 결정: 만든 사람 한 줄 영어판은 AI 가 옮김("A little mirror I made because I wondered which colors suit me. Take an easy look.") — 한국어는 사용자 문장 그대로. 바꾸려면 `index.html` `MAKER.en` · 스크린샷 5번째로 결과 화면 시안(`PLAY-STORE.md` §6-3), 짧은 설명에 "영상은 폰 밖으로 안 나가요 / no uploads"(§6-2) — 콘솔 반영은 출시 때 사용자가
