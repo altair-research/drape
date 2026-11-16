@@ -14,7 +14,7 @@ from PIL import Image, ImageDraw, ImageFont
 
 BASE = r"C:\dev\drape\store\screenshots"
 ORDER = [  # (원본 이름, 캡션 ko, 캡션 en)
-    ("01-main",   "얼굴 아래 색을 천처럼 대 보세요",            "Hold colors under your face like fabric"),
+    ("01-main",   "얼굴 아래 색을|천처럼 대 보세요",            "Hold colors under your face like fabric"),
     ("05-result", "♥한 색이 어느 쪽인지 한눈에",            "See where your liked colors gather"),
     ("03-liked",  "♥한 색끼리만 다시 비교해요",                  "Compare only the colors you liked"),
     ("02-levels", "한 색도 흐리게 · 기본 · 선명하게 3단계",      "Every color in 3 strengths"),
@@ -49,9 +49,11 @@ def one(lang, i, name, cap):
     d = ImageDraw.Draw(out)
     size = 68
     font = ImageFont.truetype(FONT[lang], size)
-    lines = wrap(d, cap, font, W - 140)
+    # "|" 는 직접 정한 줄바꿈(서연 11-17: '대 / 보세요'처럼 말이 갈라지지 않게)
+    split = lambda f: [l for part in cap.split("|") for l in wrap(d, part, f, W - 140)]
+    lines = split(font)
     while len(lines) > 2 and size > 48:
-        size -= 4; font = ImageFont.truetype(FONT[lang], size); lines = wrap(d, cap, font, W - 140)
+        size -= 4; font = ImageFont.truetype(FONT[lang], size); lines = split(font)
     lh = size * 1.3
     y = (TOP - lh * len(lines)) / 2 + 6
     for ln in lines:
