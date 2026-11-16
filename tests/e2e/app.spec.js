@@ -157,8 +157,8 @@ for (const lang of ['ko', 'en']) {
       const card = await page.evaluate(() => {
         const cv = window.__drapeCard(), x = cv.getContext('2d');
         const px = (a, b) => Array.from(x.getImageData(a, b, 1, 1).data.slice(0, 3));
-        // first swatch centre = first liked colour (Ivory #FFF3D6 at base level)
-        return { w: cv.width, h: cv.height, first: px(80 + 100, 270 + 80), bg: px(20, 20) };
+        // first swatch centre = first liked colour (Ivory #FFF3D6 at base level); v46: swatches start below the big lean line
+        return { w: cv.width, h: cv.height, first: px(80 + 100, 380 + 80), bg: px(20, 20) };
       });
       expect(card.w).toBe(1080);
       expect(card.h).toBe(1350);

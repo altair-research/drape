@@ -108,10 +108,11 @@
     background:linear-gradient(to bottom,rgba(0,0,0,.62),rgba(0,0,0,0));
     pointer-events:none;
   }
-  .readout .name{font-family:var(--sans);font-weight:600;font-size:26px;line-height:1.15;letter-spacing:-.03em}
+  .readout .name{font-family:var(--sans);font-weight:600;font-size:26px;line-height:1.15;letter-spacing:-.03em;text-shadow:0 1px 3px rgba(0,0,0,.55)}
+  /* v46 서연 11-16: 밝은 배경 위에서 설명이 안 보여 — 더 밝은 글씨 + 그림자 */
   .readout .season{
-    margin-top:5px;font-size:11.5px;letter-spacing:.02em;
-    color:var(--fg-dim);
+    margin-top:5px;font-size:12.5px;letter-spacing:.02em;
+    color:#E4E2E7;text-shadow:0 1px 2px rgba(0,0,0,.85),0 0 6px rgba(0,0,0,.55);
   }
   .readout .meta{text-align:right;font-family:var(--sans);font-size:12px;letter-spacing:.02em;font-variant-numeric:tabular-nums}
   .readout .match{margin-top:8px;font-family:var(--mono);font-size:12px;color:var(--fg-dim);display:flex;align-items:baseline;justify-content:flex-end;gap:6px}
@@ -529,7 +530,7 @@
 <script>
 (function(){
   "use strict";
-  var APP_VERSION = "45";
+  var APP_VERSION = "46";
 
   /* ---- 언어 ---- 기기 언어가 한국어면 ko, 아니면 en. 화면의 EN/한국어 버튼으로 바꾸면 기억한다. */
   var T = {
@@ -1597,8 +1598,17 @@
     x.fillStyle="#F7F3EC"; x.fillRect(0,0,W,H);
     x.fillStyle="#8A8178"; x.font="500 30px "+F; x.textBaseline="alphabetic"; x.fillText("Personal Color Mirror", 80, 118);
     x.fillStyle="#2B2622"; x.font="700 76px "+F; x.fillText(t("cardTitle"), 80, 210);
+    function wrap(txt, yy, font, color, lh){
+      x.font=font; x.fillStyle=color; var line="", out=[];
+      txt.split(/(\s+)/).forEach(function(wd){ var tst=line+wd; if(x.measureText(tst).width>W-160 && line.trim()){ out.push(line.trim()); line=wd.trimStart(); } else line=tst; });
+      if(line.trim()) out.push(line.trim());
+      out.forEach(function(l,i){ x.fillText(l, 80, yy+i*lh); }); return yy+out.length*lh;
+    }
+    // v46 서연 11-16: '나는 이쪽' 줄을 제목 바로 아래 크게 — 계절 숫자보다 먼저 읽히게
+    var w=leanWords(leanOf(keys)), top=270;
+    if(w.length) top=wrap(t("leanOf")(w), 292, "600 46px "+F, "#8A4B2E", 58)+30;
     // swatches: up to 12, 4 per row
-    var shown=keys.slice(0,12), cols=shown.length>8 ? 6 : 4, gap=24, sw=(W-160-gap*(cols-1))/cols, sh=Math.round(sw*0.82), top=270, rowH=sh+66;
+    var shown=keys.slice(0,12), cols=shown.length>8 ? 6 : 4, gap=24, sw=(W-160-gap*(cols-1))/cols, sh=Math.round(sw*0.82), rowH=sh+66;
     shown.forEach(function(k,i){
       var pk=parseKey(k), f=FLAT[findFlat(pk.h)], cx=80+(i%cols)*(sw+gap), cy=top+Math.floor(i/cols)*rowH;
       x.fillStyle=variantHex(f.h, pk.lv);
@@ -1612,24 +1622,14 @@
     if(keys.length>12){ x.fillStyle="#8A8178"; x.font="400 26px "+F; x.fillText("+"+(keys.length-12), 80, y-20); y+=20; }
     // season counts with season colour dots
     var order=SEASONS.map(function(s,si){ return si; }).filter(function(si){ return counts[si]; }).sort(function(a,b){ return counts[b]-counts[a]; });
-    var px=80; x.font="600 36px "+F;
+    var px=80; x.font="500 30px "+F;
     order.forEach(function(si){
-      x.fillStyle=seasonSwatch(SEASONS[si]); x.beginPath(); x.arc(px+14, y-12, 14, 0, Math.PI*2); x.fill();
-      x.fillStyle="#2B2622"; var lab=sName(SEASONS[si])+" "+counts[si]; x.fillText(lab, px+40, y); px+=40+x.measureText(lab).width+44;
+      x.fillStyle=seasonSwatch(SEASONS[si]); x.beginPath(); x.arc(px+12, y-10, 12, 0, Math.PI*2); x.fill();
+      x.fillStyle="#5E564F"; var lab=sName(SEASONS[si])+" "+counts[si]; x.fillText(lab, px+34, y); px+=34+x.measureText(lab).width+40;
     });
-    var w=leanWords(leanOf(keys));
-    if(w.length){ y+=62; x.fillStyle="#5E564F"; x.font="400 32px "+F; x.fillText(t("leanOf")(w), 80, y); }
-    // bottom: note, maker, url
-    function wrap(txt, yy, font, color, lh){
-      x.font=font; x.fillStyle=color; var line="", out=[];
-      txt.split(/(\s+)/).forEach(function(wd){ var tst=line+wd; if(x.measureText(tst).width>W-160 && line.trim()){ out.push(line.trim()); line=wd.trimStart(); } else line=tst; });
-      if(line.trim()) out.push(line.trim());
-      out.forEach(function(l,i){ x.fillText(l, 80, yy+i*lh); }); return yy+out.length*lh;
-    }
-    x.fillStyle="rgba(0,0,0,.10)"; x.fillRect(80, H-330, W-160, 2);
-    var yy=wrap(t("cardNote"), H-270, "400 28px "+F, "#6B635C", 40);
-    var mk=MAKER[LANG]||MAKER.ko||MAKER.en;
-    if(mk) yy=wrap("“"+mk+"”", yy+16, "400 28px "+F, "#4A433D", 40);
+    // bottom: note, url (v46: 만든 사람 따옴표는 뺌 — 받은 친구에겐 공유한 사람 말처럼 읽힘, 서연 11-16)
+    x.fillStyle="rgba(0,0,0,.10)"; x.fillRect(80, H-250, W-160, 2);
+    wrap(t("cardNote"), H-190, "400 28px "+F, "#6B635C", 40);
     x.fillStyle="#8A8178"; x.font="400 24px "+F; x.fillText("— altair research lab  ·  altair-research.github.io/drape", 80, H-60);
     return cv;
   }
