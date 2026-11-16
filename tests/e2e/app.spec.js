@@ -139,6 +139,34 @@ for (const lang of ['ko', 'en']) {
       expect(shares).toHaveLength(1);
       expect(shares[0].text).toContain(lang === 'ko' ? '봄 웜 3 · 여름 쿨 2' : 'Spring Warm 3 · Summer Cool 2');
       expect(shares[0].text).toContain(lang === 'ko' ? '쪽' : 'Leaning');
+      // v45: where the share sheet accepts files, the palette card goes along as a PNG.
+      const canFiles = await page.evaluate(() => !!(navigator.canShare && navigator.canShare({ files: [new File(['x'], 'a.png', { type: 'image/png' })] })));
+      if (canFiles) {
+        const types = await page.evaluate(() => (window.__shares[0].files || []).map(f => f.type + ':' + f.size));
+        expect(types).toHaveLength(1);
+        expect(types[0]).toMatch(/^image\/png:\d{4,}$/);
+        expect(shares[0].text).toContain('altair-research.github.io/drape');
+      }
+    });
+
+    test('palette card draws picked swatches, no face', async ({ page }) => {
+      await openPhoto(page, lang);
+      await pickColors(page);
+      await page.locator('#openSaved').click();
+      await expect(page.locator('#saveCard')).toBeVisible();
+      const card = await page.evaluate(() => {
+        const cv = window.__drapeCard(), x = cv.getContext('2d');
+        const px = (a, b) => Array.from(x.getImageData(a, b, 1, 1).data.slice(0, 3));
+        // first swatch centre = first liked colour (Ivory #FFF3D6 at base level)
+        return { w: cv.width, h: cv.height, first: px(80 + 100, 270 + 80), bg: px(20, 20) };
+      });
+      expect(card.w).toBe(1080);
+      expect(card.h).toBe(1350);
+      expect(card.bg).toEqual([247, 243, 236]);
+      expect(card.first).toEqual([255, 243, 214]);
+      const download = page.waitForEvent('download');
+      await page.locator('#saveCard').click();
+      expect((await download).suggestedFilename()).toBe('my-colors.png');
     });
   });
 }

@@ -517,6 +517,7 @@
     <div class="actions" style="padding:0">
       <button class="btn wide" id="compareKept" hidden>담은 색끼리 비교</button>
       <button class="btn wide" id="shareResult" hidden>결과 공유</button>
+      <button class="btn wide" id="saveCard" hidden>그림 저장</button>
       <button class="btn wide" id="closeSheet">돌아가기</button>
       <button class="btn" id="clearSaved">전체 지우기</button>
     </div>
@@ -528,7 +529,7 @@
 <script>
 (function(){
   "use strict";
-  var APP_VERSION = "44";
+  var APP_VERSION = "45";
 
   /* ---- 언어 ---- 기기 언어가 한국어면 ko, 아니면 en. 화면의 EN/한국어 버튼으로 바꾸면 기억한다. */
   var T = {
@@ -552,7 +553,7 @@
          introNote:"여기서 고른 색은 절대적인 답이 아니라 참고용 추천이에요. 조명과 화면에 따라 다르게 보일 수 있어요.",
          introCam:"📷 카메라로 얼굴을 비춰요. 영상은 저장·전송하지 않아요 — 폰 밖으로 안 나가요.", introGo:"시작하기", help:"사용법", more:"더보기", privacy:"개인정보처리방침",
          share:"친구에게 공유", shareText:"카메라로 얼굴 옆에 색을 대보는 퍼스널컬러 거울. 가입·광고 없음", copied:"링크 복사됨",
-         shareResult:"결과 공유", resultHead:function(n){ return "내가 ♥한 색 "+n+"개"; }, resultTail:"Personal Color Mirror로 얼굴에 대봤어요. 너도 해볼래?",
+         shareResult:"결과 공유", saveCard:"그림 저장", cardTitle:"내가 고른 색", cardNote:"앱이 정한 답이 아니라, 내 눈으로 얼굴에 대 보고 고른 색이에요.", cardSaved:"그림을 저장했어요", resultHead:function(n){ return "내가 ♥한 색 "+n+"개"; }, resultTail:"Personal Color Mirror로 얼굴에 대봤어요. 너도 해볼래?",
          feedback:"의견 보내기", fbSubject:"Personal Color Mirror 의견",
          keptCompare:"좋아요끼리 비교", levelsLabel:"채도", keptExit:"전체 색 보기", keptCountOf:function(n){ return n+"색 · 밀어서 넘기기"; },
          camLabel:"카메라", lockLabel:"빛 고정", guideLabel:"얼굴 가이드", langLabel:"언어", on:"켜짐", off:"꺼짐",
@@ -583,7 +584,7 @@
          introNote:"What you pick here is a suggestion, not a verdict. Lighting and screens change how colors look.",
          introCam:"📷 Uses your camera. Video is never saved or sent — it stays on your phone.", introGo:"Start", help:"How to use", more:"More", privacy:"Privacy policy",
          share:"Share with a friend", shareText:"A personal color mirror: hold colors next to your face with the camera. No sign-up, no ads", copied:"Link copied",
-         shareResult:"Share result", resultHead:function(n){ return "I liked "+n+(n===1?" color":" colors"); }, resultTail:"Tried on with Personal Color Mirror. Want to try?",
+         shareResult:"Share result", saveCard:"Save image", cardTitle:"My colors", cardNote:"Not a verdict from the app — colors I held up to my face and picked myself.", cardSaved:"Image saved", resultHead:function(n){ return "I liked "+n+(n===1?" color":" colors"); }, resultTail:"Tried on with Personal Color Mirror. Want to try?",
          feedback:"Send feedback", fbSubject:"Personal Color Mirror feedback",
          keptCompare:"Compare liked colors", levelsLabel:"Saturation", keptExit:"All colors", keptCountOf:function(n){ return n+(n===1?" color":" colors")+" · swipe"; },
          camLabel:"Camera", lockLabel:"Lock light", guideLabel:"Face guide", langLabel:"Language", on:"On", off:"Off",
@@ -840,6 +841,7 @@
     }
     $("compareKept").hidden = keptKeys().length < 1;
     $("shareResult").hidden = keptKeys().length < 1;
+    $("saveCard").hidden = keptKeys().length < 1;
   }
 
   /* ---- drape height ---- */
@@ -1499,6 +1501,7 @@
     $("keptExit").textContent = t("keptExit");
     $("compareKept").textContent = t("keptCompare");
     $("shareResult").textContent = t("shareResult");
+    $("saveCard").textContent = t("saveCard");
     if(keptOnly) renderKeptStrip();
     $("privacyLabel").textContent = t("privacy");
     $("shareLabel").textContent = t("share");
@@ -1584,7 +1587,77 @@
       + (function(){ var w=leanWords(leanOf(keys)); return w.length ? t("leanOf")(w) + "\n" : ""; })()
       + names.slice(0,8).join(", ") + (names.length>8 ? " …" : "") + "\n\n" + t("resultTail");
   }
-  $("shareResult").addEventListener("click", function(){ shareLink(resultText(), null); });
+  /* 결과 그림 카드(v45, 지안 11-15 결정 — 서연 검토 "공유할 한 장이 없다"): 판정 없이 고른 색 스와치·계절 개수·기울기·만든 사람 한 줄.
+     얼굴·영상은 넣지 않는다. 1080×1350(세로 4:5, 인스타·단톡에 잘 맞는 비율). */
+  function cardCanvas(){
+    var W=1080, H=1350, cv=document.createElement("canvas"); cv.width=W; cv.height=H;
+    var x=cv.getContext("2d"), F='"Pretendard Variable",Pretendard,-apple-system,"Apple SD Gothic Neo","Malgun Gothic",system-ui,sans-serif';
+    var keys=keptKeys(), counts=SEASONS.map(function(){ return 0; });
+    keys.forEach(function(k){ counts[FLAT[findFlat(parseKey(k).h)].si]++; });
+    x.fillStyle="#F7F3EC"; x.fillRect(0,0,W,H);
+    x.fillStyle="#8A8178"; x.font="500 30px "+F; x.textBaseline="alphabetic"; x.fillText("Personal Color Mirror", 80, 118);
+    x.fillStyle="#2B2622"; x.font="700 76px "+F; x.fillText(t("cardTitle"), 80, 210);
+    // swatches: up to 12, 4 per row
+    var shown=keys.slice(0,12), cols=shown.length>8 ? 6 : 4, gap=24, sw=(W-160-gap*(cols-1))/cols, sh=Math.round(sw*0.82), top=270, rowH=sh+66;
+    shown.forEach(function(k,i){
+      var pk=parseKey(k), f=FLAT[findFlat(pk.h)], cx=80+(i%cols)*(sw+gap), cy=top+Math.floor(i/cols)*rowH;
+      x.fillStyle=variantHex(f.h, pk.lv);
+      x.beginPath(); if(x.roundRect) x.roundRect(cx,cy,sw,sh,22); else x.rect(cx,cy,sw,sh); x.fill();
+      x.strokeStyle="rgba(0,0,0,.08)"; x.lineWidth=2; x.stroke();
+      x.fillStyle="#4A433D"; x.font="500 "+(cols>4?22:26)+"px "+F;
+      var nm=labelOf(f, pk.lv); while(x.measureText(nm).width>sw && nm.length>2) nm=nm.slice(0,-2)+"…";
+      x.fillText(nm, cx+2, cy+sh+38);
+    });
+    var y=top+Math.ceil(shown.length/cols)*rowH+40;
+    if(keys.length>12){ x.fillStyle="#8A8178"; x.font="400 26px "+F; x.fillText("+"+(keys.length-12), 80, y-20); y+=20; }
+    // season counts with season colour dots
+    var order=SEASONS.map(function(s,si){ return si; }).filter(function(si){ return counts[si]; }).sort(function(a,b){ return counts[b]-counts[a]; });
+    var px=80; x.font="600 36px "+F;
+    order.forEach(function(si){
+      x.fillStyle=seasonSwatch(SEASONS[si]); x.beginPath(); x.arc(px+14, y-12, 14, 0, Math.PI*2); x.fill();
+      x.fillStyle="#2B2622"; var lab=sName(SEASONS[si])+" "+counts[si]; x.fillText(lab, px+40, y); px+=40+x.measureText(lab).width+44;
+    });
+    var w=leanWords(leanOf(keys));
+    if(w.length){ y+=62; x.fillStyle="#5E564F"; x.font="400 32px "+F; x.fillText(t("leanOf")(w), 80, y); }
+    // bottom: note, maker, url
+    function wrap(txt, yy, font, color, lh){
+      x.font=font; x.fillStyle=color; var line="", out=[];
+      txt.split(/(\s+)/).forEach(function(wd){ var tst=line+wd; if(x.measureText(tst).width>W-160 && line.trim()){ out.push(line.trim()); line=wd.trimStart(); } else line=tst; });
+      if(line.trim()) out.push(line.trim());
+      out.forEach(function(l,i){ x.fillText(l, 80, yy+i*lh); }); return yy+out.length*lh;
+    }
+    x.fillStyle="rgba(0,0,0,.10)"; x.fillRect(80, H-330, W-160, 2);
+    var yy=wrap(t("cardNote"), H-270, "400 28px "+F, "#6B635C", 40);
+    var mk=MAKER[LANG]||MAKER.ko||MAKER.en;
+    if(mk) yy=wrap("“"+mk+"”", yy+16, "400 28px "+F, "#4A433D", 40);
+    x.fillStyle="#8A8178"; x.font="400 24px "+F; x.fillText("— altair research lab  ·  altair-research.github.io/drape", 80, H-60);
+    return cv;
+  }
+  /* 공유 시트는 누른 직후(사용자 동작 안)에 열어야 해서, 담은 색 창을 열 때 그림을 미리 만들어 둔다. */
+  var cardCache={k:null,b:null};
+  function cardBlob(cb){
+    var k=LANG+"|"+keptKeys().join(",");
+    if(cardCache.k===k && cardCache.b){ cb(cardCache.b); return; }
+    var go=function(){ cardCanvas().toBlob(function(b){ cardCache={k:k,b:b}; cb(b); }, "image/png"); };
+    if(document.fonts && document.fonts.ready) document.fonts.ready.then(go, go); else go();
+  }
+  function saveCard(blob){
+    var a=document.createElement("a"); a.href=URL.createObjectURL(blob); a.download="my-colors.png";
+    document.body.appendChild(a); a.click(); setTimeout(function(){ URL.revokeObjectURL(a.href); a.remove(); }, 1000);
+  }
+  /* 공유: 그림 파일을 받는 공유 시트면 그림 + 글·링크, 아니면 지금처럼 글·링크만. */
+  $("shareResult").addEventListener("click", function(){
+    var text=resultText();
+    if(!(navigator.share && navigator.canShare && window.File)){ shareLink(text, null); return; }
+    cardBlob(function(blob){
+      var file = blob && new File([blob], "my-colors.png", {type:"image/png"});
+      if(file && navigator.canShare({files:[file]})) navigator.share({files:[file], title:t("title"), text:text + "\n" + SHARE_URL}).catch(function(){});
+      else shareLink(text, null);
+    });
+  });
+  $("openSaved").addEventListener("click", function(){ if(keptKeys().length) cardBlob(function(){}); });
+  $("saveCard").addEventListener("click", function(){ cardBlob(function(b){ if(b) saveCard(b); }); });
+  window.__drapeCard = cardCanvas; // 테스트·스크린샷용
   $("menuBtn").addEventListener("click", function(){ applyLang(); $("menu").hidden = false; });
   $("closeMenu").addEventListener("click", function(){ $("menu").hidden = true; });
   if(!introSeen) showIntro();
