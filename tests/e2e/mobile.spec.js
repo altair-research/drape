@@ -95,7 +95,7 @@ for (const viewport of [{ width:320,height:640 },{ width:360,height:780 },{ widt
       await capture('saved');
 
       // Controls below a scroll panel must remain reachable vertically, without horizontal panning.
-      for (const id of ['compareKept','shareResult','saveCard','closeSheet','clearSaved']) {
+      for (const id of ['compareKept','shareResult','saveCard', 'saveStory','closeSheet','clearSaved']) {
         await page.locator(`#${id}`).scrollIntoViewIfNeeded();
         const r = await page.locator(`#${id}`).boundingBox();
         if (r.x < -0.5 || r.x+r.width > viewport.width+0.5 || r.y < 0 || r.y+r.height > viewport.height+0.5)

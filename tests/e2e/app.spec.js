@@ -154,19 +154,23 @@ for (const lang of ['ko', 'en']) {
       await pickColors(page);
       await page.locator('#openSaved').click();
       await expect(page.locator('#saveCard')).toBeVisible();
-      const card = await page.evaluate(() => {
-        const cv = window.__drapeCard(), x = cv.getContext('2d');
+      const card = await page.evaluate(() => [false, true].map(story => {
+        const cv = window.__drapeCard(story), x = cv.getContext('2d');
         const px = (a, b) => Array.from(x.getImageData(a, b, 1, 1).data.slice(0, 3));
-        // first swatch centre = first liked colour (Ivory #FFF3D6 at base level); v46: swatches start below the big lean line
-        return { w: cv.width, h: cv.height, first: px(80 + 100, 380 + 80), bg: px(20, 20) };
-      });
-      expect(card.w).toBe(1080);
-      expect(card.h).toBe(1350);
-      expect(card.bg).toEqual([247, 243, 236]);
-      expect(card.first).toEqual([255, 243, 214]);
+        // first swatch = first liked colour (Ivory #FFF3D6 at base level). v47: the swatch block is centred
+        // vertically, so scan down the first column instead of using a fixed y.
+        let first = null;
+        for (let y = 300; y < cv.height - 300 && !first; y += 4) { const p = px(180, y); if (p.join() === '255,243,214') first = p; }
+        return { w: cv.width, h: cv.height, first, bg: px(20, 20) };
+      }));
+      expect(card.map(c => [c.w, c.h])).toEqual([[1080, 1350], [1080, 1920]]);
+      for (const c of card) { expect(c.bg).toEqual([247, 243, 236]); expect(c.first).toEqual([255, 243, 214]); }
       const download = page.waitForEvent('download');
       await page.locator('#saveCard').click();
       expect((await download).suggestedFilename()).toBe('my-colors.png');
+      const story = page.waitForEvent('download');
+      await page.locator('#saveStory').click();
+      expect((await story).suggestedFilename()).toBe('my-colors-story.png');
     });
   });
 }

@@ -11,7 +11,7 @@ Color Mirror 깔아 줘서 고마워요! 시간 날 때 2분만 해 보고, 된 
 
 1. 창가에서 앱을 열고 색을 좌우로 넘겨 보기 — 얼굴 아래 색 띠가 잘 바뀌나요?
 2. 마음에 드는 색 3~5개에 ♥ → 아래 '목록' → 맨 위 '내가 고른 색' 한 줄이 나오나요?
-3. ⋯ 메뉴 → '흰 종이로 색 맞추기' → 흰 종이(A4)를 화면에 비추고 종이를 톡 — 화면이 덜 노랗게/덜 파랗게 바뀌나요?
+3. 먼저 — 이 줄을 읽기 전에 '흰 종이로 색 맞추기' 기능을 혼자 찾으셨나요? (예/아니오) 그다음 ⋯ 메뉴 → '흰 종이로 색 맞추기' → 흰 종이(A4)를 화면에 비추고 종이를 톡 — 화면이 덜 노랗게/덜 파랗게 바뀌나요?
 4. 폰 기종과 안드로이드 버전(설정 > 휴대전화 정보)
 5. (해 볼 수 있으면) 톡백(TalkBack)을 켜고 색을 넘길 때 색 이름을 읽어 주나요?
 
@@ -25,7 +25,7 @@ Thanks for installing Color Mirror! When you have 2 minutes, try these and just 
 
 1. Open the app by a window and swipe through colors — does the color band under your face change smoothly?
 2. Tap ♥ on 3–5 colors you like → "List" at the bottom → do you see a one-line "Colors I picked" summary at the top?
-3. ⋯ menu → "White paper balance" → show a sheet of white paper to the camera and tap it — does the screen look less yellow/blue?
+3. First — before reading this line, had you found the "White paper balance" feature on your own? (yes/no) Then ⋯ menu → "White paper balance" → show a sheet of white paper to the camera and tap it — does the screen look less yellow/blue?
 4. Your phone model and Android version (Settings > About phone)
 5. (If you can) turn on TalkBack — does it read the color name when you swipe?
 
@@ -38,5 +38,6 @@ Anything odd or annoying is the most useful thing you can tell me 🙏
 |---|---|
 | 1·2 안 됨 | 기종을 받아 재현. 사이트 수정이면 검증 후 바로 배포(앱 재업로드 필요 없음) |
 | 3 이 '안 바뀜'·'이상해짐' | 기종·조명을 받아 흰 종이 판별 한도(`index.html` 의 0.5~2.0·붉은기) 확인. iPhone 이면 영상 필터 지원 문제일 수 있음(`tests/e2e/WEBKIT-DIAG.md`) |
+| 3 의 '혼자 찾았나' 가 '아니오' 많음 | 흰 종이 맞추기를 첫 화면에 꺼낼지 다시 판단(지안 11-16 결정: 지금은 ⋯ 안에 두고 테스터 반응을 보고 정한다) — 절반 넘게 '아니오'면 첫 화면 한 줄 + 바로가기 안을 지안에게 |
 | 5 가 '안 읽음' | `docs/A11Y-CHECK.md` L3 — 색 이름 묶음의 aria-live 가 TalkBack 에서 안 먹는 것. 대안: 색이 바뀔 때 숨은 알림 칸에 글자 넣기 |
 | 불편했던 것 | 피드백 메모에 적고, 고쳤으면 '고쳤나' 칸에 버전 |
