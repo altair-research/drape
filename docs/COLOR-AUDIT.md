@@ -1,6 +1,6 @@
 # 색 데이터 감사 — 2026-11-04
 
-실행: `node tools/audit-colors.mjs`. Node 내장 모듈만 사용. 앱 v40, 마지막 script에서 실제 상수·함수를 추출한다. 앱 코드는 수정하지 않는다.
+실행: `node tools/audit-colors.mjs`. Node 내장 모듈만 사용. 앱 v50, 마지막 script에서 실제 상수·함수를 추출한다. 앱 코드는 수정하지 않는다.
 
 데이터·계산 무결성 검사 **267통과·0실패**. ΔE < 3 검토 경고 **3쌍**(의도된 무채색 단계 반복 12쌍 별도). 대비 부족은 정보용이며 실패로 막지 않는다.
 
@@ -258,10 +258,10 @@ ko(n)·en(e) 96개에 대해 빈 값과 전체 팔레트 중복(NFKC·trim·영�
 
 | 계절 | 담은 수 | 실제 한 줄 | 실제 축별 개수 |
 | --- | --- | --- | --- |
-| 봄 웜 | 12 | 따뜻한 · 선명한 · 밝은 쪽 | {"warm":10,"cool":2,"soft":2,"vivid":7,"light":5,"deep":1} |
-| 여름 쿨 | 12 | 차가운 · 부드러운 · 밝은 쪽 | {"warm":4,"cool":5,"soft":6,"vivid":1,"light":4,"deep":3} |
-| 가을 웜 | 12 | 따뜻한 · 선명한 · 깊은 쪽 | {"warm":11,"cool":0,"soft":3,"vivid":4,"light":1,"deep":5} |
-| 겨울 쿨 | 12 | 차가운 · 선명한 · 깊은 쪽 | {"warm":3,"cool":5,"soft":2,"vivid":5,"light":2,"deep":7} |
+| 봄 웜 | 12 | 따뜻한 · 선명한 · 밝은 쪽 | {"warm":10,"cool":2,"soft":2,"vivid":7,"light":5,"deep":1,"neutral":0} |
+| 여름 쿨 | 12 | 차가운 · 부드러운 · 밝은 쪽 | {"warm":4,"cool":5,"soft":6,"vivid":1,"light":4,"deep":3,"neutral":3} |
+| 가을 웜 | 12 | 따뜻한 · 선명한 · 깊은 쪽 | {"warm":11,"cool":0,"soft":3,"vivid":4,"light":1,"deep":5,"neutral":1} |
+| 겨울 쿨 | 12 | 차가운 · 선명한 · 깊은 쪽 | {"warm":3,"cool":5,"soft":2,"vivid":5,"light":3,"deep":9,"neutral":4} |
 
 
 **제안:** 계절 명칭과 요약 축이 다를 때 우선 실제 단색·경계 부근을 검토한다. 요약을 계절 이름에 억지로 맞추거나 경계를 변경하지 않는다. 무채색 제외 규칙·온도 대리식의 의미와 실제 사용자 인식을 따로 검증한다. **모름:** 실기기·조명별 지각 차이와 퍼스널컬러 타당성.
@@ -270,6 +270,6 @@ ko(n)·en(e) 96개에 대해 빈 값과 전체 팔레트 중복(NFKC·trim·영�
 
 [Sharma·Wu·Dalal의 수식과 참조 데이터](https://hajim.rochester.edu/ece/sites/gsharma/ciede2000/)로 CIEDE2000을 구현했다. 공개 참조 쌍 1–16 및 대칭성을 매 실행 확인하며 허용 오차는 0.00005다. sRGB→Lab는 앱 함수를 그대로 사용한다. 계산 자체가 틀리면 중단하며 데이터 검사 실패 시 보고서 작성 후 종료 코드 1, 검토 경고만 있으면 0이다.
 
-추출 함수: hexToHsl, hslToHex, isNeutral, variantHex, parseKey, findFlat, seasonSwatch, srgbToLab, polar, hexLab, colorWarmth, leanCuts, leanOf, leanWords, t. 이 vm은 신뢰하는 로컬 저장소 코드를 제한된 문맥에서 평가하기 위한 것으로 보안 샌드박스라는 뜻은 아니다. 소스 SHA-256(UTF-8 텍스트): `f65fdaf6bc1226f0224542ef9ecedb26dfc8809acd7666ee8a6ed60c73d8e16f`.
+추출 함수: hexToHsl, hslToHex, isNeutral, variantHex, parseKey, findFlat, seasonSwatch, srgbToLab, polar, hexLab, colorWarmth, leanCuts, leanOf, leanWords, t. 이 vm은 신뢰하는 로컬 저장소 코드를 제한된 문맥에서 평가하기 위한 것으로 보안 샌드박스라는 뜻은 아니다. 소스 SHA-256(UTF-8 텍스트): `03b245e7475a0b746ffd85faa9a2062909c8f352785414668ac23b7ec00f7da2`.
 
 데이터·계산 무결성 검사 실패 없음. 유사색·대표색·기대 방향 문제는 위의 검토 항목에 남긴다.

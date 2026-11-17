@@ -535,7 +535,7 @@
 <script>
 (function(){
   "use strict";
-  var APP_VERSION = "49";
+  var APP_VERSION = "50";
 
   /* ---- 언어 ---- 기기 언어가 한국어면 ko, 아니면 en. 화면의 EN/한국어 버튼으로 바꾸면 기억한다. */
   var T = {
@@ -1025,14 +1025,14 @@
   function leanOf(keys){
     /* v49 서연 11-17: 흰·회색처럼 따뜻하지도 차갑지도 않은 색이 온도 셈에서 조용히 빠져서, 여름 3·봄 2 인데 "따뜻한 2 · 차가운 0"
        "따뜻한 쪽"이 나와 "틀렸네"가 됐다. → 온도는 그런 색을 '중립 n'으로 따로 세어 보여 주고, 이긴 쪽이 중립 수보다도 많을 때만 말로 낸다.
-       무채색은 채도로는 '부드러운'(채도가 낮다), 밝기는 그대로 센다. */
+       무채색은 밝기만 센다 — v50: v49 에서 '부드러운'으로 셌더니 흰·검정·차콜이 부드럽다고 나와 겨울 전체가 '선명한'을 잃음(밤 감사 11-16). */
     var n={warm:0,cool:0,soft:0,vivid:0,light:0,deep:0,neutral:0}, words=[], cut=leanCuts();
     keys.forEach(function(k){
       var pk=parseKey(k);
       if(findFlat(pk.h)<0) return;
       var b=hexLab(variantHex(pk.h, pk.lv)), w=isNeutral(pk.h) ? 0 : colorWarmth(b);
       if(w>0.25) n.warm++; else if(w<-0.25) n.cool++; else n.neutral++;
-      if(isNeutral(pk.h) || b.C<cut.c1) n.soft++; else if(b.C>cut.c2) n.vivid++;
+      if(!isNeutral(pk.h)){ if(b.C<cut.c1) n.soft++; else if(b.C>cut.c2) n.vivid++; }
       if(b.L>cut.l2) n.light++; else if(b.L<cut.l1) n.deep++;
     });
     [["warm","cool",1],["soft","vivid",0],["light","deep",0]].forEach(function(pr){
